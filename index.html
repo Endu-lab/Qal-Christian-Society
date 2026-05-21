@@ -113,13 +113,11 @@
     <div id="page-questions" class="page active">
         <div class="card">
             <h3 style="color: var(--primary);">የዕለቱ የመጽሐፍ ቅዱስ ጥያቄ</h3>
-            <p id="quiz-question" style="font-size: 18px; font-weight: bold;">ሙሴ የእግዚአብሔርን ሕግ የተቀበለው በየትኛው ተራራ ላይ ነው?</p>
+            <p id="quiz-question" style="font-size: 18px; font-weight: bold;">የዛሬው ጥያቄ በመጫን ላይ ነው... እባክዎ ከጥቂት ሰከንዶች በኋላ ይሞክሩ!</p>
             <div id="quiz-options">
-                <button class="option-btn" onclick="checkAnswer(false)">ሀ) በደብረ ዘይት ተራራ</button>
-                <button class="option-btn" onclick="checkAnswer(true)">ለ) በሲና ተራራ</button>
-                <button class="option-btn" onclick="checkAnswer(false)">ሐ) በኮሬብ ተራራ</button>
+                <!-- Buttons will be injected here automatically from Firebase -->
             </div>
-            <p id="quiz-feedback" style="font-weight: bold; margin-top: 15px;"></p>
+            <p id="quiz-feedback" style="font-weight: bold; margin-top: 15px; line-height: 1.5;"></p>
         </div>
     </div>
 
@@ -157,28 +155,92 @@
 </nav>
 
 <script>
-    // 1. PAGE SWITCHING LOGIC
-    function switchPage(pageId, selectedTab) {
-        // Hide all pages
-        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-        // Deactivate all navigation items
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        
-        // Show the selected page
-        document.getElementById(`page-${pageId}`).classList.add('active');
-        // Activate the clicked tab
-        selectedTab.classList.add('active');
+    // 1. FIREBASE CONFIGURATION KEYS
+    // Replace these template values with your real keys from your Firebase Console
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT_ID.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase Services
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Automatically trigger the database check as soon as the webpage finishes loading
+    window.onload = function() {
+        loadDailyQuiz();
+    };
+
+    // 2. FETCH THE AUTOMATED QUIZ FROM FIRESTORE
+    function loadDailyQuiz() {
+        const questionElement = document.getElementById("quiz-question");
+        const optionsContainer = document.getElementById("quiz-options");
+        const feedbackElement = document.getElementById("quiz-feedback");
+
+        feedbackElement.innerHTML = "";
+
+        // Looks in your Firebase 'questions' collection for the newest query entry
+        db.collection("questions").orderBy("createdAt", "desc").limit(1).get().then((querySnapshot) => {
+            if (querySnapshot.empty) {
+                questionElement.innerHTML = "ምንም ጥያቄ አልተገኘም። እባክዎ በFirestore ውስጥ 'questions' የሚባል collection መኖሩን ያረጋግጡ።";
+                optionsContainer.innerHTML = "";
+                return;
+            }
+
+            querySnapshot.forEach((doc) => {
+                const quizData = doc.data();
+                
+                // Display the question text string directly from the database blueprint
+                questionElement.innerHTML = quizData.questionText;
+                optionsContainer.innerHTML = "";
+                
+                // Generate the choice buttons layout smoothly using the array from Gemini
+                quizData.options.forEach((option) => {
+                    const isCorrect = (option === quizData.correctAnswer);
+                    
+                    // We safely pass the database explanation string into the function below
+                    optionsContainer.innerHTML += `
+                        <button class="option-btn" onclick="checkAutomatedAnswer(${isCorrect}, '${quizData.explanation.replace(/'/g, "\\'")}')">
+                            ${option}
+                        </button>
+                    `;
+                });
+            });
+        }).catch((error) => {
+            console.error("Firebase Connection Error: ", error);
+            questionElement.innerHTML = "ከደመናው ማከማቻ (Firebase) ጋር መገናኘት አልተቻለም። እባክዎ የቪፒኤን (VPN) ወይም የኢንተርኔት ግንኙነትዎን ያረጋግጡ።";
+        });
     }
 
-    // 2. TEMPORARY QUIZ INTERACTION LOGIC
-    function checkAnswer(isCorrect) {
+    // 3. SELECTION EVALUATOR WITH INTEGRATED AI EXPLANATIONS
+    function checkAutomatedAnswer(isCorrect, explanationText) {
         const feedback = document.getElementById("quiz-feedback");
         if (isCorrect) {
             feedback.style.color = "green";
-            feedback.innerHTML = "🎉 ትክክል ነዎት! +10 ነጥብ አግኝተዋል።";
+            feedback.innerHTML = `🎉 ትክክል ነዎት! +10 ነጥብ።<br><span style='color: #2f3640; font-weight: normal; display:block; margin-top:10px;'>💡 **ማብራሪያ:** ${explanationText}</span>`;
         } else {
             feedback.style.color = "red";
             feedback.innerHTML = "❌ አልተሳሳቱም፣ እንደገና ይሞክሩ!";
+        }
+    }
+
+    // 4. MAIN PAGE SWITCHING ROUTER
+    function switchPage(pageId, selectedTab) {
+        // Clear active states across the layout
+        document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        
+        // Render target page selection view
+        document.getElementById(`page-${pageId}`).classList.add('active');
+        selectedTab.classList.add('active');
+
+        // Reload fresh quiz content instantly if user clicks back into the main view
+        if (pageId === 'questions') {
+            loadDailyQuiz();
         }
     }
 </script>
