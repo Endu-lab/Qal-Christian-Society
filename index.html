@@ -133,7 +133,7 @@
     <div id="page-qetero" class="page">
         <div class="card">
             <h3>ቀጠሮ (Qetero)</h3>
-            <p>የማኅበረሰብ መገናኛ፣ የጉዞ ማስተባበሪያ እና የጉባኤ ቀጠሮ ማግኛ ቦታ።</p>
+            <p>የማኅበረሰብ መገናኛ፣ የጉዞ ማስተባበሪያ vacancies እና የጉባኤ ቀጠሮ ማግኛ ቦታ።</p>
         </div>
     </div>
 
@@ -156,7 +156,7 @@
 
 <script>
     // 1. FIREBASE CONFIGURATION KEYS
-    // Replace these template values with your real keys from your Firebase Console
+    // Make sure your real project tokens replace these placeholders if you haven't swapped them yet!
     const firebaseConfig = {
         apiKey: "YOUR_API_KEY",
         authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -183,8 +183,8 @@
 
         feedbackElement.innerHTML = "";
 
-        // Looks in your Firebase 'questions' collection for the newest query entry
-        db.collection("questions").orderBy("createdAt", "desc").limit(1).get().then((querySnapshot) => {
+        // TIMEZONE SIMPLIFICATION: We removed .orderBy() so it grabs your document directly 
+        db.collection("questions").limit(1).get().then((querySnapshot) => {
             if (querySnapshot.empty) {
                 questionElement.innerHTML = "ምንም ጥያቄ አልተገኘም። እባክዎ በFirestore ውስጥ 'questions' የሚባል collection መኖሩን ያረጋግጡ።";
                 optionsContainer.innerHTML = "";
@@ -194,15 +194,15 @@
             querySnapshot.forEach((doc) => {
                 const quizData = doc.data();
                 
-                // Display the question text string directly from the database blueprint
+                // Display the question text string directly from your database blueprint
                 questionElement.innerHTML = quizData.questionText;
                 optionsContainer.innerHTML = "";
                 
-                // Generate the choice buttons layout smoothly using the array from Gemini
+                // Generate the choice buttons layout smoothly using the options array
                 quizData.options.forEach((option) => {
                     const isCorrect = (option === quizData.correctAnswer);
                     
-                    // We safely pass the database explanation string into the function below
+                    // We safely pass the database explanation string into the click handler
                     optionsContainer.innerHTML += `
                         <button class="option-btn" onclick="checkAutomatedAnswer(${isCorrect}, '${quizData.explanation.replace(/'/g, "\\'")}')">
                             ${option}
@@ -224,7 +224,7 @@
             feedback.innerHTML = `🎉 ትክክል ነዎት! +10 ነጥብ።<br><span style='color: #2f3640; font-weight: normal; display:block; margin-top:10px;'>💡 **ማብራሪያ:** ${explanationText}</span>`;
         } else {
             feedback.style.color = "red";
-            feedback.innerHTML = "❌ አልተሳሳቱም፣ እንደገና ይሞክሩ!";
+            feedback.innerHTML = "❌ አልተሳሳቱም፥ እንደገና ይሞክሩ!";
         }
     }
 
