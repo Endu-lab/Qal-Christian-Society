@@ -133,7 +133,7 @@
     <div id="page-qetero" class="page">
         <div class="card">
             <h3>ቀጠሮ (Qetero)</h3>
-            <p>የማኅበረሰብ መገናኛ፣ የጉዞ ማስተባበሪያ vacancies እና የጉባኤ ቀጠሮ ማግኛ ቦታ።</p>
+            <p>የማኅበረሰብ መገናኛ፣ የጉዞ ማስተባበሪያ እና የጉባኤ ቀጠሮ ማግኛ ቦታ።</p>
         </div>
     </div>
 
@@ -155,15 +155,15 @@
 </nav>
 
 <script>
-    // 1. FIREBASE CONFIGURATION KEYS
-    // Make sure your real project tokens replace these placeholders if you haven't swapped them yet!
+    // 1. LIVE REAL FIREBASE CONFIGURATION KEYS
     const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-        projectId: "YOUR_PROJECT_ID",
-        storageBucket: "YOUR_PROJECT_ID.appspot.com",
-        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-        appId: "YOUR_APP_ID"
+        apiKey: "AIzaSyDfGIbFp3JNFVUv3aoghgLoAcj_9vFlf9E",
+        authDomain: "qal-christian-society.firebaseapp.com",
+        projectId: "qal-christian-society",
+        storageBucket: "qal-christian-society.firebasestorage.app",
+        messagingSenderId: "1077878834449",
+        appId: "1:1077878834449:web:83482024afd7c2cd9938b0",
+        measurementId: "G-JSV8XHE65K"
     };
 
     // Initialize Firebase Services
@@ -183,7 +183,7 @@
 
         feedbackElement.innerHTML = "";
 
-        // TIMEZONE SIMPLIFICATION: We removed .orderBy() so it grabs your document directly 
+        // Timezone-safe configuration: Grabs your document without calendar sorting issues
         db.collection("questions").limit(1).get().then((querySnapshot) => {
             if (querySnapshot.empty) {
                 questionElement.innerHTML = "ምንም ጥያቄ አልተገኘም። እባክዎ በFirestore ውስጥ 'questions' የሚባል collection መኖሩን ያረጋግጡ።";
