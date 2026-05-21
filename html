@@ -18,7 +18,7 @@
         .nav-btn { cursor: pointer; padding: 10px 20px; background: #3498db; color: white; border-radius: 5px; border: none; font-weight: bold; }
         .screen { display: none; }
         .screen.active { display: block; }
-        
+         
         /* This styles your "Welcome to Qal" post cards */
         .post-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; border-top: 4px solid #3498db; }
         .post-title { font-size: 22px; font-weight: bold; color: #2c3e50; margin-bottom: 10px; display: block; }
@@ -70,12 +70,12 @@
         // 3. THE HANDSHAKE: This function gets the data from Firebase
         function loadPosts() {
             const postsList = document.getElementById('posts-list');
-            
+             
             // Step A: Go to the "posts" folder (Collection)
             db.collection("posts").get()
             .then((querySnapshot) => {
                 postsList.innerHTML = ""; // Clear the "Loading..." text
-                
+                 
                 if (querySnapshot.empty) {
                     postsList.innerHTML = '<div class="post-card">ምንም ጽሑፍ አልተገኘም::</div>';
                     return;
@@ -84,15 +84,17 @@
                 querySnapshot.forEach((doc) => {
                     const post = doc.data();
 
-                    // Step B: Match your EXACT field names from your screenshot
-                    const title = post["Welcome to Qal!"] || "Welcome"; 
+                    // Step B: Match your EXACT field names from your Firestore snapshot layout
+                    const title = post["Welcome to Qal!"] || "Welcome to Qal"; 
                     const content = post["content"] || ""; 
                     const author = post["author"] || "Qal Team";
-                    
-                    // Format the date (createdAt)
+                     
+                    // Format the date natively from your 'createdAt' timestamp field
                     let dateStr = "";
                     if (post.createdAt && post.createdAt.toDate) {
-                        dateStr = post.createdAt.toDate().toLocaleDateString();
+                        dateStr = post.createdAt.toDate().toLocaleString('am-ET', { timeZone: 'UTC' });
+                    } else if (post.createdAt) {
+                        dateStr = new Date(post.createdAt).toLocaleDateString();
                     }
 
                     // Step C: Build the HTML card to show on the screen
