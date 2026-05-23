@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ቃል (Qale) - የታሪክ እና የቅዱሳን መዝገብ</title>
-    <!-- ለአዶዎች መጠቀሚያ (FontAwesome) -->
+    <title>ቃል ክርስቲያን ማኅበር (Qal Christian Society)</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <style>
-        /* --- 1. ዋና የውበት እና የቀለም ቅንብሮች (CSS) --- */
         :root {
             --royal-gold: #d4af37;
             --deep-burgundy: #4a0e17;
             --text-charcoal: #2b2b2b;
             --light-bg: #fdfbf7;
-            --text-muted: #666;
+            --card-bg: #ffffff;
+            --text-muted: #777;
         }
 
         body {
@@ -25,7 +23,75 @@
             color: var(--text-charcoal);
         }
 
-        /* የላይኛው መተግበሪያ አሞሌ (App Bar) */
+        .hidden { display: none !important; }
+
+        /* --- 1. የምዝገባ ገጽ ውበት (Registration Screen) --- */
+        .register-container {
+            max-width: 450px;
+            margin: 60px auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            text-align: center;
+        }
+
+        .register-container h2 {
+            color: var(--deep-burgundy);
+            margin-bottom: 5px;
+        }
+
+        .register-container p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--deep-burgundy);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--royal-gold);
+            outline: none;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background-color: var(--deep-burgundy);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover { background-color: #61131e; }
+
+        /* --- 2. ዋናው መተግበሪያ አቀማመጥ (Main App Interface) --- */
         .app-bar {
             background-color: var(--deep-burgundy);
             color: white;
@@ -39,65 +105,21 @@
             z-index: 1000;
         }
 
-        .app-bar h1 {
-            margin: 0;
-            font-size: 1.5rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
+        .app-bar h1 { margin: 0; font-size: 1.3rem; font-weight: 600; }
+        .user-badge { font-size: 0.85rem; background: var(--royal-gold); padding: 4px 8px; border-radius: 4px; color: #000; font-weight: bold;}
 
-        /* የታችኛው ማውጫ (Bottom Navigation) */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
-            z-index: 1000;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 0.85rem;
-            text-decoration: none;
-            background: none;
-            border: none;
-            width: 100%;
-            padding: 5px 0;
-        }
-
-        .nav-item.active {
-            color: var(--deep-burgundy);
-            font-weight: bold;
-        }
-
-        .nav-item i {
-            font-size: 1.3rem;
-            margin-bottom: 4px;
-        }
-
-        /* ዋናው የይዘት መቀመጫ (Main Container) */
         .main-content {
             padding: 20px;
-            padding-bottom: 80px; /* ለታችኛው ማውጫ ክፍት ቦታ */
+            padding-bottom: 90px;
             max-width: 600px;
             margin: 0 auto;
         }
 
-        /* ካርዶች (Cards) */
         .info-card {
             background-color: var(--light-bg);
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border: 1px solid rgba(212, 175, 55, 0.2);
             padding: 20px;
             margin-bottom: 20px;
         }
@@ -107,172 +129,358 @@
             margin-top: 0;
             border-bottom: 2px solid var(--royal-gold);
             padding-bottom: 8px;
-            font-size: 1.3rem;
+            font-size: 1.25rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
-        /* የታሪክ መስመር (Timeline) ውበት */
-        .timeline {
-            position: relative;
-            padding-left: 20px;
-            border-left: 2px solid var(--royal-gold);
-            margin-left: 10px;
-            margin-top: 15px;
-        }
-
-        .timeline-event {
-            position: relative;
-            margin-bottom: 25px;
-        }
-
-        .timeline-event::before {
-            content: '';
-            position: absolute;
-            left: -26px;
-            top: 5px;
-            background: var(--deep-burgundy);
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            border: 2px solid var(--royal-gold);
-        }
-
-        .event-time {
-            font-weight: bold;
-            color: var(--deep-burgundy);
-            font-size: 0.95rem;
-        }
-
-        /* የቅዱሳን ዝርዝር ውበት */
-        .saints-list {
-            margin-top: 15px;
-        }
-
-        .saint-item {
-            background: #ffffff;
-            border: 1px solid #eae6dc;
-            border-radius: 8px;
-            padding: 12px 15px;
-            margin-bottom: 10px;
+        /* --- 3. የታችኛው ማውጫ (Bottom Navigation) --- */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background-color: white;
             display: flex;
-            align-items: flex-start;
-            gap: 12px;
+            justify-content: space-around;
+            padding: 8px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
+            z-index: 1000;
         }
 
-        .saint-icon {
-            color: var(--royal-gold);
-            font-size: 1.2rem;
-            margin-top: 2px;
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            background: none; border: none;
+            width: 25%; padding: 5px 0;
         }
 
-        .saint-name {
-            font-weight: bold;
-            color: var(--deep-burgundy);
-            margin-bottom: 3px;
-        }
+        .nav-item.active { color: var(--deep-burgundy); font-weight: bold; }
+        .nav-item i { font-size: 1.25rem; margin-bottom: 3px; }
 
-        .hidden-view {
-            display: none !important;
+        /* --- 4. የገጾች ውበት (Tab Contents Specific Style) --- */
+        /* ፈተና (Quiz) */
+        .timer-box {
+            font-size: 1.2rem; font-weight: bold; color: #d9534f;
+            text-align: center; margin-bottom: 15px;
         }
+        .quiz-options button {
+            width: 100%; padding: 12px; margin-bottom: 10px;
+            background: white; border: 1px solid #ddd; border-radius: 6px;
+            text-align: left; cursor: pointer; font-size: 1rem;
+        }
+        .quiz-options button:hover { background: #f0ece1; border-color: var(--royal-gold); }
+        .score-box { text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--deep-burgundy); }
+
+        /* ቤተ-መጻሕፍት (Library) */
+        .book-item {
+            background: white; padding: 12px; border-radius: 6px;
+            margin-bottom: 10px; border-left: 4px solid var(--royal-gold);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .btn-read { background: var(--deep-burgundy); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;}
+
+        /* ፖስት (Post) */
+        .post-input textarea {
+            width: 100%; height: 80px; padding: 10px; box-sizing: border-box;
+            border: 1px solid #ccc; border-radius: 6px; resize: none; margin-bottom: 10px;
+        }
+        .feed-item {
+            background: white; padding: 15px; border-radius: 8px;
+            margin-top: 12px; border: 1px solid #eae6dc;
+        }
+        .feed-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between;}
     </style>
 </head>
 <body>
 
-    <!-- የላይኛው መተግበሪያ አሞሌ -->
-    <div class="app-bar">
-        <h1>ቃል (Qale)</h1>
-        <i class="fa-solid fa-gopuram" style="color: var(--royal-gold); font-size: 1.4rem;"></i>
-    </div>
-
-    <!-- ዋናው የይዘት ማሳያ ክፍል -->
-    <div class="main-content">
+    <!-- ================= ፩. የምዝገባ ገጽ (REGISTRATION SCREEN) ================= -->
+    <div id="registration-screen" class="register-container">
+        <i class="fa-solid fa-gopuram" style="font-size: 3rem; color: var(--royal-gold); margin-bottom: 10px;"></i>
+        <h2>ቃል ክርስቲያን ማኅበር</h2>
+        <p>እባክዎ መረጃዎን አስገብተው ይመዝገቡ</p>
         
-        <!-- 1ኛ ገጽ፦ የታሪክ ገጽ (History Tab) -->
-        <div id="history-view">
-            <div class="info-card">
-                <h2><i class="fa-solid fa-book-open"></i> የታሪክ መዝገብ እና ሂደቶች</h2>
-                <div class="timeline">
-                    <div class="timeline-event">
-                        <div class="event-time">ክфለ ዘመን ፩ (1st Century)</div>
-                        <p style="margin: 5px 0 0 0; line-height: 1.5;">ክርስትና ወደ ኢትዮጵያ በጃንደረባው አማካኝነት የገባበት እና የመጀመሪያው የመንፈሳዊ መሠረት የተጣለበት ዘመን።</p>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="event-time">አራተኛው ክፍለ ዘመን (330 ዓ.ም.)</div>
-                        <p style="margin: 5px 0 0 0; line-height: 1.5;">በአብርሃ ወአጽብሃ ዘመነ መንግሥት ክርስትና የሀገሪቱ ብሔራዊ ሃይማኖት ሆኖ በይፋ የታወጀበት ታሪካዊ ወቅት።</p>
-                    </div>
-                    <div class="timeline-event">
-                        <div class="event-time">አምስተኛው ክፍለ ዘመን (480 ዓ.ም.)</div>
-                        <p style="margin: 5px 0 0 0; line-height: 1.5;">ተሰዓቱ ቅዱሳን (ዘጠኙ ቅዱሳን) ወደ ኢትዮጵያ በመምጣት መጻሕፍትን የተረጎሙበትና ገዳማትን የመሠረቱበት ዘመን።</p>
-                    </div>
-                </div>
+        <form id="regForm" onsubmit="handleRegistration(event)">
+            <div class="form-group">
+                <label>ሙሉ ስም (Full Name)</label>
+                <input type="text" id="reg-name" required placeholder="የእርስዎን ስም ያስገቡ">
             </div>
-        </div>
-
-        <!-- 2ኛ ገጽ፦ የቅዱሳን ገጽ (Saints Tab) -->
-        <div id="saints-view" class="hidden-view">
-            <div class="info-card">
-                <h2><i class="fa-solid fa-scroll"></i> የቅዱሳን ታሪክ እና መዝገብ</h2>
-                <div class="saints-list">
-                    <div class="saint-item">
-                        <i class="fa-solid fa-cross saint-icon"></i>
-                        <div>
-                            <div class="saint-name">አባ አረጋዊ (ዘሚካኤል)</div>
-                            <p style="margin: 0; font-size: 0.95rem; color: #444; line-height: 1.4;">ከዘጠኙ ቅዱሳን አንዱ የሆኑት አባ አረጋዊ በደብረ ዳሞ ተራራ ላይ ታላቅ ገዳም የመሠረቱና በዚያው የነገሡ አባት ናቸው።</p>
-                        </div>
-                    </div>
-                    <div class="saint-item">
-                        <i class="fa-solid fa-cross saint-icon"></i>
-                        <div>
-                            <div class="saint-name">ቅዱስ ያሬድ</div>
-                            <p style="margin: 0; font-size: 0.95rem; color: #444; line-height: 1.4;">በስድስተኛው ክፍለ ዘመን የተነሣ፣ የኢትዮጵያ ቤተክርስቲያን መለኮታዊ ዜማና የቅዳሴ ሥርዓት መስራች የሆነው ታላቅ ሊቅ።</p>
-                        </div>
-                    </div>
-                    <div class="saint-item">
-                        <i class="fa-solid fa-cross saint-icon"></i>
-                        <div>
-                            <div class="saint-name">አቡነ ተክለ ሃይማኖት</div>
-                            <p style="margin: 0; font-size: 0.95rem; color: #444; line-height: 1.4;">በ13ኛው ክፍለ ዘመን በሸዋ የተነሡ፣ ወንጌልን ያስፋፉና በደብረ ሊባኖስ ታላቅ ገዳም የመሠረቱ ጻድቅ አባት።</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group">
+                <label>የሞባይል ቁጥር (Mobile Number)</label>
+                <input type="tel" id="reg-phone" required placeholder="09xxxxxxxx">
             </div>
-        </div>
-
+            <div class="form-group">
+                <label>ሃይማኖት (Religion)</label>
+                <select id="reg-religion" required>
+                    <option value="">ይምረጡ...</option>
+                    <option value="ኦርቶዶክስ">ኦርቶዶክስ (Orthodox)</option>
+                    <option value="ካቶሊክ">ካቶሊክ (Catholic)</option>
+                    <option value="ወንጌላዊት">ወንጌላዊት (Evangelical)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>የእርስዎ ሚና (Role)</label>
+                <select id="reg-role" required>
+                    <option value="">ይምረጡ...</option>
+                    <option value="አምራች (Producer)">አምራች (Producer)</option>
+                    <option value="አንባቢ (Reader)">አንባቢ (Reader)</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-submit">ይመዝገቡ</button>
+        </form>
     </div>
 
-    <!-- የታችኛው ማውጫ (Bottom Navigation) -->
-    <div class="bottom-nav">
-        <button id="nav-history" class="nav-item active" onclick="switchTab('history')">
-            <i class="fa-solid fa-clock-rotate-left"></i>
-            <span>ታሪክ መስመር</span>
-        </button>
-        <button id="nav-saints" class="nav-item" onclick="switchTab('saints')">
-            <i class="fa-solid fa-users-viewfinder"></i>
-            <span>ቅዱሳን መዝገብ</span>
-        </button>
-    </div>
 
-    <!-- --- 2. ቀላል የገጽ መቀያየሪያ ኮድ (JavaScript) --- -->
-    <script>
-        function switchTab(tabName) {
-            // ንቁ የሆኑትን ክፍሎች ቀለማቸውን ማጥፋት
-            document.getElementById('nav-history').classList.remove('active');
-            document.getElementById('nav-saints').classList.remove('active');
+    <!-- ================= ፪. ዋናው መተግበሪያ እይታ (MAIN APP SCREEN) ================= -->
+    <div id="main-app-screen" class="hidden">
+        <!-- የላይኛው አሞሌ -->
+        <div class="app-bar">
+            <h1>ቃል ማኅበር (Qal)</h1>
+            <div id="user-display" class="user-badge">አንባቢ</div>
+        </div>
+
+        <!-- ዋናው የይዘት ማሳያ ቦታ -->
+        <div class="main-content">
             
-            // ገጾቹን በሙሉ መደበቅ
-            document.getElementById('history-view').classList.add('hidden-view');
-            document.getElementById('saints-view').classList.add('hidden-view');
+            <!-- ሀ. የፈተና ገጽ (Quiz Tab) -->
+            <div id="tab-quiz" class="tab-view">
+                <div class="info-card">
+                    <h2><i class="fa-solid fa-brain"></i> መንፈሳዊ ፈተና (Quiz)</h2>
+                    <div id="quiz-area">
+                        <div class="timer-box"><i class="fa-solid fa-clock"></i> የቀረው ጊዜ፦ <span id="timer-count">20</span> ሰከንድ</div>
+                        <p id="quiz-question" style="font-weight: bold; font-size: 1.1rem;"></p>
+                        <div class="quiz-options" id="quiz-options-box"></div>
+                    </div>
+                    <div id="score-area" class="score-box hidden"></div>
+                </div>
+            </div>
 
-            // የተመረጠውን ገጽ ማሳየት
-            if(tabName === 'history') {
-                document.getElementById('nav-history').classList.add('active');
-                document.getElementById('history-view').classList.remove('hidden-view');
-            } else if(tabName === 'saints') {
-                document.getElementById('nav-saints').classList.add('active');
-                document.getElementById('saints-view').classList.remove('hidden-view');
+            <!-- ለ. የቤተ-መጻሕፍት ገጽ (Library Tab) -->
+            <div id="tab-library" class="tab-view class hidden">
+                <div class="info-card">
+                    <h2><i class="fa-solid fa-book-bible"></i> ቤተ-መጻሕፍት (Library)</h2>
+                    <div class="book-item">
+                        <div><strong>የመጽሐፍ ቅዱስ ጥናት</strong><br><small style="color: var(--text-muted);">ክፍል ፩ - መግቢያ</small></div>
+                        <button class="btn-read">አንብብ</button>
+                    </div>
+                    <div class="book-item">
+                        <div><strong>የቅዱሳን ታሪክ</strong><br><small style="color: var(--text-muted);">ስለ ጻድቃን ሕይወት የተዘጋጀ</small></div>
+                        <button class="btn-read">አንብብ</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ሐ. የቀጠሮ ገጽ (Qetero Tab) -->
+            <div id="tab-qetero" class="tab-view hidden">
+                <div class="info-card">
+                    <h2><i class="fa-solid fa-calendar-check"></i> ቀጠሮ ማስያዣ (Qetero)</h2>
+                    <p style="font-size: 0.95rem; color: var(--text-muted);">ከአስተማሪዎች ወይም ከንባብ ቡድኖች ጋር ቀጠሮ እዚህ ይያዙ።</p>
+                    <div class="form-group">
+                        <label>የቀጠሮው ዓይነት</label>
+                        <select id="qetero-type">
+                            <option>የመጽሐፍ ቅዱስ ውይይት</option>
+                            <option>የንባብ ግምገማ</option>
+                            <option>የጋራ ጸሎት</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>ቀን እና ሰዓት</label>
+                        <input type="datetime-local" id="qetero-time">
+                    </div>
+                    <button class="btn-submit" onclick="saveQetero()">ቀጠሮ ያዙ</button>
+                    <div id="qetero-list" style="margin-top: 15px;"></div>
+                </div>
+            </div>
+
+            <!-- መ. የፖስት ገጽ (Post Tab) -->
+            <div id="tab-post" class="tab-view hidden">
+                <div class="info-card">
+                    <h2><i class="fa-solid fa-square-rss"></i> መልእክቶች እና ፖስቶች</h2>
+                    <div class="post-input">
+                        <textarea id="post-text" placeholder="የሚፈልጉትን መንፈሳዊ መልእክት ወይም ሐሳብ እዚህ ይጻፉ..."></textarea>
+                        <button class="btn-submit" style="margin-top: 0;" onclick="createPost()">ፖስት አድርግ</button>
+                    </div>
+                    <div id="feed-container">
+                        <div class="feed-item">
+                            <div class="feed-meta"><strong>አስተዳዳሪ (Admin)</strong><span>ከ2 ሰዓት በፊት</span></div>
+                            <div>እንኳን ወደ ቃል ክርስቲያን ማኅበር መተግበሪያ በሰላም መጣችሁ። እዚህ ጠቃሚ ትምህርቶችን ያገኛሉ።</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- የታችኛው ማውጫ አዝራሮች (Bottom Nav Buttons) -->
+        <div class="bottom-nav">
+            <button id="btn-nav-quiz" class="nav-item active" onclick="switchTab('quiz')">
+                <i class="fa-solid fa-lightbulb"></i><span>ፈተና</span>
+            </button>
+            <button id="btn-nav-library" class="nav-item" onclick="switchTab('library')">
+                <i class="fa-solid fa-book"></i><span>ቤተ-መጻሕፍት</span>
+            </button>
+            <button id="btn-nav-qetero" class="nav-item" onclick="switchTab('qetero')">
+                <i class="fa-solid fa-clock"></i><span>ቀጠሮ</span>
+            </button>
+            <button id="btn-nav-post" class="nav-item" onclick="switchTab('post')">
+                <i class="fa-solid fa-paper-plane"></i><span>ፖስት</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= ፫. የቁጥጥር ስክሪፕት (JAVASCRIPT) ================= -->
+    <script>
+        let currentUser = null;
+        let timerInterval = null;
+        let timeLeft = 20;
+
+        // የፈተና ጥያቄ ናሙና
+        const sampleQuestion = {
+            q: "በመጽሐፍ ቅዱስ ውስጥ የመጀመሪያው መጽሐፍ የትኛው ነው?",
+            options: ["ዘፍጥረት", "ዘጸአት", "ዘሌዋውያን", "መዝሙረ ዳዊት"],
+            correct: 0
+        };
+
+        // 1. የምዝገባ ቁጥጥር
+        function handleRegistration(event) {
+            event.preventDefault();
+            
+            currentUser = {
+                name: document.getElementById('reg-name').value,
+                phone: document.getElementById('reg-phone').value,
+                religion: document.getElementById('reg-religion').value,
+                role: document.getElementById('reg-role').value
+            };
+
+            // የምዝገባ ገጽን መደበቅ፣ ዋናውን መተግበሪያ ማሳየት
+            document.getElementById('registration-screen').classList.add('hidden');
+            document.getElementById('main-app-screen').classList.remove('hidden');
+
+            // የሚና ባጅ ማስተካከል
+            document.getElementById('user-display').innerText = currentUser.role;
+
+            // መተግበሪያው ሲከፈት መጀመሪያ ፈተናውን ማስጀመር
+            loadQuizQuestion();
+        }
+
+        // 2. የገጾች መቀያየሪያ (Tab Switcher)
+        function switchTab(tabName) {
+            // ሁሉንም አዝራሮች ንቁ ካልሆነ ቀለም ማድረግ
+            document.getElementById('btn-nav-quiz').classList.remove('active');
+            document.getElementById('btn-nav-library').classList.remove('active');
+            document.getElementById('btn-nav-qetero').classList.remove('active');
+            document.getElementById('btn-nav-post').classList.remove('active');
+
+            // ሁሉንም ይዘቶች መደበቅ
+            document.getElementById('tab-quiz').classList.add('hidden');
+            document.getElementById('tab-library').classList.add('hidden');
+            document.getElementById('tab-qetero').classList.add('hidden');
+            document.getElementById('tab-post').classList.add('hidden');
+
+            // የተመረጠውን ማሳየት
+            document.getElementById('btn-nav-' + tabName).classList.add('active');
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+
+            // ወደ ፈተና ሲመለሱ ታይመሩን እንደገና ማስነሳት
+            if (tabName === 'quiz' && document.getElementById('score-area').classList.contains('hidden')) {
+                startTimer();
+            } else {
+                clearInterval(timerInterval);
             }
+        }
+
+        // 3. የፈተና ቆጣሪ እና አሠራር (Quiz logic with 20s timer)
+        function loadQuizQuestion() {
+            document.getElementById('quiz-question').innerText = sampleQuestion.q;
+            const optionsBox = document.getElementById('quiz-options-box');
+            optionsBox.innerHTML = '';
+
+            sampleQuestion.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.innerText = opt;
+                btn.onclick = () => answerQuiz(index);
+                optionsBox.appendChild(btn);
+            });
+
+            timeLeft = 20;
+            document.getElementById('timer-count').innerText = timeLeft;
+            startTimer();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer-count').innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    endQuiz("ጊዜው አልቋል! ፈተናውን በሰዓቱ አላጠናቀቁም።");
+                }
+            }, 1000);
+        }
+
+        function answerQuiz(selectedIndex) {
+            clearInterval(timerInterval);
+            if (selectedIndex === sampleQuestion.correct) {
+                endQuiz("ትክክለኛ መልስ! 10 ነጥብ አግኝተዋል። 🎉");
+            } else {
+                endQuiz("ያልተሳካ ሙከራ! ትክክለኛው መልስ '" + sampleQuestion.options[sampleQuestion.correct] + "' ነበር።");
+            }
+        }
+
+        function endQuiz(message) {
+            document.getElementById('quiz-area').classList.add('hidden');
+            const scoreArea = document.getElementById('score-area');
+            scoreArea.classList.remove('hidden');
+            scoreArea.innerHTML = `<p>${message}</p><button class="btn-submit" onclick="resetQuiz()">እንደገና ፈትን</button>`;
+        }
+
+        function resetQuiz() {
+            document.getElementById('score-area').classList.add('hidden');
+            document.getElementById('quiz-area').classList.remove('hidden');
+            loadQuizQuestion();
+        }
+
+        // 4. የቀጠሮ አያያዝ (Qetero logic)
+        function saveQetero() {
+            const type = document.getElementById('qetero-type').value;
+            const time = document.getElementById('qetero-time').value;
+            if (!time) { alert("እባክዎ ቀን እና ሰዓት ይምረጡ"); return; }
+
+            const list = document.getElementById('qetero-list');
+            const item = document.createElement('div');
+            item.style.background = '#fff';
+            item.style.padding = '10px';
+            item.style.marginTop = '10px';
+            item.style.borderRadius = '5px';
+            item.style.borderLeft = '4px solid #5cb85c';
+            item.innerHTML = `<strong>${type}</strong><br><small style="color:var(--text-muted);">${time.replace('T', ' ')}</small>`;
+            list.appendChild(item);
+            
+            document.getElementById('qetero-time').value = '';
+            alert("ቀጠሮዎ በተሳካ ሁኔታ ተይዟል!");
+        }
+
+        // 5. የፖስት አዘገጃጀት (Post logic)
+        function createPost() {
+            const text = document.getElementById('post-text').value;
+            if (!text.trim()) return;
+
+            const container = document.getElementById('feed-container');
+            const newPost = document.createElement('div');
+            newPost.className = 'feed-item';
+            
+            const author = currentUser ? currentUser.name : "ያልታወቀ ተጠቃሚ";
+            
+            newPost.innerHTML = `
+                <div class="feed-meta"><strong>${author} (${currentUser.role})</strong><span>አሁን</span></div>
+                <div>${text}</div>
+            `;
+            container.insertBefore(newPost, container.firstChild);
+            document.getElementById('post-text').value = '';
         }
     </script>
 </body>
