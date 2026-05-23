@@ -47,7 +47,7 @@
         /* 1. የርዕስ ማውጫ (Header) */
         header {
             background: linear-gradient(180deg, #ffffff 0%, var(--parchment-bg) 100%);
-            padding: 40px 20px 30px;
+            padding: 40px 20px 25px;
             text-align: center;
             border-bottom: 1px solid #ebd9c8;
             position: relative;
@@ -80,42 +80,113 @@
             letter-spacing: 0.5px;
         }
 
-        /* 2. የምዝገባ ክፍሎች (Registration) */
-        .role-section {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .role-btn {
-            padding: 12px 26px;
-            border-radius: 50px;
-            border: 1px solid transparent;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .role-producer { 
-            background-color: var(--monastic-burgundy); 
-            color: white; 
-        }
-        
-        .role-reader { 
-            background-color: transparent; 
-            color: var(--text-charcoal); 
+        /* 2. የተሻሻለው የምዝገባ ሳጥን (Registration Form Container) */
+        .registration-box {
+            background: var(--parchment-card);
             border: 1px solid #ebd9c8;
+            border-radius: var(--border-radius);
+            max-width: 550px;
+            margin: 20px auto 0 auto;
+            padding: 20px 25px;
+            box-shadow: var(--shadow-sm);
+            text-align: left;
         }
 
-        .role-btn:hover {
-            transform: translateY(-1px);
-            filter: brightness(1.1);
-            box-shadow: var(--shadow-sm);
+        .registration-box h3 {
+            font-family: 'Abyssinica SIL', 'Nyala', serif;
+            color: var(--monastic-burgundy);
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid #f5f0e6;
+            padding-bottom: 8px;
+        }
+
+        .registration-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .full-width-field {
+            grid-column: span 2;
+        }
+
+        .reg-label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--text-charcoal);
+        }
+
+        .reg-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ebd9c8;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            background-color: #faf9f6;
+        }
+
+        .reg-input:focus {
+            outline: none;
+            border-color: var(--monastic-burgundy);
+            background-color: #ffffff;
+        }
+
+        .role-choice-wrapper {
+            grid-column: span 2;
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .role-select-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ebd9c8;
+            background: #ffffff;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+            color: var(--text-muted);
+        }
+
+        .role-select-btn.selected-producer {
+            background-color: var(--monastic-burgundy);
+            color: white;
+            border-color: var(--monastic-burgundy);
+        }
+
+        .role-select-btn.selected-reader {
+            background-color: var(--royal-gold);
+            color: white;
+            border-color: var(--royal-gold);
+        }
+
+        .submit-reg-btn {
+            grid-column: span 2;
+            background: var(--text-charcoal);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            margin-top: 5px;
+        }
+
+        .submit-reg-btn:hover {
+            background: var(--monastic-burgundy);
         }
 
         .main-container {
@@ -466,6 +537,8 @@
             header h1 { font-size: 2.1rem; }
             .navigation-grid { grid-template-columns: repeat(2, 1fr); }
             .week-calendar-ui { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+            .registration-form-grid { grid-template-columns: 1fr; }
+            .full-width-field, .role-choice-wrapper, .submit-reg-btn { grid-column: span 1; }
         }
     </style>
 </head>
@@ -476,14 +549,49 @@
         <h1>ቃል ክርስቲያናዊ ማኅበረሰብ</h1>
         <div class="sub-line">“በቃሉ የተገናኘ ማኅበረሰብ”</div>
 
-        <!-- 2. የተጠቃሚ ምዝገባ መምረጫ -->
-        <div class="role-section">
-            <button class="role-btn role-producer" onclick="registerRole('አዘጋጅ (Producer)')">
-                <i class="fa-solid fa-pen-nib"></i> አዘጋጅ (Producer)
-            </button>
-            <button class="role-btn role-reader" onclick="registerRole('አንባቢ (Reader)')">
-                <i class="fa-solid fa-book-open"></i> አንባቢ (Reader)
-            </button>
+        <!-- 2. የአዲስ ተጠቃሚዎች ምዝገባ ሳጥን (Orthodox, Catholic, Evangelical) -->
+        <div class="registration-box">
+            <h3><i class="fa-solid fa-user-plus"></i> የመድረኩ አባል መመዝገቢያ ቅጽ</h3>
+            <form onsubmit="handleRegistration(event)">
+                <div class="registration-form-grid">
+                    
+                    <!-- ሙሉ ስም -->
+                    <div class="full-width-field">
+                        <label class="reg-label" for="regFullName">ሙሉ ስም (Full Name)</label>
+                        <input type="text" id="regFullName" class="reg-input" required placeholder="እባክዎ ስምዎን ያስገቡ">
+                    </div>
+
+                    <!-- ሃይማኖት (Orthodox, Catholic, Evangelical) -->
+                    <div>
+                        <label class="reg-label" for="regBelief">ሃይማኖት (Denomination)</label>
+                        <select id="regBelief" class="reg-input" required>
+                            <option value="" disabled selected>ይምረጡ...</option>
+                            <option value="ኦርቶዶክስ (Orthodox)">ኦርቶዶክስ (Orthodox)</option>
+                            <option value="ካቶሊክ (Catholic)">ካቶሊክ (Catholic)</option>
+                            <option value="ወንጌላዊያን (Evangelical)">ወንጌላዊያን (Evangelical)</option>
+                        </select>
+                    </div>
+
+                    <!-- ስልክ (አማራጭ) -->
+                    <div>
+                        <label class="reg-label" for="regPhone">ስልክ ቁጥር - አማራጭ (Phone)</label>
+                        <input type="tel" id="regPhone" class="reg-input" placeholder="09........">
+                    </div>
+
+                    <!-- ሚና መምረጫ (Role Choice Buttons) -->
+                    <div class="role-choice-wrapper">
+                        <button type="button" id="role-prod-btn" class="role-select-btn" onclick="setRegistrationRole('አዘጋጅ (Producer)')">
+                            <i class="fa-solid fa-pen-nib"></i> አዘጋጅ
+                        </button>
+                        <button type="button" id="role-read-btn" class="role-select-btn" onclick="setRegistrationRole('አንባቢ (Reader)')">
+                            <i class="fa-solid fa-book-open"></i> አንባቢ
+                        </button>
+                    </div>
+
+                    <!-- መመዝገቢያ ቁልፍ -->
+                    <button type="submit" class="submit-reg-btn">አሁን መዝግብ (Register)</button>
+                </div>
+            </form>
         </div>
     </header>
 
@@ -787,7 +895,41 @@
     </footer>
 
 <script>
-    // --- 1. የማሳያ ክፍሎች መቀያየሪያ ---
+    // --- 1. የተጠቃሚ ምዝገባ መቆጣጠሪያ ---
+    let selectedRegRole = "";
+
+    function setRegistrationRole(role) {
+        selectedRegRole = role;
+        const prodBtn = document.getElementById('role-prod-btn');
+        const readBtn = document.getElementById('role-read-btn');
+
+        // የተመረጠውን ቁልፍ ቀለም መቀየር
+        if(role === 'አዘጋጅ (Producer)') {
+            prodBtn.classList.add('selected-producer');
+            readBtn.classList.remove('selected-reader');
+        } else {
+            readBtn.classList.add('selected-reader');
+            prodBtn.classList.remove('selected-producer');
+        }
+    }
+
+    function handleRegistration(event) {
+        event.preventDefault();
+        const fullName = document.getElementById('regFullName').value;
+        const belief = document.getElementById('regBelief').value;
+        const phone = document.getElementById('regPhone').value || "ያልተገለጸ";
+        const role = selectedRegRole || "አንባቢ (Reader) - በነባሪ";
+
+        alert(`🎉 እንኳን ደህና መጡ!\n\nምዝገባው ተሳክቷል፦\n• ስም: ${fullName}\n• ሃይማኖት: ${belief}\n• ስልክ: ${phone}\n• ሚና: ${role}`);
+        
+        // ቅጹን ባዶ ማድረግ
+        event.target.reset();
+        document.getElementById('role-prod-btn').classList.remove('selected-producer');
+        document.getElementById('role-read-btn').classList.remove('selected-reader');
+        selectedRegRole = "";
+    }
+
+    // --- 2. የማሳያ ክፍሎች መቀያየሪያ ---
     function switchView(target) {
         document.querySelectorAll('.app-view').forEach(view => view.classList.add('hidden-view'));
         document.querySelectorAll('.nav-card').forEach(card => card.classList.remove('active-tab'));
@@ -802,11 +944,7 @@
         }
     }
 
-    function registerRole(roleName) {
-        alert(`${roleName} ሆነው ተመዝግበዋል! ሙሉ ባህሪያቱ በቅርቡ ይለቀቃሉ።`);
-    }
-
-    // --- 2. የፈተና መቆጣጠሪያ (20 ሰከንድ ሰዓት) ---
+    // --- 3. የፈተና መቆጣጠሪያ (20 ሰከንድ ሰዓት) ---
     let points = 0;
     let timeLeft = 20;
     let quizInterval;
@@ -897,7 +1035,7 @@
         resetAndStartQuizTimer();
     };
 
-    // --- 3. የማህደር ክፍሎች መክፈቻ (Accordion) ---
+    // --- 4. የማህደር ክፍሎች መክፈቻ (Accordion) ---
     function toggleAccordion(elementId) {
         const item = document.getElementById(elementId);
         item.classList.toggle('hidden-view');
@@ -907,7 +1045,7 @@
         alert(`"${bookTitle}" የሚለውን መጽሐፍ በመክፈት ላይ...`);
     }
 
-    // --- 4. ልጥፎች መቆጣጠሪያ ---
+    // --- 5. ልጥፎች መቆጣጠሪያ ---
     function openPostModal() { document.getElementById('post-modal').classList.remove('hidden-view'); }
     function closePostModal() { document.getElementById('post-modal').classList.add('hidden-view'); }
     
@@ -936,7 +1074,7 @@
         document.getElementById('modalPostBody').value = "";
     }
 
-    // --- 5. የቀጠሮ መቆጣጠሪያ ---
+    // --- 6. የቀጠሮ መቆጣጠሪያ ---
     let selectedQetDay = "ሰኞ";
     function selectDay(element, dayCode) {
         document.querySelectorAll('.cal-day-cell').forEach(c => c.classList.remove('selected-day'));
@@ -952,7 +1090,7 @@
         e.target.reset();
     }
 
-    // --- 6. የማስታወቂያ ሳጥን ማንቀሳቀሻ (Drag & Drop) ---
+    // --- 7. የማስታወቂያ ሳጥን ማንቀሳቀሻ (Drag & Drop) ---
     const adBox = document.getElementById('movable-ad-box');
     let isDragging = false;
     let startX, startY, initialX, initialY;
@@ -1006,4 +1144,3 @@
 </script>
 </body>
 </html>
-
