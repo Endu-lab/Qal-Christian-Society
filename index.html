@@ -263,6 +263,7 @@
             align-items: center;
             justify-content: space-between;
             gap: 15px;
+            position: relative;
         }
 
         .ad-content { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; }
@@ -439,7 +440,6 @@
         .post-actions { display: flex; gap: 20px; margin-top: 14px; border-top: 1px solid #ebd9c8; padding-top: 12px; color: var(--text-muted); font-size: 0.9rem; }
         .post-actions span { cursor: pointer; display: flex; align-items: center; gap: 6px; }
         .post-actions span:hover { color: var(--monastic-burgundy); }
-        .modal-overlay { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(44, 37, 35, 0.5); display:flex; align-items:center; justify-content:center; z-index: 2000; backdrop-filter: blur(2px); }
 
         /* --- View: Calendar (Qetero) --- */
         .week-calendar-ui { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 15px; text-align: center; }
@@ -556,10 +556,7 @@
             <div id="quiz-card-body">
                 <h3 id="quiz-question-text" style="margin-bottom:20px; font-size:1.2rem; color:var(--monastic-burgundy);">የመጀመሪያው የሐዲስ ኪዳን መጽሐፍ የትኛው ነው?</h3>
                 <div id="quiz-options-container">
-                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">ሀ) የዮሐንስ ወንጌል</button>
-                    <button class="quiz-option-btn" onclick="checkAnswer(this, true)">ለ) የማቴዎስ ወንጌል</button>
-                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">ሐ) የሉቃስ ወንጌል</button>
-                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">መ) የሮሜ መልእክት</button>
+                    <!-- ጥያቄዎች በጃቫስክሪፕት በዲናሚክ መንገድ እዚህ ይጫናሉ -->
                 </div>
             </div>
             <button id="next-quiz-btn" class="submit-btn" style="margin-top:20px; display:none; background:var(--royal-gold);" onclick="loadNextQuestion()">ቀጣይ ጥያቄ (Next Question)</button>
@@ -568,7 +565,7 @@
         <!-- ማውጫ 2: ነገረ-መለኮት ማህደር (Theological Library View) -->
         <div id="view-library" class="app-view hidden-view">
             <h2 class="view-title"><i class="fa-solid fa-book-journal-whills"></i> የተደራጀ የክርስቲያናዊ መጻሕፍት ማህደር</h2>
-            <p class="library-intro">ከታች ካሉት ሶስት ዋና ዋና የእምነት ክፍሎች አንዱን በመምረጥ፣ በሥሩ የተካተቱትን አምስት የነገረ-መለኮት የንባብ ምድቦች ያግኙ።</p>
+            <p class="library-intro">ከታች ካሉት የእምነት ክፍሎች አንዱን በመምረጥ፣ በሥሩ የተካተቱትን 5 የነገረ-መለኮት የንባብ ምድቦች ያግኙ።</p>
             
             <div class="nested-library-wrapper">
                 
@@ -580,7 +577,7 @@
                     </div>
                     <div id="lib-orthodox" class="religion-books-area hidden-view">
                         
-                        <!-- ንዑስ ምድብ 1 -->
+                        <!-- 1. ብሉይ ኪዳን -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('ortho-ot')">
                                 <div class="title-group"><i class="fa-solid fa-scroll sub-icon"></i><span>ብሉይ ኪዳን (Old Testament)</span></div>
@@ -594,7 +591,7 @@
                             </div>
                         </div>
 
-                        <!-- ንዑስ ምድብ 2 -->
+                        <!-- 2. ሐዲስ ኪዳን -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('ortho-nt')">
                                 <div class="title-group"><i class="fa-solid fa-book-bible sub-icon"></i><span>ሐዲስ ኪዳን (New Testament)</span></div>
@@ -608,7 +605,7 @@
                             </div>
                         </div>
 
-                        <!-- ንዑስ ምድብ 3 -->
+                        <!-- 3. የቤተክርስቲያን ታሪክ -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('ortho-hist')">
                                 <div class="title-group"><i class="fa-solid fa-monument sub-icon"></i><span>የቤተክርስቲያን ታሪክ (Church History)</span></div>
@@ -616,13 +613,13 @@
                             </div>
                             <div id="ortho-hist" class="final-books-list hidden-view">
                                 <div class="book-item-row">
-                                    <div class="book-details"><i class="fa-solid fa-book-medical book-icon"></i><div class="book-text">የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ታሪክ <span>ከአክሱም ዘመን ጀምሮ</span></div></div>
+                                    <div class="book-details"><i class="fa-solid fa-clock book-icon"></i><div class="book-text">የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ታሪክ <span>ከአክሱም ዘመን ጀምሮ</span></div></div>
                                     <button class="btn-read-book" onclick="readBook('የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ታሪክ')">ያንብቡ</button>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- ንዑስ ምድብ 4 -->
+                        <!-- 4. የታሪክ ቲዎሎጂ -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('ortho-hist-theo')">
                                 <div class="title-group"><i class="fa-solid fa-gavel sub-icon"></i><span>የታሪክ ቲዎሎጂ (Historical Theology)</span></div>
@@ -636,7 +633,7 @@
                             </div>
                         </div>
 
-                        <!-- ንዑስ ምድብ 5 -->
+                        <!-- 5. ስልታዊ ቲዎሎጂ -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('ortho-syst')">
                                 <div class="title-group"><i class="fa-solid fa-layer-group sub-icon"></i><span>ስልታዊ ቲዎሎጂ (Systematic Theology)</span></div>
@@ -661,6 +658,7 @@
                     </div>
                     <div id="lib-catholic" class="religion-books-area hidden-view">
                         
+                        <!-- 1. ብሉይ ኪዳን -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('cath-ot')">
                                 <div class="title-group"><i class="fa-solid fa-scroll sub-icon"></i><span>ብሉይ ኪዳን (Deuterocanonical Included)</span></div>
@@ -674,6 +672,7 @@
                             </div>
                         </div>
 
+                        <!-- 2. ሐዲስ ኪዳን -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('cath-nt')">
                                 <div class="title-group"><i class="fa-solid fa-book-bible sub-icon"></i><span>ሐዲስ ኪዳን (New Testament Study)</span></div>
@@ -687,28 +686,125 @@
                             </div>
                         </div>
 
+                        <!-- 3. የቤተክርስቲያን ታሪክ -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('cath-hist')">
-                                <div class="title-group"><i class="fa-solid fa-monument sub-icon"></i><span>የቤተክርስቲያን ታሪክ (Vatican & Global History)</span></div>
+                                <div class="title-group"><i class="fa-solid fa-monument sub-icon"></i><span>የቤተክርስቲያን ታሪክ (Vatican & Global Council)</span></div>
                                 <i class="fa-solid fa-angle-down"></i>
                             </div>
                             <div id="cath-hist" class="final-books-list hidden-view">
                                 <div class="book-item-row">
-                                    <div class="book-details"><i class="fa-solid fa-book-medical book-icon"></i><div class="book-text">የቫቲካን ጉባኤያት ታሪክ <span>ሁለተኛው የቫቲካን ጉባኤ ውሳኔዎች</span></div></div>
-                                    <button class="btn-read-book" onclick="readBook('የቫቲካን ጉባኤያት ታሪክ')">ያንብቡ</button>
+                                    <div class="book-details"><i class="fa-solid fa-clock book-icon"></i><div class="book-text">የሁለተኛው ቫቲካን ጉባኤ ታሪክ <span>የቤተክርስቲያን ህዳሴ</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የሁለተኛው ቫቲካን ጉባኤ ታሪክ')">ያንብቡ</button>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- 4. የታሪክ ቲዎሎጂ -->
                         <div class="sub-category-card">
                             <div class="sub-category-header" onclick="toggleElement('cath-hist-theo')">
-                                <div class="title-group"><i class="fa-solid fa-gavel sub-icon"></i><span>የታሪክ ቲዎሎጂ (Scholasticism Period)</span></div>
+                                <div class="title-group"><i class="fa-solid fa-gavel sub-icon"></i><span>የታሪክ ቲዎሎጂ (Patristic Era)</span></div>
                                 <i class="fa-solid fa-angle-down"></i>
                             </div>
                             <div id="cath-hist-theo" class="final-books-list hidden-view">
                                 <div class="book-item-row">
-                                    <div class="book-details"><i class="fa-solid fa-book-atlas book-icon"></i><div class="book-text">የቅዱስ ቶማስ አኳይናስ ትምህርቶች <span>የእምነትና አእምሮ ትስስር</span></div></div>
-                                    <button class="btn-read-book" onclick="readBook('የቅዱስ ቶማስ አኳይናስ ትምህርቶች')">ያንብቡ</button>
+                                    <div class="book-details"><i class="fa-solid fa-quote-left book-icon"></i><div class="book-text">የቅዱስ አውගስቲን አስተዋጽዖ <span>የጸጋ ትምህርት ታሪክ</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የቅዱስ አውግስቲን የቲዎሎጂ ታሪክ')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. ስልታዊ ቲዎሎጂ -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('cath-syst')">
+                                <div class="title-group"><i class="fa-solid fa-layer-group sub-icon"></i><span>ስልታዊ ቲዎሎጂ (Dogmatic Theology)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="cath-syst" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-shield-halved book-icon"></i><div class="book-text">ካቴኪዝም ማብራሪያ (Catechism) <span>የካቶሊክ እምነት መሠረቶች</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የካቶሊክ ቤተክርስቲያን ካቴኪዝም')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ================== 3. ወንጌላውያን ቤተ-መጻሕፍት ================== -->
+                <div class="religion-container">
+                    <div class="religion-main-header bg-evangelical" onclick="toggleElement('lib-evangelical')">
+                        <span><i class="fa-solid fa-book-bible"></i> የወንጌላውያን ማህደር (Evangelical Library)</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="lib-evangelical" class="religion-books-area hidden-view">
+                        
+                        <!-- 1. ብሉይ ኪዳን -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('evan-ot')">
+                                <div class="title-group"><i class="fa-solid fa-scroll sub-icon"></i><span>ብሉይ ኪዳን (Expositional Study)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="evan-ot" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-open book-icon"></i><div class="book-text">የኢሳይያስ ትንቢት ማብራሪያ <span>የመሲሑ ጥላዎች</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የኢሳይያስ ትንቢት ትንተና')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. ሐዲስ ኪዳን -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('evan-nt')">
+                                <div class="title-group"><i class="fa-solid fa-book-bible sub-icon"></i><span>ሐዲስ ኪዳን (Epistles & Gospels)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="evan-nt" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-bookmark book-icon"></i><div class="book-text">የገላትያ መልእክት ማብራሪያ <span>የማጽደቅ ትምህርት በነፃነት</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የገላትያ መልእክት ትንተና')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. የቤተክርስቲያን ታሪክ -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('evan-hist')">
+                                <div class="title-group"><i class="fa-solid fa-monument sub-icon"></i><span>የቤተክርስቲያን ታሪክ (Reformation & Revival)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="evan-hist" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-fire book-icon"></i><div class="book-text">የ16ኛው ክፍለዘመን ሪፎርሜሽን ታሪክ <span>የማርቲን ሉተር ታሪክ</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የሪፎርሜሽን ታሪክ')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. የታሪክ ቲዎሎጂ -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('evan-hist-theo')">
+                                <div class="title-group"><i class="fa-solid fa-gavel sub-icon"></i><span>የታሪክ ቲዎሎጂ (Development of Creeds)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="evan-hist-theo" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-heading book-icon"></i><div class="book-text">የእምነት መግለጫዎች ታሪካዊ አመጣጥ <span>ከሐዋርያት ጀምሮ</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የእምነት መግለጫዎች ታሪክ')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. ስልታዊ ቲዎሎጂ -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('evan-syst')">
+                                <div class="title-group"><i class="fa-solid fa-layer-group sub-icon"></i><span>ስልታዊ ቲዎሎጂ (Doctrinal Theology)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="evan-syst" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-star book-icon"></i><div class="book-text">የነገረ መለኮት መሠረቶች <span>ስለ መጽሐፍ ቅዱስ ባለሥልጣንነት</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የወንጌላውያን ነገረ መለኮት መሠረቶች')">ያንብቡ</button>
                                 </div>
                             </div>
                         </div>
@@ -719,12 +815,286 @@
             </div>
         </div>
 
+        <!-- ማውጫ 3: ልጥፎች (Feed Posts Area) -->
+        <div id="view-posts" class="app-view hidden-view">
+            <h2 class="view-title"><i class="fa-solid fa-signs-post"></i> የማኅበረሰቡ መንፈሳዊ ልጥፎች</h2>
+            <div id="posts-container">
+                <div class="feed-post">
+                    <span class="post-header-badge">የዕለቱ ማስተንተኛ</span>
+                    <h3 style="color:var(--monastic-burgundy); margin-bottom:8px;">በፍቅር መኖር</h3>
+                    <p style="font-size:0.95rem;">እርስ በርሳችሁ ፍቅር ቢኖራችሁ፥ ደቀ መዛሙርቴ እንደ ሆናችሁ ሰዎች ሁሉ በዚህ ያውቃሉ። ቃሉን በተግባር የምንተረጉምበት ሳምንት ይሁንልን።</p>
+                    <div class="post-actions">
+                        <span onclick="alert('ይህንን ልጥፍ ወደዱት!')"><i class="fa-regular fa-thumbs-up"></i> ውደድ (Like)</span>
+                        <span onclick="alert('የማጋሪያ አማራጭ በቅርቡ ይከፈታል!')"><i class="fa-regular fa-share-from-square"></i> አጋራ (Share)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ማውጫ 4: ቀጠሮ (Calendar Area) -->
+        <div id="view-qetero" class="app-view hidden-view">
+            <h2 class="view-title"><i class="fa-solid fa-calendar-days"></i> ሳምንታዊ የቀጠሮ ሰሌዳ (Qetero)</h2>
+            <p style="color:var(--text-muted); margin-bottom:20px;">ለጉባኤያት ወይም ለንባብ መርሐ-ግብር የሚሆን ቀን ይምረጡ።</p>
+            <div class="week-calendar-ui">
+                <div class="cal-day-cell selected-day" onclick="selectDay(this, 'ሰኞ')">ሰኞ</div>
+                <div class="cal-day-cell" onclick="selectDay(this, 'ማክሰኞ')">ማክሰኞ</div>
+                <div class="cal-day-cell" onclick="selectDay(this, 'ረቡዕ')">ረቡዕ</div>
+                <div class="cal-day-cell" onclick="selectDay(this, 'ሐሙስ')">ሐሙስ</div>
+                <div class="cal-day-cell" onclick="selectDay(this, 'አርብ')">አርብ</div>
+                <div class="cal-day-cell" onclick="selectDay(this, 'ቅዳሜ')">ቅዳሜ</div>
+                <div class="cal-day-cell" onclick="selectDay(this, 'እሁድ')">እሁድ</div>
+            </div>
+            <div id="calendar-details-box" style="background:var(--gold-light); padding:15px; border-radius:10px; border:1px solid #ebd9c8; font-weight:600;">
+                የተመረጠው ቀን: <span id="current-selected-day" style="color:var(--monastic-burgundy);">ሰኞ</span> — የንባብና የውይይት ሰዓት።
+            </div>
+        </div>
+
     </div>
 
-    <!-- 6. የግርጌ ማስታወሻ (Site Footer) -->
+    <!-- 6. የድረ-ገጹ ግርጌ (Footer) -->
     <footer>
-        <p>&copy; 2026 ቃል ክርስቲያናዊ ማኅበረሰብ (Qal). ሁሉም መብቱ የተጠበቀ ነው።</p>
+        <p>© 2026 ቃል ክርስቲያናዊ ማኅበረሰብ (Qal). መብቱ በሕግ የተጠበቀ ነው።</p>
     </footer>
 
+    <!-- ==========================================================================
+       7. JAVASCRIPT APPLICATION LOGIC
+       ========================================================================== */ -->
+    <script>
+        // --- Global Application State ---
+        let currentRole = "";
+        let currentScore = 0;
+        let timerInterval = null;
+        let timeRemaining = 20;
+        let currentQuestionIndex = 0;
+
+        // Sample Trivia Questions Repository
+        const triviaQuestions = [
+            {
+                question: "የመጀመሪያው የሐዲስ ኪዳን መጽሐፍ የትኛው ነው?",
+                options: [
+                    { text: "ሀ) የዮሐንስ ወንጌል", correct: false },
+                    { text: "ለ) የማቴዎስ ወንጌል", correct: true },
+                    { text: "ሐ) የሉቃስ ወንጌል", correct: false },
+                    { text: "መ) የሮሜ መልእክት", correct: false }
+                ]
+            },
+            {
+                question: "በመጽሐፍ ቅዱስ ውስጥ ረጅሙ መጽሐፍ የትኛው ነው?",
+                options: [
+                    { text: "ሀ) ኦሪት ዘፍጥረት", correct: false },
+                    { text: "ለ) ትንቢተ ኢሳይያስ", correct: false },
+                    { text: "ሐ) መዝሙረ ዳዊት", correct: true },
+                    { text: "መ) የሐዋርያት ሥራ", correct: false }
+                ]
+            },
+            {
+                question: "ሙሴ የእግዚአብሔርን ሕግ የተቀበለበት ተራራ ማን ይባላል?",
+                options: [
+                    { text: "ሀ) የደብረ ዘይት ተራራ", correct: false },
+                    { text: "ለ) ሲና ተራራ", correct: true },
+                    { text: "ሐ) ደብረ ታቦር", correct: false },
+                    { text: "መ) አራራት ተራራ", correct: false }
+                ]
+            }
+        ];
+
+        // Run on page initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            initMovableAd();
+            startQuizTimer();
+            loadQuestion(0);
+        });
+
+        /* --- View Controller Architecture --- */
+        function switchView(viewId) {
+            // Hide all views
+            document.querySelectorAll('.app-view').forEach(view => {
+                view.classList.add('hidden-view');
+            });
+            // Show target view
+            document.getElementById(`view-${viewId}`).classList.remove('hidden-view');
+
+            // Toggle Tab States
+            document.querySelectorAll('.nav-card').forEach(card => {
+                card.classList.remove('active-tab');
+            });
+            document.getElementById(`tab-${viewId}`).classList.add('active-tab');
+
+            // Handle timer resets depending on view
+            if (viewId === 'questions') {
+                if(!timerInterval) startQuizTimer();
+            } else {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        /* --- Accordion Toggle System --- */
+        function toggleElement(elementId) {
+            const target = document.getElementById(elementId);
+            if (target.classList.contains('hidden-view')) {
+                target.classList.remove('hidden-view');
+            } else {
+                target.classList.add('hidden-view');
+            }
+        }
+
+        /* --- Member Registration Handling --- */
+        function setRegistrationRole(role) {
+            currentRole = role;
+            const prodBtn = document.getElementById('role-prod-btn');
+            const readBtn = document.getElementById('role-read-btn');
+            
+            if (role === 'አዘጋጅ (Producer)') {
+                prodBtn.classList.add('selected-producer');
+                readBtn.classList.remove('selected-reader');
+            } else {
+                readBtn.classList.add('selected-reader');
+                prodBtn.classList.remove('selected-producer');
+            }
+        }
+
+        function handleRegistration(event) {
+            event.preventDefault();
+            const fullName = document.getElementById('regFullName').value;
+            const belief = document.getElementById('regBelief').value;
+            
+            if (!currentRole) {
+                alert("እባክዎ ሚናዎን (አዘጋጅ ወይም አንባቢ) ይምረጡ!");
+                return;
+            }
+            
+            alert(`እንኳን ደህና መጡ! ምዝገባዎ ተጠናቋል።\nስም: ${fullName}\nሃይማኖት: ${belief}\nሚና: ${currentRole}`);
+        }
+
+        /* --- Trivia Quiz System Logic --- */
+        function startQuizTimer() {
+            clearInterval(timerInterval);
+            timeRemaining = 20;
+            const timerBar = document.getElementById('timer-bar');
+            const timerText = document.getElementById('timer-text');
+            
+            timerBar.style.width = '100%';
+            timerText.innerText = timeRemaining;
+
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                timerText.innerText = timeRemaining;
+                timerBar.style.width = `${(timeRemaining / 20) * 100}%`;
+
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    lockQuizOptionsDueToTimeout();
+                }
+            }, 1000);
+        }
+
+        function loadQuestion(index) {
+            const currentQuestion = triviaQuestions[index];
+            document.getElementById('quiz-question-text').innerText = currentQuestion.question;
+            const container = document.getElementById('quiz-options-container');
+            container.innerHTML = ''; // reset previous options
+
+            currentQuestion.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'quiz-option-btn';
+                btn.innerText = opt.text;
+                btn.onclick = function() { checkAnswer(this, opt.correct); };
+                container.appendChild(btn);
+            });
+
+            document.getElementById('next-quiz-btn').style.display = 'none';
+        }
+
+        function checkAnswer(selectedButton, isCorrect) {
+            clearInterval(timerInterval);
+            const container = document.getElementById('quiz-options-container');
+            const buttons = container.querySelectorAll('.quiz-option-btn');
+
+            buttons.forEach(btn => {
+                btn.disabled = true; // disable all options after choice
+            });
+
+            if (isCorrect) {
+                selectedButton.classList.add('correct');
+                currentScore += 10;
+                document.getElementById('quiz-points').innerText = currentScore;
+            } else {
+                selectedButton.classList.add('wrong');
+                // Highlight the correct answer for user knowledge
+                const questionData = triviaQuestions[currentQuestionIndex];
+                buttons.forEach((btn, idx) => {
+                    if (questionData.options[idx].correct) {
+                        btn.classList.add('correct');
+                    }
+                });
+            }
+
+            document.getElementById('next-quiz-btn').style.display = 'block';
+        }
+
+        function lockQuizOptionsDueToTimeout() {
+            alert("ጊዜዎ አልቋል! ቀጣዩን ጥያቄ ይሞክሩ።");
+            const container = document.getElementById('quiz-options-container');
+            container.querySelectorAll('.quiz-option-btn').forEach(btn => btn.disabled = true);
+            document.getElementById('next-quiz-btn').style.display = 'block';
+        }
+
+        function loadNextQuestion() {
+            currentQuestionIndex = (currentQuestionIndex + 1) % triviaQuestions.length;
+            loadQuestion(currentQuestionIndex);
+            startQuizTimer();
+        }
+
+        /* --- Library Action Trigger --- */
+        function readBook(bookTitle) {
+            alert(`“${bookTitle}” የተሰኘው መጽሐፍ በቅርቡ ሙሉ ይዘቱ ይጫናል።`);
+        }
+
+        /* --- Calendar Selection System --- */
+        function selectDay(cell, dayName) {
+            document.querySelectorAll('.cal-day-cell').forEach(c => c.classList.remove('selected-day'));
+            cell.classList.add('selected-day');
+            document.getElementById('current-selected-day').innerText = dayName;
+        }
+
+        /* --- Movable Component Mechanism (Drag & Drop) --- */
+        function initMovableAd() {
+            const adBox = document.getElementById('movable-ad-box');
+            let isDragging = false;
+            let startX, startY, initialLeft, initialTop;
+
+            adBox.addEventListener('mousedown', (e) => {
+                if (e.target.tagName === 'BUTTON') return; // Do not drag on button click
+                isDragging = true;
+                adBox.style.position = 'relative';
+                startX = e.clientX;
+                startY = e.clientY;
+                initialLeft = parseInt(adBox.style.left) || 0;
+                initialTop = parseInt(adBox.style.top) || 0;
+                adBox.style.zIndex = 1000;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                adBox.style.left = `${initialLeft + dx}px`;
+                adBox.style.top = `${initialTop + dy}px`;
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+        }
+
+        function resetAdPosition(event) {
+            event.stopPropagation();
+            const adBox = document.getElementById('movable-ad-box');
+            adBox.style.position = 'relative';
+            adBox.style.left = '0px';
+            adBox.style.top = '0px';
+        }
+    </script>
 </body>
 </html>
