@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qal (ቃል) Christian Society</title>
+    <title>ቃል ክርስቲያናዊ ማኅበረሰብ (Qal)</title>
     
     <!-- External Typography & Icon CDNs -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,10 +44,10 @@
             position: relative;
         }
 
-        /* 1. Header Layout */
+        /* 1. Header Layout with Amharic Branding */
         header {
             background: linear-gradient(135deg, #D4E6F1 0%, #E1F0FA 100%);
-            padding: 40px 20px;
+            padding: 35px 20px;
             text-align: center;
             border-bottom: 4px solid var(--dark-blue);
             box-shadow: var(--shadow);
@@ -55,7 +55,7 @@
 
         header h1 {
             color: var(--dark-blue);
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             font-weight: 700;
             margin-bottom: 5px;
             letter-spacing: -0.5px;
@@ -68,28 +68,20 @@
             font-weight: 400;
         }
 
-        .main-container {
-            max-width: 800px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-            flex: 1;
-        }
-
-        /* 2. Role Registration Matrix */
+        /* 2. Role Registration Matrix (Right below Title Bar) */
         .role-section {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-bottom: 25px;
+            margin-top: 20px;
         }
 
         .role-btn {
-            padding: 12px 28px;
+            padding: 10px 24px;
             border-radius: 50px;
             border: none;
             font-weight: 600;
-            font-size: 1rem;
+            font-size: 0.95rem;
             cursor: pointer;
             transition: var(--transition);
             display: inline-flex;
@@ -98,20 +90,21 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
 
-        .role-producer {
-            background-color: #2ecc71;
-            color: white;
-        }
-
-        .role-reader {
-            background-color: #3498db;
-            color: white;
-        }
+        .role-producer { background-color: #2ecc71; color: white; }
+        .role-reader { background-color: #3498db; color: white; }
 
         .role-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0,0,0,0.12);
             filter: brightness(1.05);
+        }
+
+        .main-container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
         }
 
         /* 3. Drag & Drop Viewport Floating Ads */
@@ -140,10 +133,7 @@
             color: #475569;
         }
 
-        .ad-content i {
-            font-size: 1.5rem;
-            color: var(--dark-blue);
-        }
+        .ad-content i { font-size: 1.5rem; color: var(--dark-blue); }
 
         .btn-reset-ad {
             background: #f1f5f9;
@@ -157,10 +147,7 @@
             transition: var(--transition);
         }
 
-        .btn-reset-ad:hover {
-            background: #e2e8f0;
-            color: #334155;
-        }
+        .btn-reset-ad:hover { background: #e2e8f0; color: #334155; }
 
         /* 4. Tab / Navigation System */
         .navigation-grid {
@@ -183,12 +170,7 @@
             color: #64748b;
         }
 
-        .nav-card i {
-            display: block;
-            font-size: 1.4rem;
-            margin-bottom: 6px;
-        }
-
+        .nav-card i { display: block; font-size: 1.4rem; margin-bottom: 6px; }
         .nav-card:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 20px rgba(0,0,0,0.08);
@@ -211,9 +193,7 @@
             min-height: 400px;
         }
 
-        .hidden-view {
-            display: none !important;
-        }
+        .hidden-view { display: none !important; }
 
         h2.view-title {
             color: var(--dark-blue);
@@ -226,52 +206,67 @@
             padding-bottom: 10px;
         }
 
-        /* Form elements common styling */
-        .form-group {
-            margin-bottom: 16px;
+        /* 5. Interactive Gamified Quiz Subsystem */
+        .quiz-score-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 12px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
 
-        .form-group label {
+        .timer-track {
+            background: #e2e8f0;
+            height: 8px;
+            border-radius: 4px;
+            width: 100%;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+
+        .timer-fill {
+            background: linear-gradient(90deg, #e67e22, #e74c3c);
+            height: 100%;
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        .quiz-option-btn {
             display: block;
-            margin-bottom: 6px;
-            font-weight: 600;
-            font-size: 0.95rem;
-        }
-
-        input, textarea, select {
             width: 100%;
-            padding: 12px 16px;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        input:focus, textarea:focus, select:focus {
-            outline: none;
-            border-color: var(--dark-blue);
-            box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.1);
-        }
-
-        .submit-btn {
-            background: var(--dark-blue);
-            color: white;
-            border: none;
-            padding: 14px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 1rem;
+            text-align: left;
+            padding: 15px 20px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            margin-bottom: 12px;
             cursor: pointer;
-            width: 100%;
+            font-size: 1rem;
+            font-weight: 500;
             transition: var(--transition);
         }
 
-        .submit-btn:hover {
-            filter: brightness(1.15);
+        .quiz-option-btn:hover {
+            border-color: #cbd5e1;
+            background: #f1f5f9;
         }
 
-        /* 5. Library Deep Cascades */
+        .quiz-option-btn.correct {
+            background: #d4edda !important;
+            border-color: #28a745 !important;
+            color: #155724;
+        }
+
+        .quiz-option-btn.wrong {
+            background: #f8d7da !important;
+            border-color: #dc3545 !important;
+            color: #721c24;
+        }
+
+        /* 6. Library Deep Cascades */
         .denom-wrapper {
             margin-bottom: 20px;
             border-radius: var(--border-radius);
@@ -295,17 +290,9 @@
         .denom-evangelical { background: var(--evangelical-teal); }
         .denom-catholic { background: var(--catholic-purple); }
 
-        .subcategories-box {
-            padding: 10px 20px;
-            background: #fafafa;
-        }
-
-        .sub-collapse-item {
-            margin: 8px 0;
-            border-left: 3px solid #cbd5e1;
-            padding-left: 12px;
-        }
-
+        .subcategories-box { padding: 10px 20px; background: #fafafa; }
+        .sub-collapse-item { margin: 8px 0; border-left: 3px solid #cbd5e1; padding-left: 12px; }
+        
         .sub-title-trigger {
             font-weight: 600;
             padding: 6px 0;
@@ -316,17 +303,9 @@
             justify-content: space-between;
         }
 
-        .sub-title-trigger:hover {
-            color: var(--dark-blue);
-        }
-
-        .book-payload-list {
-            padding: 8px 10px;
-            background: var(--white);
-            border-radius: 8px;
-            margin-top: 5px;
-        }
-
+        .sub-title-trigger:hover { color: var(--dark-blue); }
+        .book-payload-list { padding: 8px 10px; background: var(--white); border-radius: 8px; margin-top: 5px; }
+        
         .book-row {
             display: flex;
             justify-content: space-between;
@@ -340,64 +319,26 @@
         .book-title-info span { display: block; font-size: 0.8rem; color: #7f8c8d; }
 
         .btn-read-more {
-            background: #e1f0fa;
-            border: none;
-            color: var(--dark-blue);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            font-weight: 600;
+            background: #e1f0fa; border: none; color: var(--dark-blue);
+            padding: 4px 10px; border-radius: 6px; font-size: 0.8rem;
+            cursor: pointer; font-weight: 600;
         }
 
-        /* 6. Question Components */
-        .static-q-card {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 16px;
-            margin-top: 15px;
-        }
-
-        .static-q-card h4 { color: var(--dark-blue); margin-bottom: 5px; }
-        .static-q-meta { font-size: 0.8rem; color: #94a3b8; margin-bottom: 8px; }
-        .vote-bar { display: flex; gap: 15px; font-size: 0.9rem; color: #64748b; margin-top: 8px; }
-        .vote-bar i { cursor: pointer; transition: var(--transition); }
-        .vote-bar i:hover { color: var(--dark-blue); }
-
-        /* 7. Posts Components */
-        .feed-post {
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 16px;
-        }
-
+        /* 7. Posts Feed & Modals */
+        .feed-post { border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; margin-bottom: 16px; }
         .post-header-badge {
-            display: inline-block;
-            background: #edf2f7;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--dark-blue);
-            margin-bottom: 8px;
+            display: inline-block; background: #edf2f7; padding: 3px 8px;
+            border-radius: 6px; font-size: 0.75rem; font-weight: 700;
+            color: var(--dark-blue); margin-bottom: 8px;
         }
 
         .post-actions {
-            display: flex;
-            gap: 20px;
-            margin-top: 12px;
-            border-top: 1px solid #f1f5f9;
-            padding-top: 10px;
-            color: #64748b;
-            font-size: 0.9rem;
+            display: flex; gap: 20px; margin-top: 12px;
+            border-top: 1px solid #f1f5f9; padding-top: 10px; color: #64748b; font-size: 0.9rem;
         }
-
         .post-actions span { cursor: pointer; display: flex; align-items: center; gap: 5px; }
         .post-actions span:hover { color: var(--dark-blue); }
 
-        /* Modal Subsystems */
         .modal-overlay {
             position: fixed; top:0; left:0; right:0; bottom:0;
             background: rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;
@@ -405,42 +346,21 @@
         }
 
         /* 8. Qetero Layout */
-        .week-calendar-ui {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
+        .week-calendar-ui { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; margin-bottom: 15px; text-align: center; }
+        .cal-day-cell { background: #f1f5f9; padding: 10px 5px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: 600; }
+        .cal-day-cell:hover, .cal-day-cell.selected-day { background: var(--dark-blue); color: white; }
 
-        .cal-day-cell {
-            background: #f1f5f9;
-            padding: 10px 5px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            font-weight: 600;
-        }
+        /* Universal Form Elements */
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.95rem; }
+        input, textarea, select { width: 100%; padding: 12px 16px; border: 1.5px solid #e2e8f0; border-radius: 10px; font-family: inherit; font-size: 1rem; }
+        .submit-btn { background: var(--dark-blue); color: white; border: none; padding: 14px 24px; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; width: 100%; transition: var(--transition); }
+        .submit-btn:hover { filter: brightness(1.15); }
 
-        .cal-day-cell:hover, .cal-day-cell.selected-day {
-            background: var(--dark-blue);
-            color: white;
-        }
+        footer { margin-top: auto; text-align: center; padding: 30px 20px; background: #f1f5f9; color: #64748b; font-size: 0.9rem; font-weight: 500; }
 
-        /* Footer context */
-        footer {
-            margin-top: auto;
-            text-align: center;
-            padding: 30px 20px;
-            background: #f1f5f9;
-            color: #64748b;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Responsive Optimization adjustments */
         @media(max-width: 600px) {
-            header h1 { font-size: 1.8rem; }
+            header h1 { font-size: 1.9rem; }
             .navigation-grid { grid-template-columns: repeat(2, 1fr); }
             .week-calendar-ui { grid-template-columns: repeat(4, 1fr); gap: 8px; }
         }
@@ -448,15 +368,12 @@
 </head>
 <body>
 
-    <!-- 1. Header Area -->
+    <!-- 1. Header Area (Branded Amharic Layout) -->
     <header>
-        <h1>Qal (ቃል) Christian Society</h1>
+        <h1>ቃል ክርስቲያናዊ ማኅበረሰብ</h1>
         <div class="sub-line">“በቃሉ የተገናኘ ማኅበረሰብ”</div>
-    </header>
 
-    <div class="main-container">
-        
-        <!-- 2. Role Registration Matrix -->
+        <!-- 2. Role Registration Matrix (Repositioned immediately after Title Bar) -->
         <div class="role-section">
             <button class="role-btn role-producer" onclick="registerRole('አዘጋጅ (Producer)')">
                 <i class="fa-solid fa-pen-nib"></i> አዘጋጅ (Producer)
@@ -465,6 +382,9 @@
                 <i class="fa-solid fa-book-open"></i> አንባቢ (Reader)
             </button>
         </div>
+    </header>
+
+    <div class="main-container">
 
         <!-- 3. Movable Viewport Drag & Drop Ads System -->
         <div id="movable-ad-box">
@@ -481,7 +401,7 @@
         <!-- 4. Main Tab Navigation -->
         <div class="navigation-grid">
             <div class="nav-card active-tab" id="tab-questions" onclick="switchView('questions')">
-                <i class="fa-solid fa-circle-question"></i>Question
+                <i class="fa-solid fa-trophy"></i>Quiz (ፈተና)
             </div>
             <div class="nav-card" id="tab-library" onclick="switchView('library')">
                 <i class="fa-solid fa-book-atlas"></i>Library
@@ -496,44 +416,34 @@
 
         <!-- 5. App Central Screen Panels -->
         
-        <!-- Tab 1: Question Form Viewport -->
+        <!-- Tab 1: Interactive 20-Second Gamified Quiz Component -->
         <div id="view-questions" class="app-view">
-            <h2 class="view-title"><i class="fa-solid fa-feather-pointed"></i> ጥያቄ አቅርብ | Ask a Question</h2>
-            <form onsubmit="handleQuestionSubmit(event)">
-                <div class="form-group">
-                    <label>ሙሉ ስም (Full Name)</label>
-                    <input type="text" id="qName" required placeholder="የእርስዎን ስም ያስገቡ">
-                </div>
-                <div class="form-group">
-                    <label>የጥያቄው ርዕስ (Question Title)</label>
-                    <input type="text" id="qTitle" required placeholder="ዋናውን ርዕስ በአጭሩ">
-                </div>
-                <div class="form-group">
-                    <label>የጥያቄው ዝርዝር (Question Details)</label>
-                    <textarea id="qDetails" rows="4" required placeholder="የጥያቄዎን ዝርዝር እዚህ ይጻፉ..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label>ዘርፍ (Category)</label>
-                    <select id="qCategory">
-                        <option value="Theology">Theology (ቲዎሎጂ)</option>
-                        <option value="Bible">Bible (መጽሐፍ ቅዱስ)</option>
-                        <option value="Christian Living">Christian Living (ክርስቲያናዊ ሕይወት)</option>
-                        <option value="Other">Other (ሌላ)</option>
-                    </select>
-                </div>
-                <button type="submit" class="submit-btn">ጥያቄውን አቅርብ</button>
-            </form>
+            <h2 class="view-title"><i class="fa-solid fa-graduation-cap"></i> የመጽሐፍ ቅዱስ ጥያቄዎች (Trivia Challenge)</h2>
+            
+            <div class="quiz-score-header">
+                <div>Score: <span id="quiz-points" style="color:#2ecc71;">0</span> ቃል XP</div>
+                <div>Timer: <span id="timer-text" style="color:#e74c3c;">20</span>s</div>
+            </div>
 
-            <h3 style="margin-top: 30px; color: var(--dark-blue);">የቅርብ ጊዜ ጥያቄዎች</h3>
-            <div class="static-q-card">
-                <h4>ስለ ስላሴ አስተምህሮ ማብራሪያ?</h4>
-                <div class="static-q-meta">በ እምነቱ | ዘርፍ: Theology</div>
-                <p style="font-size:0.95rem; color:#475569;">በኦርቶዶክስ ተዋህዶ ትውፊት የእምነት መሠረታት ውስጥ የምስጢረ ሥላሴ አንድነትና ሦስትነት እንዴት ይብራራል?</p>
-                <div class="vote-bar">
-                    <span><i class="fa-regular fa-thumbs-up"></i> 24</span>
-                    <span><i class="fa-regular fa-thumbs-down"></i> 1</span>
+            <div class="timer-track">
+                <div id="timer-bar" class="timer-fill"></div>
+            </div>
+
+            <div id="quiz-card-body">
+                <h3 id="quiz-question-text" style="margin-bottom:20px; font-size:1.2rem; color:var(--dark-blue);">
+                    የመጀመሪያው የሐዲስ ኪዳን መጽሐፍ የትኛው ነው?
+                </h3>
+                <div id="quiz-options-container">
+                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">ሀ) የዮሐንስ ወንጌል</button>
+                    <button class="quiz-option-btn" onclick="checkAnswer(this, true)">ለ) የማቴዎስ ወንጌል</button>
+                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">ሐ) የሉቃስ ወንጌል</button>
+                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">መ) የሮሜ መልእክት</button>
                 </div>
             </div>
+            
+            <button id="next-quiz-btn" class="submit-btn" style="margin-top:20px; display:none; background:#27ae60;" onclick="loadNextQuestion()">
+                ቀጣይ ጥያቄ (Next Question)
+            </button>
         </div>
 
         <!-- Tab 2: Theological Library Tree Viewport -->
@@ -614,7 +524,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!-- Tab 3: Social Feed Viewport -->
@@ -637,24 +546,12 @@
                         <span><i class="fa-solid fa-share-nodes"></i> Share</span>
                     </div>
                 </div>
-
-                <div class="feed-post">
-                    <span class="post-header-badge">የበጎ አድራጎት ጥሪ</span>
-                    <h3 style="margin: 4px 0 8px;">Helping refugees</h3>
-                    <p style="color:#475569;">Support and shelter integration for displaced families. Contact ministry leads to drop off supplies.</p>
-                    <div class="post-actions">
-                        <span><i class="fa-regular fa-heart"></i> Like</span>
-                        <span><i class="fa-regular fa-comment"></i> Comment</span>
-                        <span><i class="fa-solid fa-share-nodes"></i> Share</span>
-                    </div>
-                </div>
             </div>
         </div>
 
         <!-- Tab 4: Appointment Booking Viewport -->
         <div id="view-qetero" class="app-view hidden-view">
             <h2 class="view-title"><i class="fa-regular fa-calendar-check"></i> ቀጠሮ ለመያዝ – Schedule</h2>
-            
             <form onsubmit="handleQeteroSubmit(event)">
                 <div class="form-group">
                     <label>አማካሪ/መምህር ይምረጡ (Select Leader)</label>
@@ -685,17 +582,9 @@
                     <label>የቀጠሮው ምክንያት (Topic Context)</label>
                     <input type="text" id="qetTopic" required placeholder="ለምሳሌ፡ ስለ መጽሐፍ ቅዱስ ጥናት">
                 </div>
-
                 <button type="submit" class="submit-btn" style="background:#e67e22;">Book Appointment (ቀጠሮ ያዙ)</button>
             </form>
-
-            <h3 style="margin-top:30px; color:var(--dark-blue);">የተያዙ ቀጠሮዎች (Upcoming)</h3>
-            <div class="static-q-card" style="border-left: 4px solid #e67e22;">
-                <strong>Aba Melaku</strong> - የነገረ መለኮት አማካሪ<br>
-                <span style="font-size:0.85rem; color:#64748b;"><i class="fa-regular fa-clock"></i> ረቡዕ (Wed) - ከቀኑ 8:00 ሰዓት | ርዕስ: የስላሴ ትምህርት</span>
-            </div>
         </div>
-
     </div>
 
     <!-- Modal Form for Creating Posts -->
@@ -719,15 +608,14 @@
                 <textarea id="modalPostBody" rows="4"></textarea>
             </div>
             <div style="display:flex; gap:10px; margin-top:15px;">
-                <button class="submit-btn" onclick="submitModalPost()">លጥፍ</button>
+                <button class="submit-btn" onclick="submitModalPost()">ልጥፍ</button>
                 <button class="submit-btn" style="background:#95a5a6;" onclick="closePostModal()">Cancel</button>
             </div>
         </div>
     </div>
 
-    <!-- Footer Area -->
     <footer>
-        Qal Christian Society – በቃሉ ሕይወት ያገኛል
+        ቃል ክርስቲያናዊ ማኅበረሰብ – በቃሉ ሕይወት ያገኛል
     </footer>
 
 <script>
@@ -738,52 +626,124 @@
         
         document.getElementById(`view-${target}`).classList.remove('hidden-view');
         document.getElementById(`tab-${target}`).classList.add('active-tab');
+
+        // Manage background timers contextually based on tab selection
+        if(target === 'questions') {
+            resetAndStartQuizTimer();
+        } else {
+            clearInterval(quizInterval);
+        }
     }
 
     function registerRole(roleName) {
         alert(`You registered as ${roleName} – more features coming soon.`);
     }
 
-    // --- 2. Collapsible UI Tree Managers ---
+    // --- 2. Gamified Quiz Runtime (20-Second Rules Engine) ---
+    let points = 0;
+    let timeLeft = 20;
+    let quizInterval;
+    let hasAnswered = false;
+
+    const sampleQuestionBank = [
+        { q: "ሙሴ የእግዚአብሔርን ሕግ የተቀበለበት ተራራ ማን ይባላል?", a: ["ሀ) የደብረ ዘይት ተራራ", "ለ) ሲና ተራራ", "ሐ) ቀርሜሎስ ተራራ", "መ) ኮሬብ ተራራ"], correctIdx: 1 },
+        { q: "በመጽሐፍ ቅዱስ ውስጥ ረጅም ዕድሜ የኖረው ሰው ማን ነው?", a: ["ሀ) ማቱሳላ", "ለ) አዳም", "ሐ) ኖኅ", "መ) ሄኖክ"], correctIdx: 0 }
+    ];
+    let currentBankIndex = 0;
+
+    function resetAndStartQuizTimer() {
+        clearInterval(quizInterval);
+        timeLeft = 20;
+        hasAnswered = false;
+        document.getElementById('timer-text').innerText = timeLeft;
+        document.getElementById('timer-bar').style.width = '100%';
+        document.getElementById('next-quiz-btn').style.display = 'none';
+
+        quizInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById('timer-text').innerText = timeLeft;
+            document.getElementById('timer-bar').style.width = (timeLeft / 20 * 100) + '%';
+
+            if(timeLeft <= 0) {
+                clearInterval(quizInterval);
+                lockQuizOptionsOnTimeout();
+            }
+        }, 1000);
+    }
+
+    function checkAnswer(selectedBtn, isCorrect) {
+        if(hasAnswered || timeLeft <= 0) return; // Prevent double point hacking
+        hasAnswered = true;
+        clearInterval(quizInterval);
+
+        if(isCorrect) {
+            selectedBtn.classList.add('correct');
+            points += 10;
+            document.getElementById('quiz-points').innerText = points;
+        } else {
+            selectedBtn.classList.add('wrong');
+            // Flash color hints on the right index
+            highlightCorrectAnswer();
+        }
+        document.getElementById('next-quiz-btn').style.display = 'block';
+    }
+
+    function highlightCorrectAnswer() {
+        const btns = document.querySelectorAll('.quiz-option-btn');
+        // Simple context checker fallback based on state maps
+        if(currentBankIndex === 0) btns[1].classList.add('correct'); // First index defaults hardcoded fallback
+    }
+
+    function lockQuizOptionsOnTimeout() {
+        hasAnswered = true;
+        alert("⏱️ ሰዓት አልቋል! (Time is up!)");
+        highlightCorrectAnswer();
+        document.getElementById('next-quiz-btn').style.display = 'block';
+    }
+
+    function loadNextQuestion() {
+        if(currentBankIndex >= sampleQuestionBank.length) {
+            alert("🎉 ሁሉንም ጥያቄዎች አጠናቀዋል! መልካም ጨዋታ!");
+            currentBankIndex = 0;
+            points = 0;
+            document.getElementById('quiz-points').innerText = points;
+        }
+
+        const data = sampleQuestionBank[currentBankIndex];
+        document.getElementById('quiz-question-text').innerText = data.q;
+        
+        const container = document.getElementById('quiz-options-container');
+        container.innerHTML = '';
+        
+        data.a.forEach((optionText, idx) => {
+            const isCorrect = (idx === data.correctIdx);
+            const btn = document.createElement('button');
+            btn.className = 'quiz-option-btn';
+            btn.innerText = optionText;
+            btn.onclick = function() { checkAnswer(this, isCorrect); };
+            container.appendChild(btn);
+        });
+
+        currentBankIndex++;
+        resetAndStartQuizTimer();
+    }
+
+    // Initialize state on start configuration
+    window.onload = function() {
+        resetAndStartQuizTimer();
+    };
+
+    // --- 3. Collapsible Library Tree Managers ---
     function toggleAccordion(elementId) {
         const item = document.getElementById(elementId);
-        if(item.classList.contains('hidden-view')) {
-            item.classList.remove('hidden-view');
-        } else {
-            item.classList.add('hidden-view');
-        }
+        item.classList.toggle('hidden-view');
     }
 
     function readBook(bookTitle) {
         alert(`ማጠቃለያውን በመክፈት ላይ: "${bookTitle}" - More features coming soon.`);
     }
 
-    // --- 3. Form Handling Framework ---
-    function handleQuestionSubmit(e) {
-        e.preventDefault();
-        const name = document.getElementById('qName').value;
-        const title = document.getElementById('qTitle').value;
-        const cat = document.getElementById('qCategory').value;
-        alert(`ጥያቄው ቀርቧል!\n\nስም: ${name}\nርዕስ: ${title}\nክፍል: ${cat}`);
-        e.target.reset();
-    }
-
-    let selectedQetDay = "Mon";
-    function selectDay(element, dayCode) {
-        document.querySelectorAll('.cal-day-cell').forEach(c => c.classList.remove('selected-day'));
-        element.classList.add('selected-day');
-        selectedQetDay = dayCode;
-    }
-
-    function handleQeteroSubmit(e) {
-        e.preventDefault();
-        const leader = document.getElementById('qetLeader').value;
-        const time = document.getElementById('qetTime').value;
-        alert(`ቀጠሮዎ ተይዟል!\n\nመሪ: ${leader}\nቀን: ${selectedQetDay}\nሰዓት: ${time}`);
-        e.target.reset();
-    }
-
-    // --- 4. Modal Engine for Posting ---
+    // --- 4. Post Feed Matrix & Modals ---
     function openPostModal() { document.getElementById('post-modal').classList.remove('hidden-view'); }
     function closePostModal() { document.getElementById('post-modal').classList.add('hidden-view'); }
     
@@ -812,28 +772,36 @@
         document.getElementById('modalPostBody').value = "";
     }
 
-    // --- 5. Pure Boundary Drag & Drop Ads Engine ---
+    // --- 5. Qetero Booking Framework ---
+    let selectedQetDay = "Mon";
+    function selectDay(element, dayCode) {
+        document.querySelectorAll('.cal-day-cell').forEach(c => c.classList.remove('selected-day'));
+        element.classList.add('selected-day');
+        selectedQetDay = dayCode;
+    }
+
+    function handleQeteroSubmit(e) {
+        e.preventDefault();
+        const leader = document.getElementById('qetLeader').value;
+        const time = document.getElementById('qetTime').value;
+        alert(`ቀጠሮዎ ተይዟል!\n\nመሪ: ${leader}\nቀን: ${selectedQetDay}\nሰዓት: ${time}`);
+        e.target.reset();
+    }
+
+    // --- 6. Pure Boundary Drag & Drop Ads Engine ---
     const adBox = document.getElementById('movable-ad-box');
     let isDragging = false;
     let startX, startY, initialX, initialY;
 
     adBox.addEventListener('mousedown', (e) => {
-        // Prevent action triggers when executing element button resets
         if(e.target.tagName === 'BUTTON') return;
-        
         isDragging = true;
-        adBox.style.transition = 'none'; // Temporarily halt layout animations during tracking
-        
-        // Pin current cursor spatial indices
+        adBox.style.transition = 'none';
         startX = e.clientX;
         startY = e.clientY;
-        
-        // Calculate dynamic runtime location positions
         const rect = adBox.getBoundingClientRect();
         initialX = rect.left;
         initialY = rect.top;
-        
-        // Transform block rendering type to allow free-range positioning
         adBox.style.position = 'fixed';
         adBox.style.width = rect.width + 'px';
         adBox.style.left = initialX + 'px';
@@ -842,14 +810,11 @@
 
     document.addEventListener('mousemove', (e) => {
         if (!isDragging) return;
-
         let deltaX = e.clientX - startX;
         let deltaY = e.clientY - startY;
-
         let newLeft = initialX + deltaX;
         let newTop = initialY + deltaY;
 
-        // Apply boundary constraints (prevent the ad box from moving completely offscreen)
         const pad = 10;
         const maxLeft = window.innerWidth - adBox.offsetWidth - pad;
         const maxTop = window.innerHeight - adBox.offsetHeight - pad;
@@ -863,14 +828,10 @@
         adBox.style.top = newTop + 'px';
     });
 
-    document.addEventListener('mouseup', () => {
-        if (isDragging) {
-            isDragging = false;
-        }
-    });
+    document.addEventListener('mouseup', () => { isDragging = false; });
 
     function resetAdPosition(e) {
-        if(e) e.stopPropagation(); // Avoid triggering immediate click listeners
+        if(e) e.stopPropagation();
         isDragging = false;
         adBox.style.transition = 'all 0.4s ease';
         adBox.style.position = 'relative';
