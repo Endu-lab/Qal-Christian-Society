@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ቃል ክርስቲያናዊ ማኅበረሰብ (Qal)</title>
     
-    <!-- External Typography & Icon CDNs -->
+    <!-- የፊደላት እና የኣይኮን ማገናኛዎች -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abyssinica+SIL&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 
     <style>
         :root {
-            /* Timeless Christian Library Palette */
+            /* የክርስቲያናዊ ቤተ-መጻሕፍት ቀለማት */
             --parchment-bg: #fbf8f3;
             --parchment-card: #ffffff;
             --monastic-burgundy: #5c061e;
@@ -44,7 +44,7 @@
             line-height: 1.6;
         }
 
-        /* 1. Beautiful Header Layout */
+        /* 1. የርዕስ ማውጫ (Header) */
         header {
             background: linear-gradient(180deg, #ffffff 0%, var(--parchment-bg) 100%);
             padding: 40px 20px 30px;
@@ -80,7 +80,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* 2. Registration Buttons */
+        /* 2. የምዝገባ ክፍሎች (Registration) */
         .role-section {
             display: flex;
             justify-content: center;
@@ -126,7 +126,7 @@
             flex: 1;
         }
 
-        /* 3. Movable Ad Box */
+        /* 3. የማስታወቂያ ሳጥን (Movable Ad Box) */
         #movable-ad-box {
             background: var(--parchment-card);
             border: 1px solid #ebd9c8;
@@ -166,7 +166,7 @@
 
         .btn-reset-ad:hover { background: #ebd9c8; }
 
-        /* 4. Elegant Tab System */
+        /* 4. የተጠቃሚ ማውጫዎች (Tabs) */
         .navigation-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -206,7 +206,7 @@
             color: var(--monastic-burgundy);
         }
 
-        /* Viewport Architecture */
+        /* ዋና ማሳያ ክፍሎች */
         .app-view {
             background: var(--parchment-card);
             border-radius: var(--border-radius);
@@ -230,7 +230,7 @@
             padding-bottom: 12px;
         }
 
-        /* 5. Beautiful Christian Library Design Layout */
+        /* 5. የአምስቱ ምድቦች መጻሕፍት ማህደር (Theological Library) */
         .library-intro {
             font-size: 1rem;
             color: var(--text-muted);
@@ -238,17 +238,23 @@
             line-height: 1.6;
         }
 
-        .denom-wrapper {
-            margin-bottom: 20px;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid #ebd9c8;
-            background: #ffffff;
+        .library-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
 
-        .denom-header {
+        .category-card {
+            border: 1px solid #ebd9c8;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .category-header {
             padding: 20px;
+            background: var(--gold-light);
             color: var(--monastic-burgundy);
             font-family: 'Abyssinica SIL', 'Nyala', serif;
             font-weight: 700;
@@ -257,89 +263,84 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: var(--gold-light);
             transition: var(--transition);
         }
 
-        .denom-header:hover {
+        .category-header:hover {
             background: #ebd9c8;
         }
 
-        .subcategories-box { 
-            padding: 10px 20px 20px; 
-            background: #ffffff; 
+        .category-header .title-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        
-        .sub-collapse-item { 
-            margin-top: 12px; 
-            border-left: 2px solid var(--royal-gold); 
-            padding-left: 16px; 
+
+        .category-header i.main-icon {
+            color: var(--royal-gold);
+            font-size: 1.4rem;
         }
-        
-        .sub-title-trigger {
+
+        .books-list-container {
+            padding: 10px 20px 20px;
+            background: #ffffff;
+        }
+
+        .book-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid #f5f0e6;
+        }
+
+        .book-item-row:last-child {
+            border-bottom: none;
+        }
+
+        .book-details {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .book-details i.book-icon {
+            color: var(--monastic-burgundy);
+            font-size: 1.1rem;
+        }
+
+        .book-text {
             font-weight: 600;
-            font-size: 1.05rem;
-            padding: 8px 0;
-            cursor: pointer;
-            color: var(--text-charcoal);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: var(--transition);
-        }
-
-        .sub-title-trigger:hover { color: var(--monastic-burgundy); }
-        
-        .book-payload-list { 
-            padding: 10px 14px; 
-            background: var(--parchment-bg); 
-            border-radius: 10px; 
-            margin-top: 8px; 
-            border: 1px solid #ebd9c8;
-        }
-        
-        .book-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid #ebd9c8;
-        }
-
-        .book-row:last-child { border-bottom: none; }
-        
-        .book-title-info { 
-            font-weight: 600; 
             font-size: 0.98rem;
             color: var(--text-charcoal);
         }
-        
-        .book-title-info span { 
-            display: block; 
-            font-size: 0.82rem; 
+
+        .book-text span {
+            display: block;
+            font-size: 0.82rem;
             color: var(--text-muted);
             margin-top: 2px;
             font-weight: 400;
         }
 
-        .btn-read-more {
-            background: var(--monastic-burgundy); 
-            border: none; 
+        .btn-read-book {
+            background: var(--monastic-burgundy);
+            border: none;
             color: white;
-            padding: 6px 14px; 
-            border-radius: 6px; 
+            padding: 6px 14px;
+            border-radius: 6px;
             font-size: 0.82rem;
-            cursor: pointer; 
+            cursor: pointer;
             font-weight: 600;
             transition: var(--transition);
         }
 
-        .btn-read-more:hover { 
+        .btn-read-book:hover {
             background: var(--royal-gold);
             transform: translateY(-1px);
         }
 
-        /* 6. Gamified Quiz Subsystem */
+        /* 6. የፈተና ሥርዓት (Quiz System) */
         .quiz-score-header {
             display: flex;
             justify-content: space-between;
@@ -402,7 +403,7 @@
             color: #b71c1c;
         }
 
-        /* 7. Posts Feed & Modals */
+        /* 7. ልጥፎች (Posts & Modals) */
         .feed-post { border: 1px solid #ebd9c8; border-radius: 12px; padding: 22px; margin-bottom: 16px; background: white; }
         
         .post-header-badge {
@@ -425,12 +426,12 @@
             z-index: 2000; backdrop-filter: blur(2px);
         }
 
-        /* 8. Qetero Calendar Layout */
+        /* 8. ቀጠሮ (Calendar Schedule) */
         .week-calendar-ui { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 15px; text-align: center; }
         .cal-day-cell { background: white; border: 1px solid #ebd9c8; padding: 12px 5px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: 600; transition: var(--transition); }
         .cal-day-cell:hover, .cal-day-cell.selected-day { background: var(--monastic-burgundy); color: white; border-color: var(--monastic-burgundy); }
 
-        /* Forms Layout */
+        /* ቅጾች (Form Elements) */
         .form-group { margin-bottom: 18px; }
         .form-group label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.95rem; color: var(--text-charcoal); }
         input, textarea, select { width: 100%; padding: 12px 16px; border: 1px solid #ebd9c8; border-radius: 10px; font-family: inherit; font-size: 1rem; background: white; }
@@ -470,12 +471,12 @@
 </head>
 <body>
 
-    <!-- 1. Beautiful Branded Header Area -->
+    <!-- 1. ርዕስ ማውጫ ክፍሎች -->
     <header>
         <h1>ቃል ክርስቲያናዊ ማኅበረሰብ</h1>
         <div class="sub-line">“በቃሉ የተገናኘ ማኅበረሰብ”</div>
 
-        <!-- 2. Role Registration Matrix -->
+        <!-- 2. የተጠቃሚ ምዝገባ መምረጫ -->
         <div class="role-section">
             <button class="role-btn role-producer" onclick="registerRole('አዘጋጅ (Producer)')">
                 <i class="fa-solid fa-pen-nib"></i> አዘጋጅ (Producer)
@@ -488,7 +489,7 @@
 
     <div class="main-container">
 
-        <!-- 3. Movable Viewport Drag & Drop Ads System -->
+        <!-- 3. ተንቀሳቃሽ የማስታወቂያ ክፍል -->
         <div id="movable-ad-box">
             <div class="ad-content">
                 <i class="fa-solid fa-bookmark"></i>
@@ -500,25 +501,25 @@
             <button class="btn-reset-ad" onclick="resetAdPosition(event)">Reset</button>
         </div>
 
-        <!-- 4. Main Tab Navigation -->
+        <!-- 4. ዋና ዋና የመተግበሪያው ማውጫዎች -->
         <div class="navigation-grid">
             <div class="nav-card active-tab" id="tab-questions" onclick="switchView('questions')">
-                <i class="fa-solid fa-trophy"></i>Quiz (ፈተና)
+                <i class="fa-solid fa-trophy"></i>ፈተና (Quiz)
             </div>
             <div class="nav-card" id="tab-library" onclick="switchView('library')">
-                <i class="fa-solid fa-book-atlas"></i>Library
+                <i class="fa-solid fa-book-atlas"></i>ማህደር (Library)
             </div>
             <div class="nav-card" id="tab-posts" onclick="switchView('posts')">
-                <i class="fa-solid fa-signs-post"></i>Posts
+                <i class="fa-solid fa-signs-post"></i>ልጥፎች (Posts)
             </div>
             <div class="nav-card" id="tab-qetero" onclick="switchView('qetero')">
-                <i class="fa-solid fa-calendar-check"></i>ቀጠሮ
+                <i class="fa-solid fa-calendar-check"></i>ቀጠሮ (Qetero)
             </div>
         </div>
 
-        <!-- 5. App Central Screens -->
+        <!-- 5. ማዕከላዊ የንባብና የፈተና ገጾች -->
         
-        <!-- Tab 1: Interactive Gamified Quiz Component -->
+        <!-- ማውጫ 1: የ20 ሰከንድ የቃል ፈተና -->
         <div id="view-questions" class="app-view">
             <h2 class="view-title"><i class="fa-solid fa-graduation-cap"></i> የመጽሐፍ ቅዱስ ጥያቄዎች (Trivia Challenge)</h2>
             
@@ -548,135 +549,196 @@
             </button>
         </div>
 
-        <!-- Tab 2: Beautiful Upgraded Christian Library Tree -->
+        <!-- ማውጫ 2: አምስቱ የነገረ-መለኮት መጻሕፍት ማህደር ምድቦች -->
         <div id="view-library" class="app-view hidden-view">
             <h2 class="view-title"><i class="fa-solid fa-book-journal-whills"></i> የክርስቲያናዊ መጻሕፍት ማህደር (Theological Library)</h2>
-            <p class="library-intro">እንኳን ወደ ቃል መንፈሳዊ ቤተ-መጻሕፍት በደህና መጡ። ከታች ያሉትን ዋና ዋና ክፍሎች በመክፈት የተዘጋጁ ስልታዊ ጥናቶችንና ማብራሪያዎችን ያንብቡ።</p>
+            <p class="library-intro">እንኳን ወደ ቃል መንፈሳዊ ቤተ-መጻሕፍት በደህና መጡ። ከታች ያሉትን አምስት ዋና ዋና ምድቦች በመክፈት የተዘጋጁትን መጻሕፍት ያንብቡ።</p>
             
-            <!-- Category Box 1: Orthodox -->
-            <div class="denom-wrapper">
-                <div class="denom-header" onclick="toggleAccordion('orth-box')">
-                    <span>የኦርቶዶክስ ተዋሕዶ ማኅደር (Orthodox Catalog)</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div id="orth-box" class="subcategories-box hidden-view">
-                    <div class="sub-collapse-item">
-                        <div class="sub-title-trigger" onclick="toggleAccordion('orth-st')">Systematic Theology (ስልታዊ ቲዎሎጂ) <i class="fa-solid fa-plus"></i></div>
-                        <div id="orth-st" class="book-payload-list hidden-view">
-                            <div class="book-row">
-                                <div class="book-title-info">የእምነት መሠረታት <span>በአቡነ ጳውሎስ የተዘጋጀ</span></div>
-                                <button class="btn-read-more" onclick="readBook('የእምነት መሠረታት')">ያንብቡ</button>
-                            </div>
-                            <div class="book-row">
-                                <div class="book-title-info">ሥላሴ በኦርቶዶክስ ትውፊት <span>በሊቃውንተ ቤተክርስቲያን</span></div>
-                                <button class="btn-read-more" onclick="readBook('ሥላሴ በኦርቶዶክስ ትውፊት')">ያንብቡ</button>
-                            </div>
+            <div class="library-grid">
+                
+                <!-- ምድብ 1: ብሉይ ኪዳን (Old Testament) -->
+                <div class="category-card">
+                    <div class="category-header" onclick="toggleAccordion('cat-ot')">
+                        <div class="title-group">
+                            <i class="fa-solid fa-scroll main-icon"></i>
+                            <span>ብሉይ ኪዳን (Old Testament)</span>
                         </div>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </div>
-                    <div class="sub-collapse-item">
-                        <div class="sub-title-trigger" onclick="toggleAccordion('orth-nt')">New Testament (ሐዲስ ኪዳን ጥናት) <i class="fa-solid fa-plus"></i></div>
-                        <div id="orth-nt" class="book-payload-list hidden-view">
-                            <div class="book-row">
-                                <div class="book-title-info">የማቴዎስ ወንጌል አንድምታ ትርጓሜ <span>የጥንታውያን ሊቃውንት ትርጓሜ</span></div>
-                                <button class="btn-read-more" onclick="readBook('የማቴዎስ ወንጌል አንድምታ')">ያንብቡ</button>
+                    <div id="cat-ot" class="books-list-container hidden-view">
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book-open book-icon"></i>
+                                <div class="book-text">የኦሪት ዘፍጥረት አንድምታ ማብራሪያ <span>በሊቃውንት የተዘጋጀ</span></div>
                             </div>
+                            <button class="btn-read-book" onclick="readBook('የኦሪት ዘፍጥረት አንድምታ')">ያንብቡ</button>
+                        </div>
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book-open book-icon"></i>
+                                <div class="book-text">የትንቢተ ኢሳይያስ ጥናት <span>የነቢያት ታሪክ ማብራሪያ</span></div>
+                            </div>
+                            <button class="btn-read-book" onclick="readBook('የትንቢተ ኢሳይያስ ጥናት')">ያንብቡ</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Category Box 2: Evangelical -->
-            <div class="denom-wrapper">
-                <div class="denom-header" onclick="toggleAccordion('evan-box')">
-                    <span>የወንጌላውያን ማኅደር (Evangelical Catalog)</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div id="evan-box" class="subcategories-box hidden-view">
-                    <div class="sub-collapse-item">
-                        <div class="sub-title-trigger" onclick="toggleAccordion('evan-nt')">New Testament (ሐዲስ ኪዳን ጥናት) <i class="fa-solid fa-plus"></i></div>
-                        <div id="evan-nt" class="book-payload-list hidden-view">
-                            <div class="book-row">
-                                <div class="book-title-info">Romans: The Gospel of Grace <span>by John Stott</span></div>
-                                <button class="btn-read-more" onclick="readBook('Romans: The Gospel of Grace')">ያንብቡ</button>
+                <!-- ምድብ 2: ሐዲስ ኪዳን (New Testament) -->
+                <div class="category-card">
+                    <div class="category-header" onclick="toggleAccordion('cat-nt')">
+                        <div class="title-group">
+                            <i class="fa-solid fa-book-bible main-icon"></i>
+                            <span>ሐዲስ ኪዳን (New Testament)</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="cat-nt" class="books-list-container hidden-view">
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book-bookmark book-icon"></i>
+                                <div class="book-text">የማቴዎስ ወንጌል ትርጓሜ <span>የወንጌል ጥናት መጽሐፍ</span></div>
                             </div>
-                            <div class="book-row">
-                                <div class="book-title-info">ማቴዎስ ወንጌል – ትርጓሜና ማብራሪያ <span>የመጽሐፍ ቅዱስ ማብራሪያ ማኅበር</span></div>
-                                <button class="btn-read-more" onclick="readBook('ማቴዎስ ወንጌል – ትርጓሜ')">ያንብቡ</button>
+                            <button class="btn-read-book" onclick="readBook('የማቴዎስ ወንጌል ትርጓሜ')">ያንብቡ</button>
+                        </div>
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book-bookmark book-icon"></i>
+                                <div class="book-text">የሮሜ መልእክት ማብራሪያ <span>ስለ ጸጋ የተጻፈ ጥናት</span></div>
                             </div>
+                            <button class="btn-read-book" onclick="readBook('የሮሜ መልእክት ማብራሪያ')">ያንብቡ</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- Category Box 3: Catholic -->
-            <div class="denom-wrapper">
-                <div class="denom-header" onclick="toggleAccordion('cath-box')">
-                    <span>የካቶሊክ ማኅደር (Catholic Catalog)</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <div id="cath-box" class="subcategories-box hidden-view">
-                    <div class="sub-collapse-item">
-                        <div class="sub-title-trigger" onclick="toggleAccordion('cath-mb')">Ministerial Books (የአገልግሎት መጻሕፍት) <i class="fa-solid fa-plus"></i></div>
-                        <div id="cath-mb" class="book-payload-list hidden-view">
-                            <div class="book-row">
-                                <div class="book-title-info">Catechism of the Catholic Church <span>Section on Ministry</span></div>
-                                <button class="btn-read-more" onclick="readBook('Catechism of the Catholic Church')">ያንብቡ</button>
+                <!-- ምድብ 3: የቤተክርስቲያን ታሪክ (Church History) -->
+                <div class="category-card">
+                    <div class="category-header" onclick="toggleAccordion('cat-history')">
+                        <div class="title-group">
+                            <i class="fa-solid fa-monument main-icon"></i>
+                            <span>የቤተክርስቲያን ታሪክ (Church History)</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="cat-history" class="books-list-container hidden-view">
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book-medical book-icon"></i>
+                                <div class="book-text">የጥንቷ ቤተክርስቲያን ታሪክ <span>ከመጀመሪያው ክፍለ ዘመን ጀምሮ</span></div>
                             </div>
-                            <div class="book-row">
-                                <div class="book-title-info">The Priesthood in Ethiopia <span>Historical Overview</span></div>
-                                <button class="btn-read-more" onclick="readBook('The Priesthood in Ethiopia')">ያንብቡ</button>
+                            <button class="btn-read-book" onclick="readBook('የጥንቷ ቤተክርስቲያን ታሪክ')">ያንብቡ</button>
+                        </div>
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book-medical book-icon"></i>
+                                <div class="book-text">የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ታሪክ <span>ቅዱስ ታሪክና ትውፊት</span></div>
                             </div>
+                            <button class="btn-read-book" onclick="readBook('የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ታሪክ')">ያንብቡ</button>
                         </div>
                     </div>
                 </div>
+
+                <!-- ምድብ 4: የታሪክ ቲዎሎጂ (Historical Theology) -->
+                <div class="category-card">
+                    <div class="category-header" onclick="toggleAccordion('cat-hist-theo')">
+                        <div class="title-group">
+                            <i class="fa-solid fa-gavel main-icon"></i>
+                            <span>የታሪክ ቲዎሎጂ (Historical Theology)</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="cat-hist-theo" class="books-list-container hidden-view">
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book-atlas book-icon"></i>
+                                <div class="book-text">የጉባኤያት ታሪክና ውሳኔዎች <span>ከኒቂያ እስከ ኬልቄዶን</span></div>
+                            </div>
+                            <button class="btn-read-book" onclick="readBook('የጉባኤያት ታሪክና ውሳኔዎች')">ያንብቡ</button>
+                        </div>
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book-atlas book-icon"></i>
+                                <div class="book-text">የቀደሙት አባቶች ትምህርት <span>የዶክትሪን እድገት ታሪክ</span></div>
+                            </div>
+                            <button class="btn-read-book" onclick="readBook('የቀደሙት አባቶች ትምህርት')">ያንብቡ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ምድብ 5: ስልታዊ ቲዎሎጂ (Systematic Theology) -->
+                <div class="category-card">
+                    <div class="category-header" onclick="toggleAccordion('cat-syst-theo')">
+                        <div class="title-group">
+                            <i class="fa-solid fa-layer-group main-icon"></i>
+                            <span>ስልታዊ ቲዎሎጂ (Systematic Theology)</span>
+                        </div>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="cat-syst-theo" class="books-list-container hidden-view">
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book book-icon"></i>
+                                <div class="book-text">የነገረ መለኮት መሠረታዊ ትምህርቶች <span>ስልታዊ የትምህርተ መለኮት ጥናት</span></div>
+                            </div>
+                            <button class="btn-read-book" onclick="readBook('የነገረ መለኮት መሠረታዊ ትምህርቶች')">ያንብቡ</button>
+                        </div>
+                        <div class="book-item-row">
+                            <div class="book-details">
+                                <i class="fa-solid fa-book book-icon"></i>
+                                <div class="book-text">የነገረ ድኅነት ምስጢር <span>ስለ መዳን የተዘጋጀ ትንተና</span></div>
+                            </div>
+                            <button class="btn-read-book" onclick="readBook('የነገረ ድኅነት ምስጢር')">ያንብቡ</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- Tab 3: Social Feed Viewport -->
+        <!-- ማውጫ 3: የማኅበረሰብ ልጥፎች -->
         <div id="view-posts" class="app-view hidden-view">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                 <h2 class="view-title" style="margin:0; border:none; padding:0;"><i class="fa-solid fa-signs-post"></i> ልጥፎች (Community Feed)</h2>
                 <button class="role-btn role-producer" style="padding:10px 20px; font-size:0.9rem;" onclick="openPostModal()">
-                    <i class="fa-solid fa-plus"></i> Create Post
+                    <i class="fa-solid fa-plus"></i> አዲስ ልጥፍ
                 </button>
             </div>
 
             <div id="news-feed-container">
                 <div class="feed-post">
                     <span class="post-header-badge">የጸሎት ጥያቄ</span>
-                    <h3 style="margin: 4px 0 8px; color: var(--monastic-burgundy);">Prayer request for healing</h3>
+                    <h3 style="margin: 4px 0 8px; color: var(--monastic-burgundy);">ስለ ሕመምተኞች እንጸልይ</h3>
                     <p style="color: var(--text-charcoal);">በህመም ላይ ላሉት ወንድማችን በጋራ እንድንጸልይ የተደረገ ጥሪ። ጌታ የፈውስ እጁን እንዲዘረጋልን።</p>
                     <div class="post-actions">
-                        <span><i class="fa-regular fa-heart"></i> Like</span>
-                        <span><i class="fa-regular fa-comment"></i> Comment</span>
-                        <span><i class="fa-solid fa-share-nodes"></i> Share</span>
+                        <span><i class="fa-regular fa-heart"></i> ውደድ (Like)</span>
+                        <span><i class="fa-regular fa-comment"></i> አስተያየት</span>
+                        <span><i class="fa-solid fa-share-nodes"></i> አጋራ</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Tab 4: Appointment Booking Viewport -->
+        <!-- ማውጫ 4: ቀጠሮ መያዣ ገጽ -->
         <div id="view-qetero" class="app-view hidden-view">
             <h2 class="view-title"><i class="fa-regular fa-calendar-check"></i> ቀጠሮ ለመያዝ – Schedule</h2>
             <form onsubmit="handleQeteroSubmit(event)">
                 <div class="form-group">
                     <label>አማካሪ/መምህር ይምረጡ (Select Leader)</label>
                     <select id="qetLeader">
-                        <option value="Pastor Dawit">Pastor Dawit (የወንጌል አገልግሎት)</option>
-                        <option value="Aba Melaku">Aba Melaku (የነገረ መለኮት አማካሪ)</option>
-                        <option value="Counselor Hanna">Counselor Hanna (ክርስቲያናዊ ምክር)</option>
+                        <option value="Pastor Dawit">ፓስተር ዳዊት (የወንጌል አገልግሎት)</option>
+                        <option value="Aba Melaku">አባ መላኩ (የነገረ መለኮት አማካሪ)</option>
+                        <option value="Counselor Hanna">አማካሪ ሃና (ክርስቲያናዊ ምክር)</option>
                     </select>
                 </div>
 
                 <label style="display:block; font-weight:600; margin-bottom:10px; font-size:0.95rem;">ቀን ይምረጡ (Select Weekday)</label>
                 <div class="week-calendar-ui">
-                    <div class="cal-day-cell selected-day" onclick="selectDay(this, 'Mon')">Mon<br>25</div>
-                    <div class="cal-day-cell" onclick="selectDay(this, 'Tue')">Tue<br>26</div>
-                    <div class="cal-day-cell" onclick="selectDay(this, 'Wed')">Wed<br>27</div>
-                    <div class="cal-day-cell" onclick="selectDay(this, 'Thu')">Thu<br>28</div>
-                    <div class="cal-day-cell" onclick="selectDay(this, 'Fri')">Fri<br>29</div>
-                    <div class="cal-day-cell" onclick="selectDay(this, 'Sat')">Sat<br>30</div>
-                    <div class="cal-day-cell" onclick="selectDay(this, 'Sun')">Sun<br>31</div>
+                    <div class="cal-day-cell selected-day" onclick="selectDay(this, 'ሰኞ')">ሰኞ<br>25</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'ማክሰኞ')">ማክሰኞ<br>26</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'ረቡዕ')">ረቡዕ<br>27</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'ሐሙስ')">ሐሙስ<br>28</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'አርብ')">አርብ<br>29</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'ቅዳሜ')">ቅዳሜ<br>30</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'እሁድ')">እሁድ<br>31</div>
                 </div>
 
                 <div class="form-group">
@@ -688,12 +750,12 @@
                     <label>የቀጠሮው ምክንያት (Topic Context)</label>
                     <input type="text" id="qetTopic" required placeholder="ለምሳሌ፡ ስለ መጽሐፍ ቅዱስ ጥናት">
                 </div>
-                <button type="submit" class="submit-btn">Book Appointment (ቀጠሮ ያዙ)</button>
+                <button type="submit" class="submit-btn">ቀጠሮ ያዙ (Book Appointment)</button>
             </form>
         </div>
     </div>
 
-    <!-- Modal Form for Creating Posts -->
+    <!-- አዲስ ልጥፍ መጻፊያ ሳጥን (Modal) -->
     <div id="post-modal" class="modal-overlay hidden-view">
         <div class="app-view" style="width:100%; max-width:500px; min-height:auto;">
             <h3 style="margin-bottom:18px; color:var(--monastic-burgundy);">አዲስ ልጥፍ ፍጠር (New Post)</h3>
@@ -715,7 +777,7 @@
             </div>
             <div style="display:flex; gap:10px; margin-top:15px;">
                 <button class="submit-btn" onclick="submitModalPost()">ልጥፍ</button>
-                <button class="submit-btn" style="background:#95a5a6;" onclick="closePostModal()">Cancel</button>
+                <button class="submit-btn" style="background:#95a5a6;" onclick="closePostModal()">አንሰርዝ</button>
             </div>
         </div>
     </div>
@@ -725,7 +787,7 @@
     </footer>
 
 <script>
-    // --- 1. View Engine Controls ---
+    // --- 1. የማሳያ ክፍሎች መቀያየሪያ ---
     function switchView(target) {
         document.querySelectorAll('.app-view').forEach(view => view.classList.add('hidden-view'));
         document.querySelectorAll('.nav-card').forEach(card => card.classList.remove('active-tab'));
@@ -741,10 +803,10 @@
     }
 
     function registerRole(roleName) {
-        alert(`You registered as ${roleName} – features coming soon.`);
+        alert(`${roleName} ሆነው ተመዝግበዋል! ሙሉ ባህሪያቱ በቅርቡ ይለቀቃሉ።`);
     }
 
-    // --- 2. Gamified Quiz Runtime (20-Second Rules) ---
+    // --- 2. የፈተና መቆጣጠሪያ (20 ሰከንድ ሰዓት) ---
     let points = 0;
     let timeLeft = 20;
     let quizInterval;
@@ -799,7 +861,7 @@
 
     function lockQuizOptionsOnTimeout() {
         hasAnswered = true;
-        alert("⏱️ ሰዓት አልቋል! (Time is up!)");
+        alert("⏱️ ሰዓት አልቋል!");
         highlightCorrectAnswer();
         document.getElementById('next-quiz-btn').style.display = 'block';
     }
@@ -835,17 +897,17 @@
         resetAndStartQuizTimer();
     };
 
-    // --- 3. Collapsible Library Accordion ---
+    // --- 3. የማህደር ክፍሎች መክፈቻ (Accordion) ---
     function toggleAccordion(elementId) {
         const item = document.getElementById(elementId);
         item.classList.toggle('hidden-view');
     }
 
     function readBook(bookTitle) {
-        alert(`ማጠቃለያውን በመክፈት ላይ: "${bookTitle}"`);
+        alert(`"${bookTitle}" የሚለውን መጽሐፍ በመክፈት ላይ...`);
     }
 
-    // --- 4. Post Feed Matrix & Modals ---
+    // --- 4. ልጥፎች መቆጣጠሪያ ---
     function openPostModal() { document.getElementById('post-modal').classList.remove('hidden-view'); }
     function closePostModal() { document.getElementById('post-modal').classList.add('hidden-view'); }
     
@@ -864,8 +926,8 @@
                 <p style="color:var(--text-charcoal);">${body}</p>
                 <div class="post-actions">
                     <span><i class="fa-regular fa-heart"></i> Like</span>
-                    <span><i class="fa-regular fa-comment"></i> Comment</span>
-                    <span><i class="fa-solid fa-share-nodes"></i> Share</span>
+                    <span><i class="fa-regular fa-comment"></i> አስተያየት</span>
+                    <span><i class="fa-solid fa-share-nodes"></i> አጋራ</span>
                 </div>
             </div>`;
         container.insertAdjacentHTML('afterbegin', newPostHtml);
@@ -874,8 +936,8 @@
         document.getElementById('modalPostBody').value = "";
     }
 
-    // --- 5. Qetero Layout ---
-    let selectedQetDay = "Mon";
+    // --- 5. የቀጠሮ መቆጣጠሪያ ---
+    let selectedQetDay = "ሰኞ";
     function selectDay(element, dayCode) {
         document.querySelectorAll('.cal-day-cell').forEach(c => c.classList.remove('selected-day'));
         element.classList.add('selected-day');
@@ -886,11 +948,11 @@
         e.preventDefault();
         const leader = document.getElementById('qetLeader').value;
         const time = document.getElementById('qetTime').value;
-        alert(`ቀጠሮዎ ተይዟል!\n\nመሪ: ${leader}\nቀን: ${selectedQetDay}\nሰዓት: ${time}`);
+        alert(`ቀጠሮዎ በተሳካ ሁኔታ ተይዟል!\n\nመሪ: ${leader}\nቀን: ${selectedQetDay}\nሰዓት: ${time}`);
         e.target.reset();
     }
 
-    // --- 6. Boundary Drag & Drop Ads Engine ---
+    // --- 6. የማስታወቂያ ሳጥን ማንቀሳቀሻ (Drag & Drop) ---
     const adBox = document.getElementById('movable-ad-box');
     let isDragging = false;
     let startX, startY, initialX, initialY;
