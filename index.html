@@ -3,485 +3,728 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ቃል ክርስቲያን ማኅበር (Qal Christian Society)</title>
+    <title>ቃል ክርስቲያናዊ ማኅበረሰብ (Qal)</title>
+    
+    <!-- External Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abyssinica+SIL&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
+        /* ==========================================================================
+           1. DESIGN SYSTEM & ROOT VARIABLES
+           ========================================================================== */
         :root {
-            --royal-gold: #d4af37;
-            --deep-burgundy: #4a0e17;
-            --text-charcoal: #2b2b2b;
-            --light-bg: #fdfbf7;
-            --card-bg: #ffffff;
-            --text-muted: #777;
+            /* Theme Colors */
+            --parchment-bg: #fbf8f3;
+            --parchment-card: #ffffff;
+            --monastic-burgundy: #5c061e;
+            --royal-gold: #b38f43;
+            --gold-light: #f5f0e6;
+            --text-charcoal: #2c2523;
+            --text-muted: #6e6562;
+            
+            /* Denomination Colors */
+            --orthodox-blue: #1a5276;
+            --catholic-purple: #6c3483;
+            --evangelical-green: #1e8449;
+
+            /* Component Tokens */
+            --shadow-sm: 0 2px 8px rgba(92, 6, 30, 0.04);
+            --shadow-md: 0 10px 30px rgba(92, 6, 30, 0.06);
+            --border-radius: 14px;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ==========================================================================
+           2. GLOBAL RESETS & BASE STYLES
+           ========================================================================== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f1ea;
-            margin: 0;
-            padding: 0;
+            font-family: 'Plus Jakarta Sans', 'Abyssinica SIL', 'Nyala', sans-serif;
+            background-color: var(--parchment-bg);
+            color: var(--text-charcoal);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            line-height: 1.6;
+        }
+
+        /* Generic Form Layout Elements */
+        .form-group { 
+            margin-bottom: 18px; 
+        }
+        
+        .form-group label { 
+            display: block; 
+            margin-bottom: 6px; 
+            font-weight: 600; 
+            font-size: 0.95rem; 
+            color: var(--text-charcoal); 
+        }
+
+        input, textarea, select { 
+            width: 100%; 
+            padding: 12px 16px; 
+            border: 1px solid #ebd9c8; 
+            border-radius: 10px; 
+            font-family: inherit; 
+            font-size: 1rem; 
+            background: white; 
+        }
+
+        input:focus, textarea:focus, select:focus { 
+            outline: none; 
+            border-color: var(--monastic-burgundy); 
+        }
+
+        .submit-btn { 
+            background: var(--monastic-burgundy); 
+            color: white; 
+            border: none; 
+            padding: 14px 24px; 
+            border-radius: 10px; 
+            font-weight: 600; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            width: 100%; 
+            transition: var(--transition); 
+        }
+        
+        .submit-btn:hover { 
+            filter: brightness(1.2); 
+        }
+
+        /* Utility Classes */
+        .hidden-view { display: none !important; }
+
+        /* ==========================================================================
+           3. SITE HEADER & REGISTRATION BOX
+           ========================================================================== */
+        header {
+            background: linear-gradient(180deg, #ffffff 0%, var(--parchment-bg) 100%);
+            padding: 40px 20px 25px;
+            text-align: center;
+            border-bottom: 1px solid #ebd9c8;
+            position: relative;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--monastic-burgundy), var(--royal-gold), var(--monastic-burgundy));
+        }
+
+        header h1 {
+            font-family: 'Abyssinica SIL', 'Nyala', serif;
+            color: var(--monastic-burgundy);
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        header .sub-line {
+            font-style: italic;
+            color: var(--text-muted);
+            font-size: 1.15rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Registration UI Component */
+        .registration-box {
+            background: var(--parchment-card);
+            border: 1px solid #ebd9c8;
+            border-radius: var(--border-radius);
+            max-width: 550px;
+            margin: 20px auto 0 auto;
+            padding: 20px 25px;
+            box-shadow: var(--shadow-sm);
+            text-align: left;
+        }
+
+        .registration-box h3 {
+            font-family: 'Abyssinica SIL', 'Nyala', serif;
+            color: var(--monastic-burgundy);
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+            text-align: center;
+            border-bottom: 1px solid #f5f0e6;
+            padding-bottom: 8px;
+        }
+
+        .registration-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .full-width-field { grid-column: span 2; }
+
+        .reg-label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 5px;
             color: var(--text-charcoal);
         }
 
-        .hidden { display: none !important; }
-
-        /* --- 1. የምዝገባ ገጽ ውበት (Registration Screen) --- */
-        .register-container {
-            max-width: 450px;
-            margin: 60px auto;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            text-align: center;
+        .reg-input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ebd9c8;
+            border-radius: 8px;
+            font-size: 0.92rem;
+            background-color: #faf9f6;
         }
 
-        .register-container h2 {
-            color: var(--deep-burgundy);
-            margin-bottom: 5px;
+        .reg-input:focus {
+            outline: none;
+            border-color: var(--monastic-burgundy);
+            background-color: #ffffff;
         }
 
-        .register-container p {
-            color: var(--text-muted);
-            margin-bottom: 25px;
-            font-size: 0.95rem;
+        .role-choice-wrapper {
+            grid-column: span 2;
+            display: flex;
+            gap: 10px;
+            margin-top: 5px;
         }
 
-        .form-group {
-            text-align: left;
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
+        .role-select-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ebd9c8;
+            background: #ffffff;
+            cursor: pointer;
             font-weight: 600;
             font-size: 0.9rem;
-            color: var(--deep-burgundy);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: var(--transition);
+            color: var(--text-muted);
         }
 
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 1rem;
-        }
+        .role-select-btn.selected-producer { background-color: var(--monastic-burgundy); color: white; border-color: var(--monastic-burgundy); }
+        .role-select-btn.selected-reader { background-color: var(--royal-gold); color: white; border-color: var(--royal-gold); }
 
-        .form-group input:focus, .form-group select:focus {
-            border-color: var(--royal-gold);
-            outline: none;
-        }
-
-        .btn-submit {
-            width: 100%;
-            background-color: var(--deep-burgundy);
+        .submit-reg-btn {
+            grid-column: span 2;
+            background: var(--text-charcoal);
             color: white;
-            padding: 14px;
             border: none;
-            border-radius: 6px;
-            font-size: 1.1rem;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
             cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
-            margin-top: 10px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            margin-top: 5px;
+        }
+        .submit-reg-btn:hover { background: var(--monastic-burgundy); }
+
+        /* ==========================================================================
+           4. MAIN CONTENT LAYOUT & NAVIGATION TABS
+           ========================================================================== */
+        .main-container {
+            max-width: 850px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 30px 20px;
+            flex: 1;
         }
 
-        .btn-submit:hover { background-color: #61131e; }
-
-        /* --- 2. ዋናው መተግበሪያ አቀማመጥ (Main App Interface) --- */
-        .app-bar {
-            background-color: var(--deep-burgundy);
-            color: white;
-            padding: 15px 20px;
+        /* Component: Movable Ad Box */
+        #movable-ad-box {
+            background: var(--parchment-card);
+            border: 1px solid #ebd9c8;
+            border-left: 4px solid var(--royal-gold);
+            padding: 16px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            cursor: move;
+            user-select: none;
+            box-shadow: var(--shadow-sm);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            gap: 15px;
         }
 
-        .app-bar h1 { margin: 0; font-size: 1.3rem; font-weight: 600; }
-        .user-badge { font-size: 0.85rem; background: var(--royal-gold); padding: 4px 8px; border-radius: 4px; color: #000; font-weight: bold;}
+        .ad-content { display: flex; align-items: center; gap: 14px; font-size: 0.95rem; }
+        .ad-content i { font-size: 1.4rem; color: var(--royal-gold); }
+        .btn-reset-ad {
+            background: var(--gold-light); border: none; padding: 6px 14px; border-radius: 8px;
+            font-size: 0.8rem; cursor: pointer; font-weight: 600; color: var(--royal-gold); transition: var(--transition);
+        }
+        .btn-reset-ad:hover { background: #ebd9c8; }
 
-        .main-content {
-            padding: 20px;
-            padding-bottom: 90px;
-            max-width: 600px;
-            margin: 0 auto;
+        /* Component: Navigation Grid */
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 30px;
         }
 
-        .info-card {
-            background-color: var(--light-bg);
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .info-card h2 {
-            color: var(--deep-burgundy);
-            margin-top: 0;
-            border-bottom: 2px solid var(--royal-gold);
-            padding-bottom: 8px;
-            font-size: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* --- 3. የታችኛው ማውጫ (Bottom Navigation) --- */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0; left: 0; right: 0;
-            background-color: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 8px 0;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.08);
-            z-index: 1000;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--text-muted);
+        .nav-card {
+            background: var(--parchment-card);
+            padding: 16px;
+            border-radius: var(--border-radius);
+            text-align: center;
             cursor: pointer;
-            font-size: 0.8rem;
-            background: none; border: none;
-            width: 25%; padding: 5px 0;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            border: 1px solid #f0e6dc;
+            font-weight: 600;
+            color: var(--text-muted);
         }
 
-        .nav-item.active { color: var(--deep-burgundy); font-weight: bold; }
-        .nav-item i { font-size: 1.25rem; margin-bottom: 3px; }
-
-        /* --- 4. የገጾች ውበት (Tab Contents Specific Style) --- */
-        /* ፈተና (Quiz) */
-        .timer-box {
-            font-size: 1.2rem; font-weight: bold; color: #d9534f;
-            text-align: center; margin-bottom: 15px;
+        .nav-card i { display: block; font-size: 1.3rem; margin-bottom: 8px; color: var(--text-muted); }
+        .nav-card:hover { transform: translateY(-2px); border-color: var(--royal-gold); color: var(--monastic-burgundy); }
+        
+        .nav-card.active-tab { 
+            background: var(--parchment-card); 
+            border: 1.5px solid var(--monastic-burgundy); 
+            color: var(--monastic-burgundy); 
+            box-shadow: var(--shadow-md); 
         }
-        .quiz-options button {
-            width: 100%; padding: 12px; margin-bottom: 10px;
-            background: white; border: 1px solid #ddd; border-radius: 6px;
-            text-align: left; cursor: pointer; font-size: 1rem;
-        }
-        .quiz-options button:hover { background: #f0ece1; border-color: var(--royal-gold); }
-        .score-box { text-align: center; font-size: 1.1rem; font-weight: bold; color: var(--deep-burgundy); }
+        .nav-card.active-tab i { color: var(--monastic-burgundy); }
 
-        /* ቤተ-መጻሕፍት (Library) */
-        .book-item {
-            background: white; padding: 12px; border-radius: 6px;
-            margin-bottom: 10px; border-left: 4px solid var(--royal-gold);
+        /* App Main View Architecture */
+        .app-view {
+            background: var(--parchment-card);
+            border-radius: var(--border-radius);
+            padding: 35px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid #f0e6dc;
+            min-height: 400px;
+        }
+
+        h2.view-title {
+            font-family: 'Abyssinica SIL', 'Nyala', serif;
+            color: var(--monastic-burgundy);
+            margin-bottom: 25px;
+            font-size: 1.7rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #ebd9c8;
+            padding-bottom: 12px;
+        }
+
+        /* ==========================================================================
+           5. APP VIEWS (QUIZ, LIBRARY, POSTS, CALENDAR)
+           ========================================================================== */
+        
+        /* --- View: Quiz System --- */
+        .quiz-score-header {
             display: flex; justify-content: space-between; align-items: center;
+            background: var(--gold-light); padding: 14px 20px; border-radius: 10px; margin-bottom: 20px; font-weight: 600; border: 1px solid #ebd9c8;
         }
-        .btn-read { background: var(--deep-burgundy); color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer;}
+        .timer-track { background: #ebd9c8; height: 6px; border-radius: 4px; width: 100%; margin-bottom: 25px; overflow: hidden; }
+        .timer-fill { background: linear-gradient(90deg, var(--royal-gold), var(--monastic-burgundy)); height: 100%; width: 100%; transition: width 1s linear; }
+        
+        .quiz-option-btn {
+            display: block; width: 100%; text-align: left; padding: 16px 20px; background: #ffffff;
+            border: 1px solid #ebd9c8; border-radius: 12px; margin-bottom: 12px; cursor: pointer; font-size: 1rem; font-weight: 500; transition: var(--transition); color: var(--text-charcoal);
+        }
+        .quiz-option-btn:hover { border-color: var(--monastic-burgundy); background: var(--parchment-bg); }
+        .quiz-option-btn.correct { background: #e8f5e9 !important; border-color: #2e7d32 !important; color: #1b5e20; font-weight: 600; }
+        .quiz-option-btn.wrong { background: #ffebee !important; border-color: #c62828 !important; color: #b71c1c; }
 
-        /* ፖስት (Post) */
-        .post-input textarea {
-            width: 100%; height: 80px; padding: 10px; box-sizing: border-box;
-            border: 1px solid #ccc; border-radius: 6px; resize: none; margin-bottom: 10px;
+        /* --- View: Theological Multi-Level Accordion Library --- */
+        .library-intro { font-size: 1rem; color: var(--text-muted); margin-bottom: 24px; }
+        
+        /* Level 1: Denomination/Religion Containers */
+        .religion-container {
+            margin-bottom: 20px;
+            border: 2px solid #ebd9c8;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: var(--shadow-sm);
         }
-        .feed-item {
-            background: white; padding: 15px; border-radius: 8px;
-            margin-top: 12px; border: 1px solid #eae6dc;
+
+        .religion-main-header {
+            padding: 22px;
+            color: white;
+            font-family: 'Abyssinica SIL', 'Nyala', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
         }
-        .feed-meta { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px; display: flex; justify-content: space-between;}
+        .religion-main-header:hover { filter: brightness(1.1); }
+
+        .bg-orthodox { background: var(--orthodox-blue); }
+        .bg-catholic { background: var(--catholic-purple); }
+        .bg-evangelical { background: var(--evangelical-green); }
+
+        .religion-books-area {
+            padding: 15px;
+            background: #fdfcf7;
+        }
+
+        /* Level 2: Categorized Cards */
+        .sub-category-card {
+            border: 1px solid #ebd9c8;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .sub-category-header {
+            padding: 14px 18px;
+            background: var(--gold-light);
+            color: var(--text-charcoal);
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .sub-category-header:hover { background: #ebd9c8; }
+        .sub-category-header .title-group { display: flex; align-items: center; gap: 10px; }
+        .sub-category-header i.sub-icon { color: var(--royal-gold); }
+
+        /* Level 3: Leaf Nodes / Books List Structure */
+        .final-books-list {
+            padding: 5px 15px;
+            background: #ffffff;
+        }
+
+        .book-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f5f0e6;
+        }
+        .book-item-row:last-child { border-bottom: none; }
+
+        .book-details { display: flex; align-items: center; gap: 12px; }
+        .book-details i.book-icon { color: var(--monastic-burgundy); font-size: 1.05rem; }
+        .book-text { font-weight: 600; font-size: 0.95rem; color: var(--text-charcoal); }
+        .book-text span { display: block; font-size: 0.8rem; color: var(--text-muted); font-weight: 400; margin-top: 1px; }
+
+        .btn-read-book {
+            background: var(--monastic-burgundy); border: none; color: white;
+            padding: 6px 14px; border-radius: 6px; font-size: 0.82rem; cursor: pointer; font-weight: 600; transition: var(--transition);
+        }
+        .btn-read-book:hover { background: var(--royal-gold); transform: translateY(-1px); }
+
+        /* --- View: Feed Posts --- */
+        .feed-post { border: 1px solid #ebd9c8; border-radius: 12px; padding: 22px; margin-bottom: 16px; background: white; }
+        .post-header-badge { display: inline-block; background: var(--gold-light); padding: 4px 10px; border-radius: 6px; font-size: 0.78rem; font-weight: 700; color: var(--monastic-burgundy); margin-bottom: 10px; border: 1px solid #ebd9c8; }
+        .post-actions { display: flex; gap: 20px; margin-top: 14px; border-top: 1px solid #ebd9c8; padding-top: 12px; color: var(--text-muted); font-size: 0.9rem; }
+        .post-actions span { cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .post-actions span:hover { color: var(--monastic-burgundy); }
+        .modal-overlay { position: fixed; top:0; left:0; right:0; bottom:0; background: rgba(44, 37, 35, 0.5); display:flex; align-items:center; justify-content:center; z-index: 2000; backdrop-filter: blur(2px); }
+
+        /* --- View: Calendar (Qetero) --- */
+        .week-calendar-ui { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-bottom: 15px; text-align: center; }
+        .cal-day-cell { background: white; border: 1px solid #ebd9c8; padding: 12px 5px; border-radius: 8px; font-size: 0.85rem; cursor: pointer; font-weight: 600; transition: var(--transition); }
+        .cal-day-cell:hover, .cal-day-cell.selected-day { background: var(--monastic-burgundy); color: white; border-color: var(--monastic-burgundy); }
+
+        /* ==========================================================================
+           6. FOOTER & MEDIA QUERIES (RESPONSIVENESS)
+           ========================================================================== */
+        footer { 
+            margin-top: auto; 
+            text-align: center; 
+            padding: 35px 20px; 
+            background: #ffffff; 
+            color: var(--text-muted); 
+            font-size: 0.9rem; 
+            font-weight: 500; 
+            border-top: 1px solid #ebd9c8; 
+        }
+
+        @media(max-width: 600px) {
+            header h1 { font-size: 2.1rem; }
+            .navigation-grid { grid-template-columns: repeat(2, 1fr); }
+            .week-calendar-ui { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+            .registration-form-grid { grid-template-columns: 1fr; }
+            .full-width-field, .role-choice-wrapper, .submit-reg-btn { grid-column: span 1; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- ================= ፩. የምዝገባ ገጽ (REGISTRATION SCREEN) ================= -->
-    <div id="registration-screen" class="register-container">
-        <i class="fa-solid fa-gopuram" style="font-size: 3rem; color: var(--royal-gold); margin-bottom: 10px;"></i>
-        <h2>ቃል ክርስቲያን ማኅበር</h2>
-        <p>እባክዎ መረጃዎን አስገብተው ይመዝገቡ</p>
-        
-        <form id="regForm" onsubmit="handleRegistration(event)">
-            <div class="form-group">
-                <label>ሙሉ ስም (Full Name)</label>
-                <input type="text" id="reg-name" required placeholder="የእርስዎን ስም ያስገቡ">
-            </div>
-            <div class="form-group">
-                <label>የሞባይል ቁጥር (Mobile Number)</label>
-                <input type="tel" id="reg-phone" required placeholder="09xxxxxxxx">
-            </div>
-            <div class="form-group">
-                <label>ሃይማኖት (Religion)</label>
-                <select id="reg-religion" required>
-                    <option value="">ይምረጡ...</option>
-                    <option value="ኦርቶዶክስ">ኦርቶዶክስ (Orthodox)</option>
-                    <option value="ካቶሊክ">ካቶሊክ (Catholic)</option>
-                    <option value="ወንጌላዊት">ወንጌላዊት (Evangelical)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>የእርስዎ ሚና (Role)</label>
-                <select id="reg-role" required>
-                    <option value="">ይምረጡ...</option>
-                    <option value="አምራች (Producer)">አምራች (Producer)</option>
-                    <option value="አንባቢ (Reader)">አንባቢ (Reader)</option>
-                </select>
-            </div>
-            <button type="submit" class="btn-submit">ይመዝገቡ</button>
-        </form>
-    </div>
+    <!-- 1. የርዕስ ማውጫ ክፍል (Site Header) -->
+    <header>
+        <h1>ቃል ክርስቲያናዊ ማኅበረሰብ</h1>
+        <div class="sub-line">“በቃሉ የተገናኘ ማኅበረሰብ”</div>
 
-
-    <!-- ================= ፪. ዋናው መተግበሪያ እይታ (MAIN APP SCREEN) ================= -->
-    <div id="main-app-screen" class="hidden">
-        <!-- የላይኛው አሞሌ -->
-        <div class="app-bar">
-            <h1>ቃል ማኅበር (Qal)</h1>
-            <div id="user-display" class="user-badge">አንባቢ</div>
-        </div>
-
-        <!-- ዋናው የይዘት ማሳያ ቦታ -->
-        <div class="main-content">
-            
-            <!-- ሀ. የፈተና ገጽ (Quiz Tab) -->
-            <div id="tab-quiz" class="tab-view">
-                <div class="info-card">
-                    <h2><i class="fa-solid fa-brain"></i> መንፈሳዊ ፈተና (Quiz)</h2>
-                    <div id="quiz-area">
-                        <div class="timer-box"><i class="fa-solid fa-clock"></i> የቀረው ጊዜ፦ <span id="timer-count">20</span> ሰከንድ</div>
-                        <p id="quiz-question" style="font-weight: bold; font-size: 1.1rem;"></p>
-                        <div class="quiz-options" id="quiz-options-box"></div>
+        <!-- 2. የተጠቃሚዎች ምዝገባ ሳጥን (Member Registration) -->
+        <div class="registration-box">
+            <h3><i class="fa-solid fa-user-plus"></i> የመድረኩ አባል መመዝገቢያ ቅጽ</h3>
+            <form onsubmit="handleRegistration(event)">
+                <div class="registration-form-grid">
+                    <div class="full-width-field">
+                        <label class="reg-label" for="regFullName">ሙሉ ስም (Full Name)</label>
+                        <input type="text" id="regFullName" class="reg-input" required placeholder="እባክዎ ስምዎን ያስገቡ">
                     </div>
-                    <div id="score-area" class="score-box hidden"></div>
-                </div>
-            </div>
-
-            <!-- ለ. የቤተ-መጻሕፍት ገጽ (Library Tab) -->
-            <div id="tab-library" class="tab-view class hidden">
-                <div class="info-card">
-                    <h2><i class="fa-solid fa-book-bible"></i> ቤተ-መጻሕፍት (Library)</h2>
-                    <div class="book-item">
-                        <div><strong>የመጽሐፍ ቅዱስ ጥናት</strong><br><small style="color: var(--text-muted);">ክፍል ፩ - መግቢያ</small></div>
-                        <button class="btn-read">አንብብ</button>
-                    </div>
-                    <div class="book-item">
-                        <div><strong>የቅዱሳን ታሪክ</strong><br><small style="color: var(--text-muted);">ስለ ጻድቃን ሕይወት የተዘጋጀ</small></div>
-                        <button class="btn-read">አንብብ</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ሐ. የቀጠሮ ገጽ (Qetero Tab) -->
-            <div id="tab-qetero" class="tab-view hidden">
-                <div class="info-card">
-                    <h2><i class="fa-solid fa-calendar-check"></i> ቀጠሮ ማስያዣ (Qetero)</h2>
-                    <p style="font-size: 0.95rem; color: var(--text-muted);">ከአስተማሪዎች ወይም ከንባብ ቡድኖች ጋር ቀጠሮ እዚህ ይያዙ።</p>
-                    <div class="form-group">
-                        <label>የቀጠሮው ዓይነት</label>
-                        <select id="qetero-type">
-                            <option>የመጽሐፍ ቅዱስ ውይይት</option>
-                            <option>የንባብ ግምገማ</option>
-                            <option>የጋራ ጸሎት</option>
+                    <div>
+                        <label class="reg-label" for="regBelief">ሃይማኖት (Denomination)</label>
+                        <select id="regBelief" class="reg-input" required>
+                            <option value="" disabled selected>ይምረጡ...</option>
+                            <option value="ኦርቶዶክስ (Orthodox)">ኦርቶዶክስ (Orthodox)</option>
+                            <option value="ካቶሊክ (Catholic)">ካቶሊክ (Catholic)</option>
+                            <option value="ወንጌላዊያን (Evangelical)">ወንጌላዊያን (Evangelical)</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>ቀን እና ሰዓት</label>
-                        <input type="datetime-local" id="qetero-time">
+                    <div>
+                        <label class="reg-label" for="regPhone">ስልክ ቁጥር - አማራጭ (Phone)</label>
+                        <input type="tel" id="regPhone" class="reg-input" placeholder="09........">
                     </div>
-                    <button class="btn-submit" onclick="saveQetero()">ቀጠሮ ያዙ</button>
-                    <div id="qetero-list" style="margin-top: 15px;"></div>
+                    <div class="role-choice-wrapper">
+                        <button type="button" id="role-prod-btn" class="role-select-btn" onclick="setRegistrationRole('አዘጋጅ (Producer)')">
+                            <i class="fa-solid fa-pen-nib"></i> አዘጋጅ
+                        </button>
+                        <button type="button" id="role-read-btn" class="role-select-btn" onclick="setRegistrationRole('አንባቢ (Reader)')">
+                            <i class="fa-solid fa-book-open"></i> አንባቢ
+                        </button>
+                    </div>
+                    <button type="submit" class="submit-reg-btn">አሁን መዝግብ (Register)</button>
+                </div>
+            </form>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Section Workspace -->
+    <div class="main-container">
+
+        <!-- 3. ተንቀሳቃሽ የማስታወቂያ ክፍል (Movable Promotion Unit) -->
+        <div id="movable-ad-box">
+            <div class="ad-content">
+                <i class="fa-solid fa-bookmark"></i>
+                <div>
+                    <strong>ልዩ መልእክት: የቅዱሳት መጻሕፍት ማኅበር</strong>
+                    <span style="display:block; font-size:0.85rem; color:var(--text-muted);">ለቃል አባላት የተዘጋጁ መንፈሳዊ መጻሕፍት ማውጫ ላይ የ10% ቅናሽ።</span>
                 </div>
             </div>
+            <button class="btn-reset-ad" onclick="resetAdPosition(event)">Reset</button>
+        </div>
 
-            <!-- መ. የፖስት ገጽ (Post Tab) -->
-            <div id="tab-post" class="tab-view hidden">
-                <div class="info-card">
-                    <h2><i class="fa-solid fa-square-rss"></i> መልእክቶች እና ፖስቶች</h2>
-                    <div class="post-input">
-                        <textarea id="post-text" placeholder="የሚፈልጉትን መንፈሳዊ መልእክት ወይም ሐሳብ እዚህ ይጻፉ..."></textarea>
-                        <button class="btn-submit" style="margin-top: 0;" onclick="createPost()">ፖስት አድርግ</button>
+        <!-- 4. ዋና ዋና ማውጫዎች (View Controller Tabs) -->
+        <div class="navigation-grid">
+            <div class="nav-card active-tab" id="tab-questions" onclick="switchView('questions')">
+                <i class="fa-solid fa-trophy"></i>ፈተና (Quiz)
+            </div>
+            <div class="nav-card" id="tab-library" onclick="switchView('library')">
+                <i class="fa-solid fa-book-atlas"></i>ማህደር (Library)
+            </div>
+            <div class="nav-card" id="tab-posts" onclick="switchView('posts')">
+                <i class="fa-solid fa-signs-post"></i>ልጥፎች (Posts)
+            </div>
+            <div class="nav-card" id="tab-qetero" onclick="switchView('qetero')">
+                <i class="fa-solid fa-calendar-check"></i>ቀጠሮ (Qetero)
+            </div>
+        </div>
+
+        <!-- 5. ማዕከላዊ ገጾች (App Dynamic View Containers) -->
+        
+        <!-- ማውጫ 1: ፈተና (Quiz Area) -->
+        <div id="view-questions" class="app-view">
+            <h2 class="view-title"><i class="fa-solid fa-graduation-cap"></i> የመጽሐፍ ቅዱስ ጥያቄዎች (Trivia Challenge)</h2>
+            <div class="quiz-score-header">
+                <div>የተከማቸ ነጥብ: <span id="quiz-points" style="color:var(--monastic-burgundy);">0</span> ቃል XP</div>
+                <div>ቀሪ ሰዓት: <span id="timer-text" style="color:#c62828;">20</span> ሰከንድ</div>
+            </div>
+            <div class="timer-track"><div id="timer-bar" class="timer-fill"></div></div>
+            <div id="quiz-card-body">
+                <h3 id="quiz-question-text" style="margin-bottom:20px; font-size:1.2rem; color:var(--monastic-burgundy);">የመጀመሪያው የሐዲስ ኪዳን መጽሐፍ የትኛው ነው?</h3>
+                <div id="quiz-options-container">
+                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">ሀ) የዮሐንስ ወንጌል</button>
+                    <button class="quiz-option-btn" onclick="checkAnswer(this, true)">ለ) የማቴዎስ ወንጌል</button>
+                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">ሐ) የሉቃስ ወንጌል</button>
+                    <button class="quiz-option-btn" onclick="checkAnswer(this, false)">መ) የሮሜ መልእክት</button>
+                </div>
+            </div>
+            <button id="next-quiz-btn" class="submit-btn" style="margin-top:20px; display:none; background:var(--royal-gold);" onclick="loadNextQuestion()">ቀጣይ ጥያቄ (Next Question)</button>
+        </div>
+
+        <!-- ማውጫ 2: ነገረ-መለኮት ማህደር (Theological Library View) -->
+        <div id="view-library" class="app-view hidden-view">
+            <h2 class="view-title"><i class="fa-solid fa-book-journal-whills"></i> የተደራጀ የክርስቲያናዊ መጻሕፍት ማህደር</h2>
+            <p class="library-intro">ከታች ካሉት ሶስት ዋና ዋና የእምነት ክፍሎች አንዱን በመምረጥ፣ በሥሩ የተካተቱትን አምስት የነገረ-መለኮት የንባብ ምድቦች ያግኙ።</p>
+            
+            <div class="nested-library-wrapper">
+                
+                <!-- ================== 1. ኦርቶዶክስ ቤተ-መጻሕፍት ================== -->
+                <div class="religion-container">
+                    <div class="religion-main-header bg-orthodox" onclick="toggleElement('lib-orthodox')">
+                        <span><i class="fa-solid fa-cross"></i> የኦርቶዶክስ ማህደር (Orthodox Library)</span>
+                        <i class="fa-solid fa-chevron-down"></i>
                     </div>
-                    <div id="feed-container">
-                        <div class="feed-item">
-                            <div class="feed-meta"><strong>አስተዳዳሪ (Admin)</strong><span>ከ2 ሰዓት በፊት</span></div>
-                            <div>እንኳን ወደ ቃል ክርስቲያን ማኅበር መተግበሪያ በሰላም መጣችሁ። እዚህ ጠቃሚ ትምህርቶችን ያገኛሉ።</div>
+                    <div id="lib-orthodox" class="religion-books-area hidden-view">
+                        
+                        <!-- ንዑስ ምድብ 1 -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('ortho-ot')">
+                                <div class="title-group"><i class="fa-solid fa-scroll sub-icon"></i><span>ብሉይ ኪዳን (Old Testament)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="ortho-ot" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-open book-icon"></i><div class="book-text">የኦሪት ዘፍጥረት አንድምታ ማብራሪያ <span>በቅዱሳን አባቶች ትርጓሜ</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የኦሪት ዘፍጥረት አንድምታ (ኦርቶዶክስ)')">ያንብቡ</button>
+                                </div>
+                            </div>
                         </div>
+
+                        <!-- ንዑስ ምድብ 2 -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('ortho-nt')">
+                                <div class="title-group"><i class="fa-solid fa-book-bible sub-icon"></i><span>ሐዲስ ኪዳን (New Testament)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="ortho-nt" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-bookmark book-icon"></i><div class="book-text">የማቴዎስ ወንጌል አንድምታ ትርጓሜ <span>የጉባኤያት ትንተና</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የማቴዎስ ወንጌል ትርጓሜ (ኦርቶዶክስ)')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ንዑስ ምድብ 3 -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('ortho-hist')">
+                                <div class="title-group"><i class="fa-solid fa-monument sub-icon"></i><span>የቤተክርስቲያን ታሪክ (Church History)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="ortho-hist" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-medical book-icon"></i><div class="book-text">የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ታሪክ <span>ከአክሱም ዘመን ጀምሮ</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የኢትዮጵያ ኦርቶዶክስ ተዋሕዶ ታሪክ')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ንዑስ ምድብ 4 -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('ortho-hist-theo')">
+                                <div class="title-group"><i class="fa-solid fa-gavel sub-icon"></i><span>የታሪክ ቲዎሎጂ (Historical Theology)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="ortho-hist-theo" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-atlas book-icon"></i><div class="book-text">የሶስቱ ዓለም አቀፍ ጉባኤያት ታሪክ <span>ኒቂያ፣ ቁስጥንጥንያ፣ ኤፌሶን</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የሶስቱ ዓለም አቀፍ ጉባኤያት ታሪክ')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ንዑስ ምድብ 5 -->
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('ortho-syst')">
+                                <div class="title-group"><i class="fa-solid fa-layer-group sub-icon"></i><span>ስልታዊ ቲዎሎጂ (Systematic Theology)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="ortho-syst" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book book-icon"></i><div class="book-text">አምስቱ አዕማደ ምስጢር <span>መሠረታዊ የነገረ መለኮት ትምህርት</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('አምስቱ አዕማደ ምስጢር')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
+                <!-- ================== 2. ካቶሊክ ቤተ-መጻሕፍት ================== -->
+                <div class="religion-container">
+                    <div class="religion-main-header bg-catholic" onclick="toggleElement('lib-catholic')">
+                        <span><i class="fa-solid fa-church"></i> የካቶሊክ ማህደር (Catholic Library)</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div id="lib-catholic" class="religion-books-area hidden-view">
+                        
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('cath-ot')">
+                                <div class="title-group"><i class="fa-solid fa-scroll sub-icon"></i><span>ብሉይ ኪዳን (Deuterocanonical Included)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="cath-ot" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-open book-icon"></i><div class="book-text">የመጽሐፈ ጥበብ ማብራሪያ <span>የቀደሙት መጻሕፍት ጥናት</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የመጽሐፈ ጥበብ ማብራሪያ')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('cath-nt')">
+                                <div class="title-group"><i class="fa-solid fa-book-bible sub-icon"></i><span>ሐዲስ ኪዳን (New Testament Study)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="cath-nt" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-bookmark book-icon"></i><div class="book-text">የሮሜ መልእክት ትንተና <span>በካቶሊክ ሊቃውንት እይታ</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የሮሜ መልእክት ትንተና (ካቶሊክ)')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('cath-hist')">
+                                <div class="title-group"><i class="fa-solid fa-monument sub-icon"></i><span>የቤተክርስቲያን ታሪክ (Vatican & Global History)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="cath-hist" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-medical book-icon"></i><div class="book-text">የቫቲካን ጉባኤያት ታሪክ <span>ሁለተኛው የቫቲካን ጉባኤ ውሳኔዎች</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የቫቲካን ጉባኤያት ታሪክ')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sub-category-card">
+                            <div class="sub-category-header" onclick="toggleElement('cath-hist-theo')">
+                                <div class="title-group"><i class="fa-solid fa-gavel sub-icon"></i><span>የታሪክ ቲዎሎጂ (Scholasticism Period)</span></div>
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div id="cath-hist-theo" class="final-books-list hidden-view">
+                                <div class="book-item-row">
+                                    <div class="book-details"><i class="fa-solid fa-book-atlas book-icon"></i><div class="book-text">የቅዱስ ቶማስ አኳይናስ ትምህርቶች <span>የእምነትና አእምሮ ትስስር</span></div></div>
+                                    <button class="btn-read-book" onclick="readBook('የቅዱስ ቶማስ አኳይናስ ትምህርቶች')">ያንብቡ</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
-
         </div>
 
-        <!-- የታችኛው ማውጫ አዝራሮች (Bottom Nav Buttons) -->
-        <div class="bottom-nav">
-            <button id="btn-nav-quiz" class="nav-item active" onclick="switchTab('quiz')">
-                <i class="fa-solid fa-lightbulb"></i><span>ፈተና</span>
-            </button>
-            <button id="btn-nav-library" class="nav-item" onclick="switchTab('library')">
-                <i class="fa-solid fa-book"></i><span>ቤተ-መጻሕፍት</span>
-            </button>
-            <button id="btn-nav-qetero" class="nav-item" onclick="switchTab('qetero')">
-                <i class="fa-solid fa-clock"></i><span>ቀጠሮ</span>
-            </button>
-            <button id="btn-nav-post" class="nav-item" onclick="switchTab('post')">
-                <i class="fa-solid fa-paper-plane"></i><span>ፖስት</span>
-            </button>
-        </div>
     </div>
 
-    <!-- ================= ፫. የቁጥጥር ስክሪፕት (JAVASCRIPT) ================= -->
-    <script>
-        let currentUser = null;
-        let timerInterval = null;
-        let timeLeft = 20;
+    <!-- 6. የግርጌ ማስታወሻ (Site Footer) -->
+    <footer>
+        <p>&copy; 2026 ቃል ክርስቲያናዊ ማኅበረሰብ (Qal). ሁሉም መብቱ የተጠበቀ ነው።</p>
+    </footer>
 
-        // የፈተና ጥያቄ ናሙና
-        const sampleQuestion = {
-            q: "በመጽሐፍ ቅዱስ ውስጥ የመጀመሪያው መጽሐፍ የትኛው ነው?",
-            options: ["ዘፍጥረት", "ዘጸአት", "ዘሌዋውያን", "መዝሙረ ዳዊት"],
-            correct: 0
-        };
-
-        // 1. የምዝገባ ቁጥጥር
-        function handleRegistration(event) {
-            event.preventDefault();
-            
-            currentUser = {
-                name: document.getElementById('reg-name').value,
-                phone: document.getElementById('reg-phone').value,
-                religion: document.getElementById('reg-religion').value,
-                role: document.getElementById('reg-role').value
-            };
-
-            // የምዝገባ ገጽን መደበቅ፣ ዋናውን መተግበሪያ ማሳየት
-            document.getElementById('registration-screen').classList.add('hidden');
-            document.getElementById('main-app-screen').classList.remove('hidden');
-
-            // የሚና ባጅ ማስተካከል
-            document.getElementById('user-display').innerText = currentUser.role;
-
-            // መተግበሪያው ሲከፈት መጀመሪያ ፈተናውን ማስጀመር
-            loadQuizQuestion();
-        }
-
-        // 2. የገጾች መቀያየሪያ (Tab Switcher)
-        function switchTab(tabName) {
-            // ሁሉንም አዝራሮች ንቁ ካልሆነ ቀለም ማድረግ
-            document.getElementById('btn-nav-quiz').classList.remove('active');
-            document.getElementById('btn-nav-library').classList.remove('active');
-            document.getElementById('btn-nav-qetero').classList.remove('active');
-            document.getElementById('btn-nav-post').classList.remove('active');
-
-            // ሁሉንም ይዘቶች መደበቅ
-            document.getElementById('tab-quiz').classList.add('hidden');
-            document.getElementById('tab-library').classList.add('hidden');
-            document.getElementById('tab-qetero').classList.add('hidden');
-            document.getElementById('tab-post').classList.add('hidden');
-
-            // የተመረጠውን ማሳየት
-            document.getElementById('btn-nav-' + tabName).classList.add('active');
-            document.getElementById('tab-' + tabName).classList.remove('hidden');
-
-            // ወደ ፈተና ሲመለሱ ታይመሩን እንደገና ማስነሳት
-            if (tabName === 'quiz' && document.getElementById('score-area').classList.contains('hidden')) {
-                startTimer();
-            } else {
-                clearInterval(timerInterval);
-            }
-        }
-
-        // 3. የፈተና ቆጣሪ እና አሠራር (Quiz logic with 20s timer)
-        function loadQuizQuestion() {
-            document.getElementById('quiz-question').innerText = sampleQuestion.q;
-            const optionsBox = document.getElementById('quiz-options-box');
-            optionsBox.innerHTML = '';
-
-            sampleQuestion.options.forEach((opt, index) => {
-                const btn = document.createElement('button');
-                btn.innerText = opt;
-                btn.onclick = () => answerQuiz(index);
-                optionsBox.appendChild(btn);
-            });
-
-            timeLeft = 20;
-            document.getElementById('timer-count').innerText = timeLeft;
-            startTimer();
-        }
-
-        function startTimer() {
-            clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                timeLeft--;
-                document.getElementById('timer-count').innerText = timeLeft;
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    endQuiz("ጊዜው አልቋል! ፈተናውን በሰዓቱ አላጠናቀቁም።");
-                }
-            }, 1000);
-        }
-
-        function answerQuiz(selectedIndex) {
-            clearInterval(timerInterval);
-            if (selectedIndex === sampleQuestion.correct) {
-                endQuiz("ትክክለኛ መልስ! 10 ነጥብ አግኝተዋል። 🎉");
-            } else {
-                endQuiz("ያልተሳካ ሙከራ! ትክክለኛው መልስ '" + sampleQuestion.options[sampleQuestion.correct] + "' ነበር።");
-            }
-        }
-
-        function endQuiz(message) {
-            document.getElementById('quiz-area').classList.add('hidden');
-            const scoreArea = document.getElementById('score-area');
-            scoreArea.classList.remove('hidden');
-            scoreArea.innerHTML = `<p>${message}</p><button class="btn-submit" onclick="resetQuiz()">እንደገና ፈትን</button>`;
-        }
-
-        function resetQuiz() {
-            document.getElementById('score-area').classList.add('hidden');
-            document.getElementById('quiz-area').classList.remove('hidden');
-            loadQuizQuestion();
-        }
-
-        // 4. የቀጠሮ አያያዝ (Qetero logic)
-        function saveQetero() {
-            const type = document.getElementById('qetero-type').value;
-            const time = document.getElementById('qetero-time').value;
-            if (!time) { alert("እባክዎ ቀን እና ሰዓት ይምረጡ"); return; }
-
-            const list = document.getElementById('qetero-list');
-            const item = document.createElement('div');
-            item.style.background = '#fff';
-            item.style.padding = '10px';
-            item.style.marginTop = '10px';
-            item.style.borderRadius = '5px';
-            item.style.borderLeft = '4px solid #5cb85c';
-            item.innerHTML = `<strong>${type}</strong><br><small style="color:var(--text-muted);">${time.replace('T', ' ')}</small>`;
-            list.appendChild(item);
-            
-            document.getElementById('qetero-time').value = '';
-            alert("ቀጠሮዎ በተሳካ ሁኔታ ተይዟል!");
-        }
-
-        // 5. የፖስት አዘገጃጀት (Post logic)
-        function createPost() {
-            const text = document.getElementById('post-text').value;
-            if (!text.trim()) return;
-
-            const container = document.getElementById('feed-container');
-            const newPost = document.createElement('div');
-            newPost.className = 'feed-item';
-            
-            const author = currentUser ? currentUser.name : "ያልታወቀ ተጠቃሚ";
-            
-            newPost.innerHTML = `
-                <div class="feed-meta"><strong>${author} (${currentUser.role})</strong><span>አሁን</span></div>
-                <div>${text}</div>
-            `;
-            container.insertBefore(newPost, container.firstChild);
-            document.getElementById('post-text').value = '';
-        }
-    </script>
 </body>
 </html>
