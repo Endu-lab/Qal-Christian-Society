@@ -3,511 +3,881 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ቃል (Qal) - Multi-Purpose Theological System</title>
-    <link rel="manifest" href="manifest.json?v=2.7">
-    <meta name="theme-color" content="#1a2a6c">
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <title>Qal (ቃል) Christian Society</title>
+    
+    <!-- External Typography & Icon CDNs -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        :root { 
-            --primary: #1a2a6c; 
-            --accent: #f39c12; 
-            --sky-blue: #87CEEB; 
-            --white: #ffffff; 
-            --success: #28a745; 
-            --dark: #333333;
-        }
-        
-        html, body { 
-            margin: 0; padding: 0; height: 100%; width: 100%; 
-            display: flex; flex-direction: column; 
-            background: #f4f7f6;
-            font-family: 'Nyala', 'Segoe UI', sans-serif; 
-            overflow: hidden;
+        :root {
+            --primary-bg: #E1F0FA;
+            --dark-blue: #1a2a6c;
+            --text-dark: #2c3e50;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+            --border-radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Denominational Color Codes */
+            --orthodox-gold: #f39c12;
+            --evangelical-teal: #16a085;
+            --catholic-purple: #8e44ad;
         }
 
-        .admin-nav {
-            background: var(--primary);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 10;
-        }
-        .nav-tab {
-            color: white;
-            background: transparent;
-            border: none;
-            padding: 10px 15px;
-            font-size: 1.1em;
-            cursor: pointer;
-            border-bottom: 3px solid transparent;
-            font-weight: bold;
-        }
-        .nav-tab.active {
-            border-bottom: 3px solid var(--accent);
-            color: var(--accent);
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
-        .view-panel {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px;
+        body {
+            font-family: 'Inter', 'Nyala', 'Segoe UI', sans-serif;
+            background-color: #f8fafc;
+            color: var(--text-dark);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            -webkit-overflow-scrolling: touch;
+            line-height: 1.6;
+            position: relative;
         }
-        
-        .card-container {
-            background: var(--white);
+
+        /* 1. Header Layout */
+        header {
+            background: linear-gradient(135deg, #D4E6F1 0%, #E1F0FA 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--dark-blue);
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            color: var(--dark-blue);
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: -0.5px;
+        }
+
+        header .sub-line {
+            font-style: italic;
+            color: #566573;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .main-container {
+            max-width: 800px;
             width: 100%;
-            max-width: 600px;
-            padding: 25px;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            box-sizing: border-box;
-            margin-bottom: 120px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
         }
 
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border-radius: 8px; border: 1.5px solid #ddd; box-sizing: border-box; font-size: 1em; font-family: inherit; }
-        input:focus, select:focus { border-color: var(--primary); }
-        .btn { width: 100%; padding: 14px; background: var(--primary); color: white; border: none; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 1.1em; transition: 0.2s; }
-        .btn:active { transform: scale(0.98); }
-        
-        #timer-box { width: 50px; height: 50px; border: 3px solid #e74c3c; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-weight: 900; color: #e74c3c; font-size: 1.3em; }
-        .opt-btn { background: #ffffff; color: #333; text-align: left; border: 2px solid #eee; display: flex; align-items: center; margin-bottom: 8px; margin-top: 5px; width: 100%; padding: 14px; border-radius: 12px; cursor: pointer; font-weight: bold;}
-        .label { background: var(--primary); color: white; min-width: 32px; height: 32px; border-radius: 8px; margin-right: 15px; display: flex; align-items: center; justify-content: center; }
-
-        footer { 
-            position: fixed; bottom: 0; width: 100%; height: 95px;
-            background: white; border-top: 3px solid var(--primary); 
-            display: flex; align-items: center; justify-content: center; z-index: 2000; 
+        /* 2. Role Registration Matrix */
+        .role-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
         }
-        .ad-banner-img { height: 70px; width: auto; max-width: 95%; object-fit: contain; border-radius: 8px; cursor: pointer; }
-        .hidden { display: none !important; }
 
-        .badge { display: inline-block; padding: 4px 8px; background: #eee; border-radius: 5px; font-size: 0.85em; margin-right: 5px; font-weight: bold; color: #555;}
+        .role-btn {
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
 
-        @keyframes shake {
-            0%, 100% { transform: translate(0, 0); }
-            20%, 60% { transform: translate(-4px, 2px); }
-            40%, 80% { transform: translate(4px, -2px); }
+        .role-producer {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .role-reader {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .role-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.12);
+            filter: brightness(1.05);
+        }
+
+        /* 3. Drag & Drop Viewport Floating Ads */
+        #movable-ad-box {
+            position: relative;
+            background: var(--white);
+            border: 2px dashed #cbd5e1;
+            padding: 15px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            cursor: move;
+            user-select: none;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .ad-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+
+        .ad-content i {
+            font-size: 1.5rem;
+            color: var(--dark-blue);
+        }
+
+        .btn-reset-ad {
+            background: #f1f5f9;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            transition: var(--transition);
+        }
+
+        .btn-reset-ad:hover {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        /* 4. Tab / Navigation System */
+        .navigation-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .nav-card {
+            background: var(--white);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 2px solid transparent;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .nav-card i {
+            display: block;
+            font-size: 1.4rem;
+            margin-bottom: 6px;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.08);
+            color: var(--dark-blue);
+        }
+
+        .nav-card.active-tab {
+            background: var(--white);
+            border-color: var(--dark-blue);
+            color: var(--dark-blue);
+            transform: scale(1.02);
+        }
+
+        /* App View Viewport Architecture */
+        .app-view {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            min-height: 400px;
+        }
+
+        .hidden-view {
+            display: none !important;
+        }
+
+        h2.view-title {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        /* Form elements common styling */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--dark-blue);
+            box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.1);
+        }
+
+        .submit-btn {
+            background: var(--dark-blue);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .submit-btn:hover {
+            filter: brightness(1.15);
+        }
+
+        /* 5. Library Deep Cascades */
+        .denom-wrapper {
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+        }
+
+        .denom-header {
+            padding: 18px 20px;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .denom-orthodox { background: var(--orthodox-gold); }
+        .denom-evangelical { background: var(--evangelical-teal); }
+        .denom-catholic { background: var(--catholic-purple); }
+
+        .subcategories-box {
+            padding: 10px 20px;
+            background: #fafafa;
+        }
+
+        .sub-collapse-item {
+            margin: 8px 0;
+            border-left: 3px solid #cbd5e1;
+            padding-left: 12px;
+        }
+
+        .sub-title-trigger {
+            font-weight: 600;
+            padding: 6px 0;
+            cursor: pointer;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sub-title-trigger:hover {
+            color: var(--dark-blue);
+        }
+
+        .book-payload-list {
+            padding: 8px 10px;
+            background: var(--white);
+            border-radius: 8px;
+            margin-top: 5px;
+        }
+
+        .book-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .book-row:last-child { border-bottom: none; }
+        .book-title-info { font-weight: 500; font-size: 0.95rem; }
+        .book-title-info span { display: block; font-size: 0.8rem; color: #7f8c8d; }
+
+        .btn-read-more {
+            background: #e1f0fa;
+            border: none;
+            color: var(--dark-blue);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* 6. Question Components */
+        .static-q-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 15px;
+        }
+
+        .static-q-card h4 { color: var(--dark-blue); margin-bottom: 5px; }
+        .static-q-meta { font-size: 0.8rem; color: #94a3b8; margin-bottom: 8px; }
+        .vote-bar { display: flex; gap: 15px; font-size: 0.9rem; color: #64748b; margin-top: 8px; }
+        .vote-bar i { cursor: pointer; transition: var(--transition); }
+        .vote-bar i:hover { color: var(--dark-blue); }
+
+        /* 7. Posts Components */
+        .feed-post {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .post-header-badge {
+            display: inline-block;
+            background: #edf2f7;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--dark-blue);
+            margin-bottom: 8px;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 12px;
+            border-top: 1px solid #f1f5f9;
+            padding-top: 10px;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .post-actions span { cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        .post-actions span:hover { color: var(--dark-blue); }
+
+        /* Modal Subsystems */
+        .modal-overlay {
+            position: fixed; top:0; left:0; right:0; bottom:0;
+            background: rgba(0,0,0,0.4); display:flex; align-items:center; justify-content:center;
+            z-index: 2000;
+        }
+
+        /* 8. Qetero Layout */
+        .week-calendar-ui {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .cal-day-cell {
+            background: #f1f5f9;
+            padding: 10px 5px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .cal-day-cell:hover, .cal-day-cell.selected-day {
+            background: var(--dark-blue);
+            color: white;
+        }
+
+        /* Footer context */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 30px 20px;
+            background: #f1f5f9;
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Responsive Optimization adjustments */
+        @media(max-width: 600px) {
+            header h1 { font-size: 1.8rem; }
+            .navigation-grid { grid-template-columns: repeat(2, 1fr); }
+            .week-calendar-ui { grid-template-columns: repeat(4, 1fr); gap: 8px; }
         }
     </style>
 </head>
 <body>
 
-    <audio id="snd-correct" src="https://raw.githubusercontent.com/Endu-lab/Bible_Quize/main/assets/sounds/correct.mp3"></audio>
-    <audio id="snd-wrong" src="https://raw.githubusercontent.com/Endu-lab/Bible_Quize/main/assets/sounds/wrong.mp3"></audio>
-    <audio id="ad-audio" preload="auto"></audio>
+    <!-- 1. Header Area -->
+    <header>
+        <h1>Qal (ቃል) Christian Society</h1>
+        <div class="sub-line">“በቃሉ የተገናኘ ማኅበረሰብ”</div>
+    </header>
 
-    <!-- Top Architecture Navigation Bar -->
-    <nav class="admin-nav">
-        <button class="nav-tab active" onclick="switchTab('library')">📚 ማህደር</button>
-        <button class="nav-tab" onclick="switchTab('questions')">📝 ጥያቄዎች</button>
-        <button class="nav-tab" onclick="switchTab('qetero')">📅 ቀጠሮ</button>
-        <button class="nav-tab" onclick="switchTab('post')">🚀 የቀጥታ ጨዋታ</button>
-    </nav>
-
-    <!-- 1. LIBRARY INTERFACE PANEL -->
-    <div id="view-library" class="view-panel">
-        <div class="card-container">
-            <h2>📚 ስልታዊ ማህደር ማውጫ (Theological Library)</h2>
-            
-            <label>1. የሃይማኖት ዘርፍ (Religious Category):</label>
-            <select id="libReligion">
-                <option value="Orthodox">Orthodox (ኦርቶዶክስ)</option>
-                <option value="Catholic">Catholic (ካቶሊክ)</option>
-                <option value="Evangelical">Evangelical (ወንጌላዊ)</option>
-            </select>
-
-            <label>2. የባህሪ ዓይነት (Feature Type):</label>
-            <select id="libFeature" onchange="toggleTheologyFields()">
-                <option value="QuestionBank">Question Bank (የጥያቄ ባንክ)</option>
-                <option value="BookPDF">Book / PDF Resource (መጽሐፍ)</option>
-            </select>
-
-            <!-- Cascading Theological Fields -->
-            <div id="theology-sub-section">
-                <label>3. የቲዎሎጂ ክፍፍል (Theological Field):</label>
-                <select id="libTheology">
-                    <option value="Systematic">Systematic Theology (ስልታዊ ቲዎሎጂ)</option>
-                    <option value="OldTestament">Old Testament (ብሉይ ኪዳን)</option>
-                    <option value="NewTestament">New Testament (ሐዲስ ኪዳን)</option>
-                    <option value="Historical">Historical Theology (የቤተክርስቲያን ታሪክ)</option>
-                </select>
-            </div>
-
-            <input type="text" id="libBlockId" placeholder="የማህደር ልዩ መለያ ኮድ (e.g., orth_ot_01)">
-            <input type="text" id="libBlockName" placeholder="የክፍሉ ርዕስ (e.g., የኦሪት ዘፍጥረት ጥናት)">
-            <textarea id="libBookUrl" class="hidden" placeholder="የመጽሐፍ/PDF ሊንክ ያስገቡ (URL)"></textarea>
-
-            <button class="btn" onclick="saveLibraryBlock()">አዲስ ማህደር ክፍል ፍጠር</button>
-            <hr style="margin:20px 0;">
-            <h3>የተመዘገቡ የቲዎሎጂ ማህደሮች</h3>
-            <div id="library-list-output">በመጫን ላይ...</div>
+    <div class="main-container">
+        
+        <!-- 2. Role Registration Matrix -->
+        <div class="role-section">
+            <button class="role-btn role-producer" onclick="registerRole('አዘጋጅ (Producer)')">
+                <i class="fa-solid fa-pen-nib"></i> አዘጋጅ (Producer)
+            </button>
+            <button class="role-btn role-reader" onclick="registerRole('አንባቢ (Reader)')">
+                <i class="fa-solid fa-book-open"></i> አንባቢ (Reader)
+            </button>
         </div>
-    </div>
 
-    <!-- 2. QUESTION AUTHORING INTERFACE PANEL (Ads are blocked here!) -->
-    <div id="view-questions" class="view-panel hidden">
-        <div class="card-container">
-            <h2>📝 የጥያቄዎች ማዘጋጃ ገጽ (Question Workspace)</h2>
-            <p style="color:#777; font-size:0.9em;">ማሳሰቢያ፡ ጥያቄዎችን በተረጋጋ ሁኔታ እንዲያዘጋጁ ማስታወቂያዎች በዚህ ገጽ ላይ አይታዩም።</p>
-            
-            <label>ለመመደብ የሚፈልጉትን ማህደር ይምረጡ:</label>
-            <select id="qTargetBlock"><option value="">ማህደሮችን በመፈለግ ላይ...</option></select>
-            
-            <input type="text" id="addQText" placeholder="ጥያቄውን እዚህ ይጻፉ">
-            <input type="text" id="addOptA" placeholder="ምርጫ ሀ">
-            <input type="text" id="addOptB" placeholder="ምርጫ ለ">
-            <input type="text" id="addOptC" placeholder="ምርጫ ሐ">
-            <input type="text" id="addOptD" placeholder="ምርጫ መ">
-            
-            <label>ትክክለኛ መልስ:</label>
-            <select id="addQCorrect">
-                <option value="A">ሀ</option><option value="B">ለ</option>
-                <option value="C">ሐ</option><option value="D">መ</option>
-            </select>
-            <button class="btn" onclick="saveQuestionToLibrary()">ጥያቄውን በማህደር መዝግብ</button>
-        </div>
-    </div>
-
-    <!-- 3. QETERO (SCHEDULER) INTERFACE PANEL -->
-    <div id="view-qetero" class="view-panel hidden">
-        <div class="card-container">
-            <h2>📅 ቀጠሮ ሰሌዳ ማስተካከያ (Session Scheduler)</h2>
-            <p>በቀጥታ ጨዋታው ላይ ተማሪዎች እንዲፈተኑበት የሚፈልጉትን ንቁ የጥያቄ ማህደር ክፍል ይምረጡ።</p>
-            <label>የቀጥታ ጨዋታው ማህደር ክፍል (Active Session Block):</label>
-            <select id="qeteroActiveBlock"><option value="">ማህደሮችን በመፈለግ ላይ...</option></select>
-            <button class="btn" style="background:#f39c12;" onclick="updateQeteroSchedule()">ቀጠሮውን አጽድቅ (Activate Session)</button>
-        </div>
-    </div>
-
-    <!-- 4. POST (LIVE PLAYER APPLICATION WINDOW) -->
-    <div id="view-post" class="view-panel hidden" style="background: linear-gradient(180deg, var(--sky-blue) 0%, #f0f8ff 100%);">
-        <div class="card-container" style="text-align:center;">
-            <div id="pet" style="font-size: 45px; margin-bottom: 8px;">🐑</div>
-            
-            <!-- Secure Role Identification & Login Viewport -->
-            <div id="scr-start">
-                <h2 style="color:var(--primary); margin-top:0;">ቃል (Qal) የመግቢያ ገጽ</h2>
-                
-                <label style="text-align:left; display:block; font-weight:bold; margin-bottom:5px;">የአጠቃቀም ሚና (Your Role):</label>
-                <select id="uRole">
-                    <option value="Reader">Reader / ተማሪ (አንባቢ)</option>
-                    <option value="Developer">Developer / አደራጅ (አስተማሪ)</option>
-                </select>
-
-                <input type="text" id="uName" placeholder="ሙሉ ስም">
-                <input type="tel" id="uPhone" placeholder="ስልክ ቁጥር">
-                <button class="btn" onclick="startApp()">መፈተን ጀምር ➔</button>
-            </div>
-
-            <!-- Quiz Engine Viewport -->
-            <div id="scr-quiz" class="hidden">
-                <div id="timer-box">20</div>
-                <p id="qText" style="font-weight:bold; font-size:1.15em; min-height:50px; margin: 10px 0;"></p>
-                <div id="opts-box"></div>
-            </div>
-
-            <!-- Results & Reward Mechanism Viewport -->
-            <div id="scr-res" class="hidden">
-                <h1 id="res-pct" style="color:var(--accent); font-size:4em; margin:10px 0;">0%</h1>
-                <div id="roll-section" class="hidden">
-                    <p style="font-weight:bold;">ዕጣዎን ይሞክሩ!</p>
-                    <div id="gift-box" style="font-size:60px; cursor:pointer;" onclick="startRoll()">🎁</div>
+        <!-- 3. Movable Viewport Drag & Drop Ads System -->
+        <div id="movable-ad-box">
+            <div class="ad-content">
+                <i class="fa-solid fa-rectangle-ad"></i>
+                <div>
+                    <strong>Sponsor: የቅዱሳት መጻሕፍት ማኅበር</strong>
+                    <span style="display:block; font-size:0.85rem; color:#64748b;">10% off for Qal members structural catalog.</span>
                 </div>
-                <button class="btn" onclick="resetQuizState()" style="background:#888;">እንደገና ጨዋታ ጀምር</button>
+            </div>
+            <button class="btn-reset-ad" onclick="resetAdPosition(event)">Reset Ads</button>
+        </div>
+
+        <!-- 4. Main Tab Navigation -->
+        <div class="navigation-grid">
+            <div class="nav-card active-tab" id="tab-questions" onclick="switchView('questions')">
+                <i class="fa-solid fa-circle-question"></i>Question
+            </div>
+            <div class="nav-card" id="tab-library" onclick="switchView('library')">
+                <i class="fa-solid fa-book-atlas"></i>Library
+            </div>
+            <div class="nav-card" id="tab-posts" onclick="switchView('posts')">
+                <i class="fa-solid fa-rss"></i>Posts
+            </div>
+            <div class="nav-card" id="tab-qetero" onclick="switchView('qetero')">
+                <i class="fa-solid fa-calendar-check"></i>ቀጠሮ
+            </div>
+        </div>
+
+        <!-- 5. App Central Screen Panels -->
+        
+        <!-- Tab 1: Question Form Viewport -->
+        <div id="view-questions" class="app-view">
+            <h2 class="view-title"><i class="fa-solid fa-feather-pointed"></i> ጥያቄ አቅርብ | Ask a Question</h2>
+            <form onsubmit="handleQuestionSubmit(event)">
+                <div class="form-group">
+                    <label>ሙሉ ስም (Full Name)</label>
+                    <input type="text" id="qName" required placeholder="የእርስዎን ስም ያስገቡ">
+                </div>
+                <div class="form-group">
+                    <label>የጥያቄው ርዕስ (Question Title)</label>
+                    <input type="text" id="qTitle" required placeholder="ዋናውን ርዕስ በአጭሩ">
+                </div>
+                <div class="form-group">
+                    <label>የጥያቄው ዝርዝር (Question Details)</label>
+                    <textarea id="qDetails" rows="4" required placeholder="የጥያቄዎን ዝርዝር እዚህ ይጻፉ..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ዘርፍ (Category)</label>
+                    <select id="qCategory">
+                        <option value="Theology">Theology (ቲዎሎጂ)</option>
+                        <option value="Bible">Bible (መጽሐፍ ቅዱስ)</option>
+                        <option value="Christian Living">Christian Living (ክርስቲያናዊ ሕይወት)</option>
+                        <option value="Other">Other (ሌላ)</option>
+                    </select>
+                </div>
+                <button type="submit" class="submit-btn">ጥያቄውን አቅርብ</button>
+            </form>
+
+            <h3 style="margin-top: 30px; color: var(--dark-blue);">የቅርብ ጊዜ ጥያቄዎች</h3>
+            <div class="static-q-card">
+                <h4>ስለ ስላሴ አስተምህሮ ማብራሪያ?</h4>
+                <div class="static-q-meta">በ እምነቱ | ዘርፍ: Theology</div>
+                <p style="font-size:0.95rem; color:#475569;">በኦርቶዶክስ ተዋህዶ ትውፊት የእምነት መሠረታት ውስጥ የምስጢረ ሥላሴ አንድነትና ሦስትነት እንዴት ይብራራል?</p>
+                <div class="vote-bar">
+                    <span><i class="fa-regular fa-thumbs-up"></i> 24</span>
+                    <span><i class="fa-regular fa-thumbs-down"></i> 1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Theological Library Tree Viewport -->
+        <div id="view-library" class="app-view hidden-view">
+            <h2 class="view-title"><i class="fa-solid fa-layer-group"></i> ማህደር (Theological Library Matrix)</h2>
+            
+            <!-- Category Box 1: Orthodox -->
+            <div class="denom-wrapper">
+                <div class="denom-header denom-orthodox" onclick="toggleAccordion('orth-box')">
+                    <span>የኦርቶዶክስ ተዋሕዶ ማኅደር (Orthodox)</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div id="orth-box" class="subcategories-box hidden-view">
+                    <div class="sub-collapse-item">
+                        <div class="sub-title-trigger" onclick="toggleAccordion('orth-st')">Systematic Theology (ስልታዊ ቲዎሎጂ) <i class="fa-solid fa-plus"></i></div>
+                        <div id="orth-st" class="book-payload-list hidden-view">
+                            <div class="book-row">
+                                <div class="book-title-info">የእምነት መሠረታት <span>by Abune Paulos</span></div>
+                                <button class="btn-read-more" onclick="readBook('የእምነት መሠረታት')">Read More</button>
+                            </div>
+                            <div class="book-row">
+                                <div class="book-title-info">ሥላሴ በኦርቶዶክስ ትውፊት <span>ሊቃውንተ ቤተክርስቲያን</span></div>
+                                <button class="btn-read-more" onclick="readBook('ሥላሴ በኦርቶዶክስ ትውፊት')">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-collapse-item">
+                        <div class="sub-title-trigger" onclick="toggleAccordion('orth-nt')">New Testament (ሐዲስ ኪዳን) <i class="fa-solid fa-plus"></i></div>
+                        <div id="orth-nt" class="book-payload-list hidden-view">
+                            <div class="book-row"><div class="book-title-info">የማቴዎስ ወንጌል አንድምታ ትርጓሜ</div><button class="btn-read-more" onclick="readBook('የማቴዎስ ወንጌል አንድምታ')">Read More</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Box 2: Evangelical -->
+            <div class="denom-wrapper">
+                <div class="denom-header denom-evangelical" onclick="toggleAccordion('evan-box')">
+                    <span>የወንጌላውያን ማኅደር (Evangelical)</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div id="evan-box" class="subcategories-box hidden-view">
+                    <div class="sub-collapse-item">
+                        <div class="sub-title-trigger" onclick="toggleAccordion('evan-nt')">New Testament (ሐዲስ ኪዳን) <i class="fa-solid fa-plus"></i></div>
+                        <div id="evan-nt" class="book-payload-list hidden-view">
+                            <div class="book-row">
+                                <div class="book-title-info">Romans: The Gospel of Grace <span>by John Stott</span></div>
+                                <button class="btn-read-more" onclick="readBook('Romans: The Gospel of Grace')">Read More</button>
+                            </div>
+                            <div class="book-row">
+                                <div class="book-title-info">ማቴዎስ ወንጌል – ትርጓሜ <span>የመጽሐፍ ቅዱስ ማብራሪያ</span></div>
+                                <button class="btn-read-more" onclick="readBook('ማቴዎስ ወንጌል – ትርጓሜ')">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Box 3: Catholic -->
+            <div class="denom-wrapper">
+                <div class="denom-header denom-catholic" onclick="toggleAccordion('cath-box')">
+                    <span>የካቶሊክ ማኅደር (Catholic)</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div id="cath-box" class="subcategories-box hidden-view">
+                    <div class="sub-collapse-item">
+                        <div class="sub-title-trigger" onclick="toggleAccordion('cath-mb')">Ministerial Books (የአገልግሎት መጻሕፍት) <i class="fa-solid fa-plus"></i></div>
+                        <div id="cath-mb" class="book-payload-list hidden-view">
+                            <div class="book-row">
+                                <div class="book-title-info">Catechism of the Catholic Church <span>Section on Ministry</span></div>
+                                <button class="btn-read-more" onclick="readBook('Catechism of the Catholic Church')">Read More</button>
+                            </div>
+                            <div class="book-row">
+                                <div class="book-title-info">The Priesthood in Ethiopia <span>Historical Overview</span></div>
+                                <button class="btn-read-more" onclick="readBook('The Priesthood in Ethiopia')">Read More</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Tab 3: Social Feed Viewport -->
+        <div id="view-posts" class="app-view hidden-view">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="view-title" style="margin:0; border:none; padding:0;"><i class="fa-solid fa-signs-post"></i> ልጥፎች (Community Feed)</h2>
+                <button class="role-btn role-producer" style="padding:8px 16px; font-size:0.9rem;" onclick="openPostModal()">
+                    <i class="fa-solid fa-plus"></i> Create Post
+                </button>
+            </div>
+
+            <div id="news-feed-container">
+                <div class="feed-post">
+                    <span class="post-header-badge">የጸሎት ጥያቄ</span>
+                    <h3 style="margin: 4px 0 8px;">Prayer request for healing</h3>
+                    <p style="color:#475569;">በህመም ላይ ላሉት ወንድማችን በጋራ እንድንጸልይ የተደረገ ጥሪ። ጌታ የፈውስ እጁን እንዲዘረጋልን።</p>
+                    <div class="post-actions">
+                        <span><i class="fa-regular fa-heart"></i> Like</span>
+                        <span><i class="fa-regular fa-comment"></i> Comment</span>
+                        <span><i class="fa-solid fa-share-nodes"></i> Share</span>
+                    </div>
+                </div>
+
+                <div class="feed-post">
+                    <span class="post-header-badge">የበጎ አድራጎት ጥሪ</span>
+                    <h3 style="margin: 4px 0 8px;">Helping refugees</h3>
+                    <p style="color:#475569;">Support and shelter integration for displaced families. Contact ministry leads to drop off supplies.</p>
+                    <div class="post-actions">
+                        <span><i class="fa-regular fa-heart"></i> Like</span>
+                        <span><i class="fa-regular fa-comment"></i> Comment</span>
+                        <span><i class="fa-solid fa-share-nodes"></i> Share</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: Appointment Booking Viewport -->
+        <div id="view-qetero" class="app-view hidden-view">
+            <h2 class="view-title"><i class="fa-regular fa-calendar-check"></i> ቀጠሮ ለመያዝ – Schedule</h2>
+            
+            <form onsubmit="handleQeteroSubmit(event)">
+                <div class="form-group">
+                    <label>አማካሪ/መምህር ይምረጡ (Select Leader)</label>
+                    <select id="qetLeader">
+                        <option value="Pastor Dawit">Pastor Dawit (የወንጌል አገልግሎት)</option>
+                        <option value="Aba Melaku">Aba Melaku (የነገረ መለኮት አማካሪ)</option>
+                        <option value="Counselor Hanna">Counselor Hanna (ክርስቲያናዊ ምክር)</option>
+                    </select>
+                </div>
+
+                <label style="display:block; font-weight:600; margin-bottom:8px; font-size:0.95rem;">ቀን ይምረጡ (Select Weekday)</label>
+                <div class="week-calendar-ui">
+                    <div class="cal-day-cell selected-day" onclick="selectDay(this, 'Mon')">Mon<br>25</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'Tue')">Tue<br>26</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'Wed')">Wed<br>27</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'Thu')">Thu<br>28</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'Fri')">Fri<br>29</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'Sat')">Sat<br>30</div>
+                    <div class="cal-day-cell" onclick="selectDay(this, 'Sun')">Sun<br>31</div>
+                </div>
+
+                <div class="form-group">
+                    <label>ሰዓት (Time Slot)</label>
+                    <input type="time" id="qetTime" required value="09:00">
+                </div>
+
+                <div class="form-group">
+                    <label>የቀጠሮው ምክንያት (Topic Context)</label>
+                    <input type="text" id="qetTopic" required placeholder="ለምሳሌ፡ ስለ መጽሐፍ ቅዱስ ጥናት">
+                </div>
+
+                <button type="submit" class="submit-btn" style="background:#e67e22;">Book Appointment (ቀጠሮ ያዙ)</button>
+            </form>
+
+            <h3 style="margin-top:30px; color:var(--dark-blue);">የተያዙ ቀጠሮዎች (Upcoming)</h3>
+            <div class="static-q-card" style="border-left: 4px solid #e67e22;">
+                <strong>Aba Melaku</strong> - የነገረ መለኮት አማካሪ<br>
+                <span style="font-size:0.85rem; color:#64748b;"><i class="fa-regular fa-clock"></i> ረቡዕ (Wed) - ከቀኑ 8:00 ሰዓት | ርዕስ: የስላሴ ትምህርት</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal Form for Creating Posts -->
+    <div id="post-modal" class="modal-overlay hidden-view">
+        <div class="app-view" style="width:100%; max-width:500px; min-height:auto;">
+            <h3 style="margin-bottom:15px; color:var(--dark-blue);">አዲስ ልጥፍ ፍጠር (New Post)</h3>
+            <div class="form-group">
+                <label>የልጥፍ ዓይነት</label>
+                <select id="modalPostType">
+                    <option value="የጸሎት ጥያቄ">የጸሎት ጥያቄ (Prayer)</option>
+                    <option value="የበጎ አድራጎት ጥሪ">የበጎ አድራጎት ጥሪ (Charity)</option>
+                    <option value="የመጽሐፍ ምክረ ሐሳብ">የመጽሐፍ ምክረ ሐሳብ (Review)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>ርዕስ (Title)</label>
+                <input type="text" id="modalPostTitle">
+            </div>
+            <div class="form-group">
+                <label>ይዘት (Body Content)</label>
+                <textarea id="modalPostBody" rows="4"></textarea>
+            </div>
+            <div style="display:flex; gap:10px; margin-top:15px;">
+                <button class="submit-btn" onclick="submitModalPost()">លጥፍ</button>
+                <button class="submit-btn" style="background:#95a5a6;" onclick="closePostModal()">Cancel</button>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER ADVERTISING LAYER -->
-    <footer id="global-ad-footer">
-        <div id="ad-banner-box" style="width:100%; height:100%; display:flex; justify-content:center; align-items:center; gap:10px;">
-            <p style="color:#ccc; font-size:0.7em;">Loading Ad Loops...</p>
-        </div>
+    <!-- Footer Area -->
+    <footer>
+        Qal Christian Society – በቃሉ ሕይወት ያገኛል
     </footer>
 
 <script>
-    // --- FIREBASE ACCOUNT CONFIGURATION ---
-    const firebaseConfig = { 
-        apiKey: "AIzaSyCLiqB5FqygKqPwLlctFsvQBP58fHontnc", 
-        authDomain: "biblicallanguagequizbot.firebaseapp.com", 
-        projectId: "biblicallanguagequizbot", 
-        storageBucket: "biblicallanguagequizbot.firebasestorage.app", 
-        messagingSenderId: "1040255793336", 
-        appId: "1:1040255793336:web:83444c54330769d257dc4d" 
-    };
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    // --- AD VISIBILITY ROUTER ---
-    function switchTab(tabName) {
-        document.querySelectorAll('.view-panel').forEach(panel => panel.classList.add('hidden'));
-        document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
+    // --- 1. View Engine Controls ---
+    function switchView(target) {
+        document.querySelectorAll('.app-view').forEach(view => view.classList.add('hidden-view'));
+        document.querySelectorAll('.nav-card').forEach(card => card.classList.remove('active-tab'));
         
-        document.getElementById(`view-${tabName}`).classList.remove('hidden');
-        event.target.classList.add('active');
+        document.getElementById(`view-${target}`).classList.remove('hidden-view');
+        document.getElementById(`tab-${target}`).classList.add('active-tab');
+    }
 
-        // Logic Fix: Hide ads on Question authoring view, show on everything else
-        const adFooter = document.getElementById('global-ad-footer');
-        if (tabName === 'questions') {
-            adFooter.classList.add('hidden');
+    function registerRole(roleName) {
+        alert(`You registered as ${roleName} – more features coming soon.`);
+    }
+
+    // --- 2. Collapsible UI Tree Managers ---
+    function toggleAccordion(elementId) {
+        const item = document.getElementById(elementId);
+        if(item.classList.contains('hidden-view')) {
+            item.classList.remove('hidden-view');
         } else {
-            adFooter.classList.remove('hidden');
-        }
-
-        if (tabName === 'questions' || tabName === 'qetero') loadLibraryDropdowns();
-        if (tabName === 'library') renderLibraryBlocks();
-    }
-
-    function toggleTheologyFields() {
-        const feature = document.getElementById('libFeature').value;
-        const bookUrlField = document.getElementById('libBookUrl');
-        if(feature === 'BookPDF') {
-            bookUrlField.classList.remove('hidden');
-        } else {
-            bookUrlField.classList.add('hidden');
+            item.classList.add('hidden-view');
         }
     }
 
-    // --- 1. THEOLOGICAL LIBRARY MANAGER ---
-    async function saveLibraryBlock() {
-        const id = document.getElementById('libBlockId').value.trim();
-        const name = document.getElementById('libBlockName').value.trim();
-        const religion = document.getElementById('libReligion').value;
-        const feature = document.getElementById('libFeature').value;
-        const theology = document.getElementById('libTheology').value;
-        const url = document.getElementById('libBookUrl').value.trim();
-
-        if(!id || !name) return alert("እባክዎን ሁሉንም ቦታዎች ይሙሉ!");
-
-        await db.collection("library").doc(id).set({
-            blockName: name,
-            categoryReligion: religion,
-            featureType: feature,
-            theologyField: theology,
-            bookFileUrl: feature === 'BookPDF' ? url : '',
-            createdAt: new Date()
-        });
-
-        alert("የቲዎሎጂ ማህደሩ በትክክል ተመዝግቧል!");
-        ['libBlockId', 'libBlockName', 'libBookUrl'].forEach(field => document.getElementById(field).value = '');
-        renderLibraryBlocks();
+    function readBook(bookTitle) {
+        alert(`ማጠቃለያውን በመክፈት ላይ: "${bookTitle}" - More features coming soon.`);
     }
 
-    async function renderLibraryBlocks() {
-        const snap = await db.collection("library").get();
-        let html = "<div>";
-        snap.forEach(d => { 
-            const data = d.data();
-            html += `
-            <div style="border-bottom:1px solid #eee; padding:10px 0;">
-                <span class="badge" style="background:#1a2a6c; color:white;">${data.categoryReligion}</span>
-                <span class="badge" style="background:#f39c12; color:white;">${data.featureType}</span>
-                <span class="badge">${data.theologyField}</span>
-                <br><b>ID: ${d.id}</b> - ${data.blockName}
-            </div>`; 
-        });
-        html += "</div>";
-        document.getElementById('library-list-output').innerHTML = html === "<div></div>" ? "ምንም ማህደር አልተገኘም" : html;
+    // --- 3. Form Handling Framework ---
+    function handleQuestionSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById('qName').value;
+        const title = document.getElementById('qTitle').value;
+        const cat = document.getElementById('qCategory').value;
+        alert(`ጥያቄው ቀርቧል!\n\nስም: ${name}\nርዕስ: ${title}\nክፍል: ${cat}`);
+        e.target.reset();
     }
 
-    async function loadLibraryDropdowns() {
-        // Only load segments that match QuestionBank functionality into the quiz setups
-        const snap = await db.collection("library").where("featureType", "==", "QuestionBank").get();
-        let opts = '<option value="">-- ይምረጡ --</option>';
-        snap.forEach(d => { opts += `<option value="${d.id}">${d.data().blockName} (${d.id})</option>`; });
-        document.getElementById('qTargetBlock').innerHTML = opts;
-        document.getElementById('qeteroActiveBlock').innerHTML = opts;
+    let selectedQetDay = "Mon";
+    function selectDay(element, dayCode) {
+        document.querySelectorAll('.cal-day-cell').forEach(c => c.classList.remove('selected-day'));
+        element.classList.add('selected-day');
+        selectedQetDay = dayCode;
     }
 
-    // --- 2. QUESTION WORKSPACE LOGIC ---
-    async function saveQuestionToLibrary() {
-        const block = document.getElementById('qTargetBlock').value;
-        const text = document.getElementById('addQText').value.trim();
-        const a = document.getElementById('addOptA').value.trim();
-        const b = document.getElementById('addOptB').value.trim();
-        const c = document.getElementById('addOptC').value.trim();
-        const d = document.getElementById('addOptD').value.trim();
-        const correct = document.getElementById('addQCorrect').value;
-
-        if(!block || !text || !a || !b || !c || !d) return alert("እባክዎን ሁሉንም የጥያቄ ፎርሞች ይሙሉ!");
-
-        await db.collection("question_library").add({
-            blockId: block, questionText: text,
-            optionA: a, optionB: b, optionC: c, optionD: d, correctAnswer: correct
-        });
-
-        alert("ጥያቄው በማህደሩ ውስጥ ተቀምጧል!");
-        ['addQText', 'addOptA', 'addOptB', 'addOptC', 'addOptD'].forEach(id => document.getElementById(id).value = '');
+    function handleQeteroSubmit(e) {
+        e.preventDefault();
+        const leader = document.getElementById('qetLeader').value;
+        const time = document.getElementById('qetTime').value;
+        alert(`ቀጠሮዎ ተይዟል!\n\nመሪ: ${leader}\nቀን: ${selectedQetDay}\nሰዓት: ${time}`);
+        e.target.reset();
     }
 
-    // --- 3. QETERO SCHEDULER ENGINE ---
-    async function updateQeteroSchedule() {
-        const selectedBlock = document.getElementById('qeteroActiveBlock').value;
-        if(!selectedBlock) return alert("ማህደር አልመረጡም!");
-        await db.collection("qetero").doc("active_session").set({ targetBlock: selectedBlock, lastUpdated: new Date() });
-        alert("የቀጥታ ጨዋታ ቀጠሮው ተቀይሯል!");
-    }
+    // --- 4. Modal Engine for Posting ---
+    function openPostModal() { document.getElementById('post-modal').classList.remove('hidden-view'); }
+    function closePostModal() { document.getElementById('post-modal').classList.add('hidden-view'); }
+    
+    function submitModalPost() {
+        const type = document.getElementById('modalPostType').value;
+        const title = document.getElementById('modalPostTitle').value;
+        const body = document.getElementById('modalPostBody').value;
 
-    // --- 4. ENGINE CORE (POST / PLAYER RUNTIME LOGIC) ---
-    let qPool = [], ads = [], qIdx = 0, score = 0, timer, tLeft = 20;
-    let winChance = 15, minToRoll = 90;
+        if(!title || !body) return alert("እባክዎን ቅጹን ያጠናቅቁ!");
 
-    async function startApp() {
-        const n = document.getElementById('uName').value;
-        const p = document.getElementById('uPhone').value;
-        const role = document.getElementById('uRole').value;
-        if(!n || !p) return alert("ስም እና ስልክ ያስገቡ!");
-        
-        localStorage.setItem('un', n); 
-        localStorage.setItem('up', p);
-        localStorage.setItem('ur', role);
-
-        try {
-            const rewSnap = await db.collection("config").doc("rewards").get();
-            if(rewSnap.exists) {
-                winChance = rewSnap.data().winRate || 15;
-                minToRoll = rewSnap.data().minScore || 90;
-            }
-            const adSnap = await db.collection("ads").doc("config").get();
-            if(adSnap.exists) ads = adSnap.data().list || [];
-            
-            qPool = [];
-            const scheduleSnap = await db.collection("qetero").doc("active_session").get();
-            if(scheduleSnap.exists) {
-                const activeBlock = scheduleSnap.data().targetBlock;
-                const qSnap = await db.collection("question_library").where("blockId", "==", activeBlock).get();
-                qSnap.forEach(d => {
-                    const data = d.data();
-                    qPool.push({
-                        text: data.questionText,
-                        options: [data.optionA, data.optionB, data.optionC, data.optionD],
-                        correct: data.correctAnswer
-                    });
-                });
-            }
-
-            qPool = qPool.sort(() => 0.5 - Math.random()).slice(0, 25);
-            if(qPool.length === 0) return alert("በአሁኑ ሰዓት የተለቀቀ ንቁ የቀጠሮ ጥያቄ የለም!");
-
-            document.getElementById('scr-start').classList.add('hidden');
-            renderQ();
-            updateBanner();
-        } catch(e) { console.error(e); alert("የግንኙነት ስህተት ተፈጥሯል!"); }
-    }
-
-    function renderQ() {
-        document.getElementById('scr-quiz').classList.remove('hidden');
-        const q = qPool[qIdx];
-        document.getElementById('qText').innerText = q.text;
-        let h = ''; const labels = ["ሀ", "ለ", "ሐ", "መ"];
-        q.options.forEach((opt, i) => {
-            const code = String.fromCharCode(65+i);
-            h += `<button class="opt-btn" onclick="checkAns('${code}')"><div class="label">${labels[i]}</div><span>${opt}</span></button>`;
-        });
-        document.getElementById('opts-box').innerHTML = h;
-        startTimer();
-    }
-
-    function startTimer() {
-        tLeft = 20; clearInterval(timer);
-        document.getElementById('timer-box').innerText = tLeft;
-        timer = setInterval(() => { 
-            tLeft--; 
-            document.getElementById('timer-box').innerText = tLeft; 
-            if(tLeft <= 0) { clearInterval(timer); checkAns('X'); } 
-        }, 1000);
-    }
-
-    function checkAns(a) {
-        clearInterval(timer);
-        if(a === qPool[qIdx].correct) { 
-            score++; 
-            document.getElementById('pet').innerText = "🦁"; 
-            document.getElementById('snd-correct').play().catch(()=>{}); 
-        } else { 
-            document.getElementById('pet').innerText = "🐑"; 
-            document.getElementById('snd-wrong').play().catch(()=>{}); 
-        }
-        setTimeout(() => { 
-            qIdx++; 
-            if(qIdx < qPool.length) renderQ(); 
-            else showFinal(); 
-        }, 600);
-    }
-
-    async function showFinal() {
-        document.getElementById('scr-quiz').classList.add('hidden');
-        document.getElementById('scr-res').classList.remove('hidden');
-        const p = Math.round((score/qPool.length)*100);
-        document.getElementById('res-pct').innerText = p + "%";
-        
-        await db.collection("results").add({ 
-            name: localStorage.getItem('un'), 
-            phone: localStorage.getItem('up'), 
-            role: localStorage.getItem('ur'),
-            score: p, 
-            timestamp: firebase.firestore.FieldValue.serverTimestamp() 
-        });
-        if(p >= minToRoll) document.getElementById('roll-section').classList.remove('hidden');
-    }
-
-    function startRoll() {
-        const gift = document.getElementById('gift-box');
-        gift.style.animation = "shake 0.8s infinite";
-        
-        setTimeout(async () => {
-            gift.style.animation = "none";
-            const win = (Math.random() * 100) < winChance;
-            if (win) {
-                document.getElementById('roll-section').innerHTML = `<h2 style="color:#28a745;">እንኳን ደስ አሎት! 🎉</h2><p>የ 5 ብር ካርድ አግኝተዋል!</p>`;
-                await db.collection("winners").add({
-                    name: localStorage.getItem('un'), phone: localStorage.getItem('up'),
-                    prize: "5 ETB Card", timestamp: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            } else {
-                document.getElementById('roll-section').innerHTML = `<h2 style="color:#e74c3c;">አልደረሰዎትም 😔</h2>`;
-            }
-        }, 3000);
-    }
-
-    function resetQuizState() {
-        qIdx = 0; score = 0;
-        document.getElementById('scr-res').classList.add('hidden');
-        document.getElementById('scr-start').classList.remove('hidden');
-        document.getElementById('roll-section').classList.add('hidden');
-        document.getElementById('roll-section').innerHTML = `<p style="font-weight:bold;">ዕጣዎን ይሞክሩ!</p><div id="gift-box" style="font-size:60px; cursor:pointer;" onclick="startRoll()">🎁</div>`;
-    }
-
-    // --- GLOBAL AD ROTATOR ENGINE ---
-    function updateBanner() {
-        if(!ads || ads.length === 0) return;
-        const r = ads[Math.floor(Math.random() * ads.length)];
-        document.getElementById('ad-banner-box').innerHTML = `
-            <div style="display:flex; align-items:center; gap:12px;">
-                <img src="${r.img}" class="ad-banner-img" onclick="window.open('${r.link || '#'}', '_blank')">
-                <div style="text-align:left; line-height:1.2; font-size: 0.9em;">
-                    <div style="color:var(--primary); font-weight:bold;">የቀኑ ማስታወቂያ</div>
-                    <div style="color:#777; font-size:0.8em;">ለማየት ምስሉን ይንኩ</div>
+        const container = document.getElementById('news-feed-container');
+        const newPostHtml = `
+            <div class="feed-post">
+                <span class="post-header-badge">${type}</span>
+                <h3 style="margin: 4px 0 8px;">${title}</h3>
+                <p style="color:#475569;">${body}</p>
+                <div class="post-actions">
+                    <span><i class="fa-regular fa-heart"></i> Like</span>
+                    <span><i class="fa-regular fa-comment"></i> Comment</span>
+                    <span><i class="fa-solid fa-share-nodes"></i> Share</span>
                 </div>
             </div>`;
-        if(r.audio) {
-            const audio = document.getElementById('ad-audio');
-            audio.src = r.audio; audio.play().catch(e => {});
-        }
+        container.insertAdjacentHTML('afterbegin', newPostHtml);
+        closePostModal();
+        document.getElementById('modalPostTitle').value = "";
+        document.getElementById('modalPostBody').value = "";
     }
 
-    // Initialize Loops
-    renderLibraryBlocks();
-    setInterval(updateBanner, 7000);
+    // --- 5. Pure Boundary Drag & Drop Ads Engine ---
+    const adBox = document.getElementById('movable-ad-box');
+    let isDragging = false;
+    let startX, startY, initialX, initialY;
+
+    adBox.addEventListener('mousedown', (e) => {
+        // Prevent action triggers when executing element button resets
+        if(e.target.tagName === 'BUTTON') return;
+        
+        isDragging = true;
+        adBox.style.transition = 'none'; // Temporarily halt layout animations during tracking
+        
+        // Pin current cursor spatial indices
+        startX = e.clientX;
+        startY = e.clientY;
+        
+        // Calculate dynamic runtime location positions
+        const rect = adBox.getBoundingClientRect();
+        initialX = rect.left;
+        initialY = rect.top;
+        
+        // Transform block rendering type to allow free-range positioning
+        adBox.style.position = 'fixed';
+        adBox.style.width = rect.width + 'px';
+        adBox.style.left = initialX + 'px';
+        adBox.style.top = initialY + 'px';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+
+        let deltaX = e.clientX - startX;
+        let deltaY = e.clientY - startY;
+
+        let newLeft = initialX + deltaX;
+        let newTop = initialY + deltaY;
+
+        // Apply boundary constraints (prevent the ad box from moving completely offscreen)
+        const pad = 10;
+        const maxLeft = window.innerWidth - adBox.offsetWidth - pad;
+        const maxTop = window.innerHeight - adBox.offsetHeight - pad;
+
+        if (newLeft < pad) newLeft = pad;
+        if (newLeft > maxLeft) newLeft = maxLeft;
+        if (newTop < pad) newTop = pad;
+        if (newTop > maxTop) newTop = maxTop;
+
+        adBox.style.left = newLeft + 'px';
+        adBox.style.top = newTop + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+        }
+    });
+
+    function resetAdPosition(e) {
+        if(e) e.stopPropagation(); // Avoid triggering immediate click listeners
+        isDragging = false;
+        adBox.style.transition = 'all 0.4s ease';
+        adBox.style.position = 'relative';
+        adBox.style.width = '100%';
+        adBox.style.left = '0px';
+        adBox.style.top = '0px';
+    }
 </script>
 </body>
 </html>
