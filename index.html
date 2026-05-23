@@ -3,74 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ቃል (Qale) - የእውቀት ፈተና</title>
+    <title>ቃል (Qale) - የታሪክ መዝገብ እና የእውቀት ፈተና</title>
+    <!-- ለአዶዎች መጠቀሚያ (FontAwesome) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
+        /* --- 1. ዋና የውበት እና የቀለም ቅንብሮች (CSS) --- */
         :root {
             --royal-gold: #d4af37;
             --deep-burgundy: #4a0e17;
             --text-charcoal: #2b2b2b;
             --light-bg: #fdfbf7;
+            --text-muted: #666;
         }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f1ea;
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .quiz-container {
-            background-color: var(--light-bg);
-            max-width: 600px;
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            border: 2px solid var(--royal-gold);
-            padding: 25px;
-            box-sizing: border-box;
-        }
-        .quiz-header {
-            text-align: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .quiz-header h1 {
-            color: var(--deep-burgundy);
-            margin: 0;
-            font-size: 2rem;
-        }
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
+            padding: 0;
             color: var(--text-charcoal);
-            margin-bottom: 15px;
         }
-        .timer-progress-container {
-            width: 100%;
-            background-color: #e0e0e0;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow: hidden;
+
+        /* የላይኛው መተግበሪያ አሞሌ (App Bar) */
+        .app-bar {
+            background-color: var(--deep-burgundy);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
-        .timer-progress-bar {
-            height: 100%;
-            background-color: #c62828;
-            width: 100%;
-            transition: width 1s linear;
-        }
-        .question-text {
-            font-size: 1.25rem;
-            color: var(--deep-burgundy);
+
+        .app-bar h1 {
+            margin: 0;
+            font-size: 1.5rem;
             font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.5;
+            letter-spacing: 1px;
         }
+
+        /* የታችኛው ማውጫ (Bottom Navigation) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: none;
+            background: none;
+            border: none;
+            width: 100%;
+        }
+
+        .nav-item.active {
+            color: var(--deep-burgundy);
+            font-weight: bold;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        /* ዋናው የይዘት መቀመጫ (Main Container) */
+        .main-content {
+            padding: 20px;
+            padding-bottom: 80px; /* ለታችኛው ማውጫ ክፍት ቦታ */
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ካርዶች (Cards) */
+        .info-card {
+            background-color: var(--light-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .info-card h2 {
+            color: var(--deep-burgundy);
+            margin-top: 0;
+            border-bottom: 2px solid var(--royal-gold);
+            padding-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        /* የታሪክ መስመር (Timeline) ውበት */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--royal-gold);
+            margin-left: 10px;
+        }
+
+        .timeline-event {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-event::before {
+            content: '';
+            position: absolute;
+            left: -26px;
+            top: 5px;
+            background: var(--deep-burgundy);
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            border: 2px solid var(--royal-gold);
+        }
+
+        .event-time {
+            font-weight: bold;
+            color: var(--deep-burgundy);
+            font-size: 0.9rem;
+        }
+
+        /* የፈተና ምርጫ አዝራሮች */
         .quiz-option-btn {
             display: block;
             width: 100%;
@@ -84,528 +154,51 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
+
         .quiz-option-btn:hover {
             background-color: #f0ebe1;
             border-color: var(--royal-gold);
         }
+
         .quiz-option-btn.correct {
             background-color: #d4edda !important;
             border-color: #c3e6cb !important;
             color: #155724 !important;
             font-weight: bold;
         }
+
         .quiz-option-btn.wrong {
             background-color: #f8d7da !important;
             border-color: #f5c6cb !important;
             color: #721c24 !important;
         }
-        .action-btn {
-            display: block;
-            width: 100%;
-            background-color: var(--deep-burgundy);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-        .action-btn:hover {
-            background-color: #61131e;
-        }
-        .hidden-view {
-            display: none !important;
-        }
-    </style>
-</head>
-<body>
-    <div class="quiz-container">
-        <div class="quiz-header">
-            <h1>ቃል (Qale)</h1>
-        </div>
-        <div id="quiz-card-body">
-            <div class="status-bar">
-                <div><i class="fa-solid fa-star" style="color: var(--royal-gold);"></i> ነጥብ: <span id="quiz-points">0</span></div>
-                <div><i class="fa-solid fa-clock"></i> ሰዓት: <span id="timer-text">20</span> ሰከንድ</div>
-            </div>
-            <div class="timer-progress-container">
-                <div id="timer-bar" class="timer-progress-bar"></div>
-            </div>
-            <div id="quiz-question-text" class="question-text">ጥያቄው እዚህ ላይ ይጫናል...</div>
-            <div id="quiz-options-container"></div>
-            <button id="next-quiz-btn" class="action-btn" style="display: none;" onclick="loadNextQuestion()">ቀጣይ ጥያቄ <i class="fa-solid fa-arrow-right"></i></button>
-        </div>
-        <div id="quiz-result-screen" class="hidden-view" style="margin-top: 20px; overflow: hidden;">
-            <div id="mobile-reward-box" style="float: right; width: 220px; background: #e8f5e9; border: 2px dashed #2e7d32; padding: 15px; border-radius: 10px; margin-left: 15px; text-align: center; display: none;">
-                <i class="fa-solid fa-sim-card" style="font-size: 2rem; color: #2e7d32; margin-bottom: 8px;"></i>
-                <h4 style="color: #1b5e20; margin-top: 0; margin-bottom: 5px;">የሞባይል ካርድ ሽልማት</h4>
-                <div style="background: #ffffff; padding: 8px; border: 1px solid #a5d6a7; font-family: monospace; font-size: 1.1rem; font-weight: bold; color: #2e7d32; letter-spacing: 1px; margin-bottom: 8px;">
-                    *805*148293048291#
-                </div>
-                <span style="font-size: 0.75rem; color: #555;">የካርዱን ቁጥር ተጭነው በመውሰድ ስልክዎ ላይ ይሙሉ!</span>
-            </div>
-            <div id="result-message-area"></div>
-            <div style="clear: both; padding-top: 15px;">
-                <button id="try-again-btn" class="action-btn" style="background-color: var(--royal-gold); color: #000; display: none;" onclick="restartQuiz()"><i class="fa-solid fa-rotate-right"></i> እንደገና ይሞክሩ (Try Again)</button>
-            </div>
-        </div>
-    </div>
-    <script>
-        let points = 0; 
-        let timeLeft = 20; 
-        let quizInterval; 
-        let hasAnswered = false;
-        let currentBankIndex = 0;
-        let correctAnswersCount = 0;
 
-        const sampleQuestionBank = [
-            { q: "ሙሴ የእግዚአብሔርን ሕግ የተቀበለበት ተራራ ማን ይባላል?", a: ["ሀ) የደብረ ዘይት ተራራ", "ለ) ሲና ተራራ", "ሐ) ቀርሜሎስ ተራራ", "መ) ኮሬብ ተራራ"], correctIdx: 1 },
-            { q: "በመጽሐፍ ቅዱስ ውስጥ ረጅም ዕድሜ የኖረው ሰው ማን ነው?", a: ["ሀ) ማቱሳላ", "ለ) አዳም", "ሐ) ኖኅ", "መ) ሄኖክ"], correctIdx: 0 }
-        ];
-
-        function resetAndStartQuizTimer() {
-            clearInterval(quizInterval); 
-            timeLeft = 20; 
-            hasAnswered = false;
-            document.getElementById('timer-text').innerText = timeLeft;
-            document.getElementById('timer-bar').style.width = '100%';
-            document.getElementById('next-quiz-btn').style.display = 'none';
-            document.getElementById('quiz-card-body').classList.remove('hidden-view');
-            document.getElementById('quiz-result-screen').classList.add('hidden-view');
-
-            quizInterval = setInterval(() => {
-                timeLeft--; 
-                document.getElementById('timer-text').innerText = timeLeft;
-                document.getElementById('timer-bar').style.width = (timeLeft / 20 * 100) + '%';
-                if(timeLeft <= 0) { clearInterval(quizInterval); lockQuizOptionsOnTimeout(); }
-            }, 1000);
-        }
-
-        function checkAnswer(selectedBtn, isCorrect) {
-            if(hasAnswered || timeLeft <= 0) return;
-            hasAnswered = true; 
-            clearInterval(quizInterval);
-            if(isCorrect) { 
-                selectedBtn.classList.add('correct'); 
-                points += 10; 
-                correctAnswersCount++;
-                document.getElementById('quiz-points').innerText = points; 
-            } else { 
-                selectedBtn.classList.add('wrong'); 
-                highlightCorrectAnswer(); 
-            }
-            document.getElementById('next-quiz-btn').style.display = 'block';
-        }
-
-        function highlightCorrectAnswer() {
-            const currentQuestion = sampleQuestionBank[currentBankIndex - 1];
-            const btns = document.querySelectorAll('.quiz-option-btn');
-            if (currentQuestion) { btns[currentQuestion.correctIdx].classList.add('correct'); }
-        }
-
-        function lockQuizOptionsOnTimeout() { hasAnswered = true; highlightCorrectAnswer(); document.getElementById('next-quiz-btn').style.display = 'block'; }
-
-        function loadNextQuestion() {
-            if(currentBankIndex >= sampleQuestionBank.length) { showQuizFinalResults(); return; }
-            const data = sampleQuestionBank[currentBankIndex];
-            document.getElementById('quiz-question-text').innerText = data.q;
-            const container = document.getElementById('quiz-options-container'); 
-            container.innerHTML = '';
-            data.a.forEach((optionText, idx) => {
-                const isCorrect = (idx === data.correctIdx); 
-                const btn = document.createElement('button');
-                btn.className = 'quiz-option-btn'; 
-                btn.innerText = optionText; 
-                btn.onclick = function() { checkAnswer(this, isCorrect); }; 
-                container.appendChild(btn);
-            });
-            currentBankIndex++; 
-            resetAndStartQuizTimer();
-        }
-
-        function showQuizFinalResults() {
-            clearInterval(quizInterval);
-            document.getElementById('quiz-card-body').classList.add('hidden-view');
-            document.getElementById('next-quiz-btn').style.display = 'none';
-            const resultScreen = document.getElementById('quiz-result-screen');
-            const rewardBox = document.getElementById('mobile-reward-box');
-            const msgArea = document.getElementById('result-message-area');
-            const tryAgainBtn = document.getElementById('try-again-btn');
-            resultScreen.classList.remove('hidden-view');
-            
-            let scorePercentage = (correctAnswersCount / sampleQuestionBank.length) * 100;
-            if (scorePercentage >= 95) {
-                rewardBox.style.display = 'block';
-                msgArea.innerHTML = `<h3 style="color: #2e7d32; font-size: 1.6rem; margin-bottom: 10px;">🎉 እንኳን ደስ አለዎት! አሸንፈዋል! (You Win)</h3><p style="font-size: 1.1rem; color: var(--text-charcoal); line-height: 1.6;">ሁሉንም ጥያቄዎች በብቃት በመመለስ <strong>${scorePercentage}%</strong> አግኝተዋል። የሞባይል አየር ሰዓት ሽልማትዎን ከቀኝ በኩል ይውሰዱ!</p>`;
-                tryAgainBtn.style.display = 'none';
-            } else {
-                rewardBox.style.display = 'none';
-                msgArea.innerHTML = `<h3 style="color: #c62828; font-size: 1.5rem; margin-bottom: 10px;">🔒 ውጤትዎ ከ95% በታች ነው</h3><p style="font-size: 1.1rem; color: var(--text-charcoal); line-height: 1.6;">የአሁኑ ውጤትዎ <strong>${scorePercentage}%</strong> ነው። ሽልማቱን ለመክፈት 95% እና ከዚያ በላይ ማግኘት አለብዎት። ተስፋ ሳይቆርጡ በድጋሚ ይሞክሩ!</p>`;
-                tryAgainBtn.style.display = 'block';
-            }
-        }
-
-        function restartQuiz() { points = 0; currentBankIndex = 0; correctAnswersCount = 0; document.getElementById('quiz-points').innerText = points; loadNextQuestion(); }
-        window.onload = loadNextQuestion;
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="am">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ቃል (Qale) - የእውቀት ፈተና</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --royal-gold: #d4af37;
-            --deep-burgundy: #4a0e17;
-            --text-charcoal: #2b2b2b;
-            --light-bg: #fdfbf7;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f1ea;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .quiz-container {
-            background-color: var(--light-bg);
-            max-width: 600px;
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            border: 2px solid var(--royal-gold);
-            padding: 25px;
-            box-sizing: border-box;
-        }
-        .quiz-header {
-            text-align: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .quiz-header h1 {
-            color: var(--deep-burgundy);
-            margin: 0;
-            font-size: 2rem;
-        }
-        .status-bar {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            color: var(--text-charcoal);
-            margin-bottom: 15px;
-        }
+        /* የሰዓት መቁጠሪያ መስመር */
         .timer-progress-container {
             width: 100%;
             background-color: #e0e0e0;
-            height: 8px;
-            border-radius: 4px;
+            height: 6px;
+            border-radius: 3px;
             margin-bottom: 20px;
             overflow: hidden;
         }
+
         .timer-progress-bar {
             height: 100%;
             background-color: #c62828;
             width: 100%;
             transition: width 1s linear;
         }
-        .question-text {
-            font-size: 1.25rem;
-            color: var(--deep-burgundy);
-            font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        .quiz-option-btn {
-            display: block;
-            width: 100%;
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            padding: 14px 20px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            text-align: left;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .quiz-option-btn:hover {
-            background-color: #f0ebe1;
-            border-color: var(--royal-gold);
-        }
-        .quiz-option-btn.correct {
-            background-color: #d4edda !important;
-            border-color: #c3e6cb !important;
-            color: #155724 !important;
-            font-weight: bold;
-        }
-        .quiz-option-btn.wrong {
-            background-color: #f8d7da !important;
-            border-color: #f5c6cb !important;
-            color: #721c24 !important;
-        }
-        .action-btn {
-            display: block;
-            width: 100%;
-            background-color: var(--deep-burgundy);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 1.1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-        .action-btn:hover {
-            background-color: #61131e;
-        }
-        .hidden-view {
-            display: none !important;
-        }
-    </style>
-</head>
-<body>
-    <div class="quiz-container">
-        <div class="quiz-header">
-            <h1>ቃል (Qale)</h1>
-        </div>
-        <div id="quiz-card-body">
-            <div class="status-bar">
-                <div><i class="fa-solid fa-star" style="color: var(--royal-gold);"></i> ነጥብ: <span id="quiz-points">0</span></div>
-                <div><i class="fa-solid fa-clock"></i> ሰዓት: <span id="timer-text">20</span> ሰከንድ</div>
-            </div>
-            <div class="timer-progress-container">
-                <div id="timer-bar" class="timer-progress-bar"></div>
-            </div>
-            <div id="quiz-question-text" class="question-text">ጥያቄው እዚህ ላይ ይጫናል...</div>
-            <div id="quiz-options-container"></div>
-            <button id="next-quiz-btn" class="action-btn" style="display: none;" onclick="loadNextQuestion()">ቀጣይ ጥያቄ <i class="fa-solid fa-arrow-right"></i></button>
-        </div>
-        <div id="quiz-result-screen" class="hidden-view" style="margin-top: 20px; overflow: hidden;">
-            <div id="mobile-reward-box" style="float: right; width: 220px; background: #e8f5e9; border: 2px dashed #2e7d32; padding: 15px; border-radius: 10px; margin-left: 15px; text-align: center; display: none;">
-                <i class="fa-solid fa-sim-card" style="font-size: 2rem; color: #2e7d32; margin-bottom: 8px;"></i>
-                <h4 style="color: #1b5e20; margin-top: 0; margin-bottom: 5px;">የሞባይል ካርድ ሽልማት</h4>
-                <div style="background: #ffffff; padding: 8px; border: 1px solid #a5d6a7; font-family: monospace; font-size: 1.1rem; font-weight: bold; color: #2e7d32; letter-spacing: 1px; margin-bottom: 8px;">
-                    *805*148293048291#
-                </div>
-                <span style="font-size: 0.75rem; color: #555;">የካርዱን ቁጥር ተጭነው በመውሰድ ስልክዎ ላይ ይሙሉ!</span>
-            </div>
-            <div id="result-message-area"></div>
-            <div style="clear: both; padding-top: 15px;">
-                <button id="try-again-btn" class="action-btn" style="background-color: var(--royal-gold); color: #000; display: none;" onclick="restartQuiz()"><i class="fa-solid fa-rotate-right"></i> እንደገና ይሞክሩ (Try Again)</button>
-            </div>
-        </div>
-    </div>
-    <script>
-        let points = 0; 
-        let timeLeft = 20; 
-        let quizInterval; 
-        let hasAnswered = false;
-        let currentBankIndex = 0;
-        let correctAnswersCount = 0;
 
-        const sampleQuestionBank = [
-            { q: "ሙሴ የእግዚአብሔርን ሕግ የተቀበለበት ተራራ ማን ይባላል?", a: ["ሀ) የደብረ ዘይት ተራራ", "ለ) ሲና ተራራ", "ሐ) ቀርሜሎስ ተራራ", "መ) ኮሬብ ተራራ"], correctIdx: 1 },
-            { q: "በመጽሐፍ ቅዱስ ውስጥ ረጅም ዕድሜ የኖረው ሰው ማን ነው?", a: ["ሀ) ማቱሳላ", "ለ) አዳም", "ሐ) ኖኅ", "መ) ሄኖክ"], correctIdx: 0 }
-        ];
-
-        function resetAndStartQuizTimer() {
-            clearInterval(quizInterval); 
-            timeLeft = 20; 
-            hasAnswered = false;
-            document.getElementById('timer-text').innerText = timeLeft;
-            document.getElementById('timer-bar').style.width = '100%';
-            document.getElementById('next-quiz-btn').style.display = 'none';
-            document.getElementById('quiz-card-body').classList.remove('hidden-view');
-            document.getElementById('quiz-result-screen').classList.add('hidden-view');
-
-            quizInterval = setInterval(() => {
-                timeLeft--; 
-                document.getElementById('timer-text').innerText = timeLeft;
-                document.getElementById('timer-bar').style.width = (timeLeft / 20 * 100) + '%';
-                if(timeLeft <= 0) { clearInterval(quizInterval); lockQuizOptionsOnTimeout(); }
-            }, 1000);
-        }
-
-        function checkAnswer(selectedBtn, isCorrect) {
-            if(hasAnswered || timeLeft <= 0) return;
-            hasAnswered = true; 
-            clearInterval(quizInterval);
-            if(isCorrect) { 
-                selectedBtn.classList.add('correct'); 
-                points += 10; 
-                correctAnswersCount++;
-                document.getElementById('quiz-points').innerText = points; 
-            } else { 
-                selectedBtn.classList.add('wrong'); 
-                highlightCorrectAnswer(); 
-            }
-            document.getElementById('next-quiz-btn').style.display = 'block';
-        }
-
-        function highlightCorrectAnswer() {
-            const currentQuestion = sampleQuestionBank[currentBankIndex - 1];
-            const btns = document.querySelectorAll('.quiz-option-btn');
-            if (currentQuestion) { btns[currentQuestion.correctIdx].classList.add('correct'); }
-        }
-
-        function lockQuizOptionsOnTimeout() { hasAnswered = true; highlightCorrectAnswer(); document.getElementById('next-quiz-btn').style.display = 'block'; }
-
-        function loadNextQuestion() {
-            if(currentBankIndex >= sampleQuestionBank.length) { showQuizFinalResults(); return; }
-            const data = sampleQuestionBank[currentBankIndex];
-            document.getElementById('quiz-question-text').innerText = data.q;
-            const container = document.getElementById('quiz-options-container'); 
-            container.innerHTML = '';
-            data.a.forEach((optionText, idx) => {
-                const isCorrect = (idx === data.correctIdx); 
-                const btn = document.createElement('button');
-                btn.className = 'quiz-option-btn'; 
-                btn.innerText = optionText; 
-                btn.onclick = function() { checkAnswer(this, isCorrect); }; 
-                container.appendChild(btn);
-            });
-            currentBankIndex++; 
-            resetAndStartQuizTimer();
-        }
-
-        function showQuizFinalResults() {
-            clearInterval(quizInterval);
-            document.getElementById('quiz-card-body').classList.add('hidden-view');
-            document.getElementById('next-quiz-btn').style.display = 'none';
-            const resultScreen = document.getElementById('quiz-result-screen');
-            const rewardBox = document.getElementById('mobile-reward-box');
-            const msgArea = document.getElementById('result-message-area');
-            const tryAgainBtn = document.getElementById('try-again-btn');
-            resultScreen.classList.remove('hidden-view');
-            
-            let scorePercentage = (correctAnswersCount / sampleQuestionBank.length) * 100;
-            if (scorePercentage >= 95) {
-                rewardBox.style.display = 'block';
-                msgArea.innerHTML = `<h3 style="color: #2e7d32; font-size: 1.6rem; margin-bottom: 10px;">🎉 እንኳን ደስ አለዎት! አሸንፈዋል! (You Win)</h3><p style="font-size: 1.1rem; color: var(--text-charcoal); line-height: 1.6;">ሁሉንም ጥያቄዎች በብቃት በመመለስ <strong>${scorePercentage}%</strong> አግኝተዋል። የሞባይል አየር ሰዓት ሽልማትዎን ከቀኝ በኩል ይውሰዱ!</p>`;
-                tryAgainBtn.style.display = 'none';
-            } else {
-                rewardBox.style.display = 'none';
-                msgArea.innerHTML = `<h3 style="color: #c62828; font-size: 1.5rem; margin-bottom: 10px;">🔒 ውጤትዎ ከ95% በታች ነው</h3><p style="font-size: 1.1rem; color: var(--text-charcoal); line-height: 1.6;">የአሁኑ ውጤትዎ <strong>${scorePercentage}%</strong> ነው። ሽልማቱን ለመክፈት 95% እና ከዚያ በላይ ማግኘት አለብዎት። ተስፋ ሳይቆርጡ በድጋሚ ይሞክሩ!</p>`;
-                tryAgainBtn.style.display = 'block';
-            }
-        }
-
-        function restartQuiz() { points = 0; currentBankIndex = 0; correctAnswersCount = 0; document.getElementById('quiz-points').innerText = points; loadNextQuestion(); }
-        window.onload = loadNextQuestion;
-    </script>
-</body>
-</html><!DOCTYPE html>
-<html lang="am">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ቃል (Qale) - የእውቀት ፈተና</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --royal-gold: #d4af37;
-            --deep-burgundy: #4a0e17;
-            --text-charcoal: #2b2b2b;
-            --light-bg: #fdfbf7;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f1ea;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .quiz-container {
-            background-color: var(--light-bg);
-            max-width: 600px;
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-            border: 2px solid var(--royal-gold);
-            padding: 25px;
-            box-sizing: border-box;
-        }
-        .quiz-header {
-            text-align: center;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-        .quiz-header h1 {
-            color: var(--deep-burgundy);
-            margin: 0;
-            font-size: 2rem;
-        }
+        /* የነጥብ ማሳያ ሰሌዳ */
         .status-bar {
             display: flex;
             justify-content: space-between;
             font-weight: bold;
-            color: var(--text-charcoal);
             margin-bottom: 15px;
         }
-        .timer-progress-container {
-            width: 100%;
-            background-color: #e0e0e0;
-            height: 8px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .timer-progress-bar {
-            height: 100%;
-            background-color: #c62828;
-            width: 100%;
-            transition: width 1s linear;
-        }
-        .question-text {
-            font-size: 1.25rem;
-            color: var(--deep-burgundy);
-            font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-        .quiz-option-btn {
-            display: block;
-            width: 100%;
-            background-color: #ffffff;
-            border: 1px solid #ccc;
-            padding: 14px 20px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            text-align: left;
-            font-size: 1.05rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .quiz-option-btn:hover {
-            background-color: #f0ebe1;
-            border-color: var(--royal-gold);
-        }
-        .quiz-option-btn.correct {
-            background-color: #d4edda !important;
-            border-color: #c3e6cb !important;
-            color: #155724 !important;
-            font-weight: bold;
-        }
-        .quiz-option-btn.wrong {
-            background-color: #f8d7da !important;
-            border-color: #f5c6cb !important;
-            color: #721c24 !important;
-        }
-        .action-btn {
+
+        .submit-btn {
             display: block;
             width: 100%;
             background-color: var(--deep-burgundy);
@@ -618,47 +211,129 @@
             font-weight: bold;
             margin-top: 15px;
         }
-        .action-btn:hover {
+
+        .submit-btn:hover {
             background-color: #61131e;
         }
+
         .hidden-view {
             display: none !important;
         }
     </style>
 </head>
 <body>
-    <div class="quiz-container">
-        <div class="quiz-header">
-            <h1>ቃል (Qale)</h1>
-        </div>
-        <div id="quiz-card-body">
-            <div class="status-bar">
-                <div><i class="fa-solid fa-star" style="color: var(--royal-gold);"></i> ነጥብ: <span id="quiz-points">0</span></div>
-                <div><i class="fa-solid fa-clock"></i> ሰዓት: <span id="timer-text">20</span> ሰከንድ</div>
-            </div>
-            <div class="timer-progress-container">
-                <div id="timer-bar" class="timer-progress-bar"></div>
-            </div>
-            <div id="quiz-question-text" class="question-text">ጥያቄው እዚህ ላይ ይጫናል...</div>
-            <div id="quiz-options-container"></div>
-            <button id="next-quiz-btn" class="action-btn" style="display: none;" onclick="loadNextQuestion()">ቀጣይ ጥያቄ <i class="fa-solid fa-arrow-right"></i></button>
-        </div>
-        <div id="quiz-result-screen" class="hidden-view" style="margin-top: 20px; overflow: hidden;">
-            <div id="mobile-reward-box" style="float: right; width: 220px; background: #e8f5e9; border: 2px dashed #2e7d32; padding: 15px; border-radius: 10px; margin-left: 15px; text-align: center; display: none;">
-                <i class="fa-solid fa-sim-card" style="font-size: 2rem; color: #2e7d32; margin-bottom: 8px;"></i>
-                <h4 style="color: #1b5e20; margin-top: 0; margin-bottom: 5px;">የሞባይል ካርድ ሽልማት</h4>
-                <div style="background: #ffffff; padding: 8px; border: 1px solid #a5d6a7; font-family: monospace; font-size: 1.1rem; font-weight: bold; color: #2e7d32; letter-spacing: 1px; margin-bottom: 8px;">
-                    *805*148293048291#
-                </div>
-                <span style="font-size: 0.75rem; color: #555;">የካርዱን ቁጥር ተጭነው በመውሰድ ስልክዎ ላይ ይሙሉ!</span>
-            </div>
-            <div id="result-message-area"></div>
-            <div style="clear: both; padding-top: 15px;">
-                <button id="try-again-btn" class="action-btn" style="background-color: var(--royal-gold); color: #000; display: none;" onclick="restartQuiz()"><i class="fa-solid fa-rotate-right"></i> እንደገና ይሞክሩ (Try Again)</button>
-            </div>
-        </div>
+
+    <!-- የላይኛው አሞሌ -->
+    <div class="app-bar">
+        <h1>ቃል (Qale)</h1>
+        <i class="fa-solid fa-gopuram" style="color: var(--royal-gold); font-size: 1.4rem;"></i>
     </div>
+
+    <!-- ዋናው የይዘት ክፍል -->
+    <div class="main-content">
+        
+        <!-- 1ኛ ገጽ፦ ታሪክ (History View) -->
+        <div id="history-view">
+            <div class="info-card">
+                <h2>📜 የታሪክ መዝገብ እና ሂደቶች</h2>
+                <div class="timeline">
+                    <div class="timeline-event">
+                        <div class="event-time">ክፍለ ዘመን ፩ (1st Century)</div>
+                        <p style="margin: 5px 0 0 0;">ክርስትና ወደ ኢትዮጵያ በጃንደረባው አማካኝነት የገባበት እና የመጀመሪያው የመንፈሳዊ መሠረት የተጣለበት ዘመን።</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="event-time">አራተኛው ክፍለ ዘመን (330 ዓ.ም.)</div>
+                        <p style="margin: 5px 0 0 0;">በአብርሃ ወአጽብሃ ዘመነ መንግሥት ክርስትና የሀገሪቱ ብሔራዊ ሃይማኖት ሆኖ በይፋ የታወጀበት ታሪካዊ ወቅት።</p>
+                    </div>
+                    <div class="timeline-event">
+                        <div class="event-time">አምስተኛው ክፍለ ዘመን (480 ዓ.ም.)</div>
+                        <p style="margin: 5px 0 0 0;">ተሰዓቱ ቅዱሳን (ዘጠኙ ቅዱሳን) ወደ ኢትዮጵያ በመምጣት መጻሕፍትን የተረጎሙበትና ገዳማትን የመሠረቱበት ዘመን።</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2ኛ ገጽ፦ ፈተና (Quiz View) -->
+        <div id="quiz-view" class="hidden-view">
+            <!-- የጥያቄዎች ማሳያ ካርድ -->
+            <div id="quiz-card-body" class="info-card">
+                <h2><i class="fa-solid fa-graduation-cap"></i> የዕውቀት መመዘኛ</h2>
+                
+                <div class="status-bar">
+                    <div><i class="fa-solid fa-star" style="color: var(--royal-gold);"></i> ነጥብ: <span id="quiz-points">0</span></div>
+                    <div><i class="fa-solid fa-clock"></i> ሰዓት: <span id="timer-text">20</span> ሰከንድ</div>
+                </div>
+
+                <div class="timer-progress-container">
+                    <div id="timer-bar" class="timer-progress-bar"></div>
+                </div>
+
+                <div id="quiz-question-text" style="font-size: 1.2rem; font-weight: bold; margin-bottom: 25px;">ጥያቄው እዚህ ይጫናል...</div>
+                <div id="quiz-options-container"></div>
+                
+                <button id="next-quiz-btn" class="submit-btn" style="display: none;" onclick="loadNextQuestion()">ቀጣይ ጥያቄ <i class="fa-solid fa-arrow-right"></i></button>
+            </div>
+
+            <!-- አዲስ፡ የፈተና ማጠቃለያ እና የሞባይል ካርድ ሽልማት ማሳያ ሳጥን (You Win / Try Again) -->
+            <div id="quiz-result-screen" class="info-card hidden-view" style="overflow: hidden;">
+                
+                <!-- የሞባይል ካርድ ሳጥን (በስተቀኝ የሚንሳፈፍ / Float Right) -->
+                <div id="mobile-reward-box" style="float: right; width: 200px; background: #e8f5e9; border: 2px dashed #2e7d32; padding: 15px; border-radius: 10px; margin-left: 15px; text-align: center; display: none;">
+                    <i class="fa-solid fa-sim-card" style="font-size: 2rem; color: #2e7d32; margin-bottom: 8px;"></i>
+                    <h4 style="color: #1b5e20; margin-top: 0; margin-bottom: 5px;">የሞባይል ካርድ</h4>
+                    <div style="background: #ffffff; padding: 8px; border: 1px solid #a5d6a7; font-family: monospace; font-size: 1.1rem; font-weight: bold; color: #2e7d32; letter-spacing: 1px; margin-bottom: 8px;">
+                        *805*148293048291#
+                    </div>
+                    <span style="font-size: 0.75rem; color: #555;">ቁጥሩን ተጭነው በመውሰድ ስልክዎ ላይ ይሙሉ!</span>
+                </div>
+
+                <!-- የበላይ መልእክት (የአሸናፊነት ወይም የሞካሪነት) -->
+                <div id="result-message-area">
+                    <!-- መልእክቶች እዚህ ይገባሉ -->
+                </div>
+
+                <!-- እንደገና መሞከሪያ አዝራር -->
+                <div style="clear: both; padding-top: 15px;">
+                    <button id="try-again-btn" class="submit-btn" style="background-color: var(--royal-gold); color: #000; display: none;" onclick="restartQuiz()"><i class="fa-solid fa-rotate-right"></i> እንደገና ይሞክሩ (Try Again)</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- የታችኛው ማውጫ (Bottom Navigation) -->
+    <div class="bottom-nav">
+        <button id="nav-history" class="nav-item active" onclick="switchTab('history')">
+            <i class="fa-solid fa-book-open"></i>
+            <span>ታሪክ</span>
+        </button>
+        <button id="nav-quiz" class="nav-item" onclick="switchTab('quiz')">
+            <i class="fa-solid fa-gamepad"></i>
+            <span>ፈተና</span>
+        </button>
+    </div>
+
+    <!-- --- 2. የአሠራር መቆጣጠሪያ ኮድ (JavaScript) --- -->
     <script>
+        // ገጾችን ማቀያየሪያ (Tab Switching Logic)
+        function switchTab(tabName) {
+            document.getElementById('nav-history').classList.remove('active');
+            document.getElementById('nav-quiz').classList.remove('active');
+            document.getElementById('history-view').classList.add('hidden-view');
+            document.getElementById('quiz-view').classList.add('hidden-view');
+
+            if(tabName === 'history') {
+                document.getElementById('nav-history').classList.add('active');
+                document.getElementById('history-view').classList.remove('hidden-view');
+                clearInterval(quizInterval); // ወደ ታሪክ ሲሄድ ሰዓቱ ይቆማል
+            } else if(tabName === 'quiz') {
+                document.getElementById('nav-quiz').classList.add('active');
+                document.getElementById('quiz-view').classList.remove('hidden-view');
+                restartQuiz(); // ወደ ፈተና ሲመጣ ፈተናው አዲስ ይጀምራል
+            }
+        }
+
+        // --- የፈተና መቆጣጠሪያ ተግባራት ---
         let points = 0; 
         let timeLeft = 20; 
         let quizInterval; 
@@ -666,9 +341,18 @@
         let currentBankIndex = 0;
         let correctAnswersCount = 0;
 
+        // የጥያቄዎች ባንክ
         const sampleQuestionBank = [
-            { q: "ሙሴ የእግዚአብሔርን ሕግ የተቀበለበት ተራራ ማን ይባላል?", a: ["ሀ) የደብረ ዘይት ተራራ", "ለ) ሲና ተራራ", "ሐ) ቀርሜሎስ ተራራ", "መ) ኮሬብ ተራራ"], correctIdx: 1 },
-            { q: "በመጽሐፍ ቅዱስ ውስጥ ረጅም ዕድሜ የኖረው ሰው ማን ነው?", a: ["ሀ) ማቱሳላ", "ለ) አዳም", "ሐ) ኖኅ", "መ) ሄኖክ"], correctIdx: 0 }
+            { 
+                q: "ሙሴ የእግዚአብሔርን ሕግ የተቀበለበት ተራራ ማን ይባላል?", 
+                a: ["ሀ) የደብረ ዘይት ተራራ", "ለ) ሲና ተራራ", "ሐ) ቀርሜሎስ ተራራ", "መ) ኮሬብ ተራራ"], 
+                correctIdx: 1 
+            },
+            { 
+                q: "በመጽሐፍ ቅዱስ ውስጥ ረጅም ዕድሜ የኖረው ሰው ማን ነው?", 
+                a: ["ሀ) ማቱሳላ", "ለ) አዳም", "ሐ) ኖኅ", "መ) ሄኖክ"], 
+                correctIdx: 0 
+            }
         ];
 
         function resetAndStartQuizTimer() {
@@ -678,6 +362,7 @@
             document.getElementById('timer-text').innerText = timeLeft;
             document.getElementById('timer-bar').style.width = '100%';
             document.getElementById('next-quiz-btn').style.display = 'none';
+            
             document.getElementById('quiz-card-body').classList.remove('hidden-view');
             document.getElementById('quiz-result-screen').classList.add('hidden-view');
 
@@ -685,18 +370,23 @@
                 timeLeft--; 
                 document.getElementById('timer-text').innerText = timeLeft;
                 document.getElementById('timer-bar').style.width = (timeLeft / 20 * 100) + '%';
-                if(timeLeft <= 0) { clearInterval(quizInterval); lockQuizOptionsOnTimeout(); }
+                
+                if(timeLeft <= 0) { 
+                    clearInterval(quizInterval); 
+                    lockQuizOptionsOnTimeout(); 
+                }
             }, 1000);
         }
 
         function checkAnswer(selectedBtn, isCorrect) {
             if(hasAnswered || timeLeft <= 0) return;
             hasAnswered = true; 
-            clearInterval(quizInterval);
+            clearInterval(quizInterval); 
+            
             if(isCorrect) { 
                 selectedBtn.classList.add('correct'); 
                 points += 10; 
-                correctAnswersCount++;
+                correctAnswersCount++; 
                 document.getElementById('quiz-points').innerText = points; 
             } else { 
                 selectedBtn.classList.add('wrong'); 
@@ -708,17 +398,28 @@
         function highlightCorrectAnswer() {
             const currentQuestion = sampleQuestionBank[currentBankIndex - 1];
             const btns = document.querySelectorAll('.quiz-option-btn');
-            if (currentQuestion) { btns[currentQuestion.correctIdx].classList.add('correct'); }
+            if (currentQuestion) {
+                btns[currentQuestion.correctIdx].classList.add('correct');
+            }
         }
 
-        function lockQuizOptionsOnTimeout() { hasAnswered = true; highlightCorrectAnswer(); document.getElementById('next-quiz-btn').style.display = 'block'; }
+        function lockQuizOptionsOnTimeout() { 
+            hasAnswered = true; 
+            highlightCorrectAnswer(); 
+            document.getElementById('next-quiz-btn').style.display = 'block'; 
+        }
 
         function loadNextQuestion() {
-            if(currentBankIndex >= sampleQuestionBank.length) { showQuizFinalResults(); return; }
+            if(currentBankIndex >= sampleQuestionBank.length) { 
+                showQuizFinalResults();
+                return;
+            }
+            
             const data = sampleQuestionBank[currentBankIndex];
             document.getElementById('quiz-question-text').innerText = data.q;
             const container = document.getElementById('quiz-options-container'); 
-            container.innerHTML = '';
+            container.innerHTML = ''; 
+            
             data.a.forEach((optionText, idx) => {
                 const isCorrect = (idx === data.correctIdx); 
                 const btn = document.createElement('button');
@@ -727,34 +428,57 @@
                 btn.onclick = function() { checkAnswer(this, isCorrect); }; 
                 container.appendChild(btn);
             });
+            
             currentBankIndex++; 
             resetAndStartQuizTimer();
         }
 
+        // ማጠቃለያ እና የ 95% ስሌት ማሳያ ዋና ክፍል (You Win / Try Again)
         function showQuizFinalResults() {
             clearInterval(quizInterval);
+            
             document.getElementById('quiz-card-body').classList.add('hidden-view');
             document.getElementById('next-quiz-btn').style.display = 'none';
+            
             const resultScreen = document.getElementById('quiz-result-screen');
             const rewardBox = document.getElementById('mobile-reward-box');
             const msgArea = document.getElementById('result-message-area');
             const tryAgainBtn = document.getElementById('try-again-btn');
+            
             resultScreen.classList.remove('hidden-view');
             
             let scorePercentage = (correctAnswersCount / sampleQuestionBank.length) * 100;
+            
             if (scorePercentage >= 95) {
+                // 95% እና ከዚያ በላይ -> You Win! (ካርዱ በቀኝ በኩል ይንሳፈፋል)
                 rewardBox.style.display = 'block';
-                msgArea.innerHTML = `<h3 style="color: #2e7d32; font-size: 1.6rem; margin-bottom: 10px;">🎉 እንኳን ደስ አለዎት! አሸንፈዋል! (You Win)</h3><p style="font-size: 1.1rem; color: var(--text-charcoal); line-height: 1.6;">ሁሉንም ጥያቄዎች በብቃት በመመለስ <strong>${scorePercentage}%</strong> አግኝተዋል። የሞባይል አየር ሰዓት ሽልማትዎን ከቀኝ በኩል ይውሰዱ!</p>`;
+                msgArea.innerHTML = `
+                    <h3 style="color: #2e7d32; font-size: 1.5rem; margin-bottom: 10px;">🎉 እንኳን ደስ አለዎት! አሸንፈዋል! (You Win)</h3>
+                    <p style="font-size: 1.05rem; line-height: 1.5;">
+                        ሁሉንም ጥያቄዎች በብቃት በመመለስ <strong>${scorePercentage}%</strong> አግኝተዋል። ለእርስዎ የተዘጋጀውን የሞባይል አየር ሰዓት ሽልማት በስተቀኝ ካለው ሳጥን ላይ መውሰድ ይችላሉ!
+                    </p>
+                `;
                 tryAgainBtn.style.display = 'none';
             } else {
+                // ከ 95% በታች -> Try Again...
                 rewardBox.style.display = 'none';
-                msgArea.innerHTML = `<h3 style="color: #c62828; font-size: 1.5rem; margin-bottom: 10px;">🔒 ውጤትዎ ከ95% በታች ነው</h3><p style="font-size: 1.1rem; color: var(--text-charcoal); line-height: 1.6;">የአሁኑ ውጤትዎ <strong>${scorePercentage}%</strong> ነው። ሽልማቱን ለመክፈት 95% እና ከዚያ በላይ ማግኘት አለብዎት። ተስፋ ሳይቆርጡ በድጋሚ ይሞክሩ!</p>`;
+                msgArea.innerHTML = `
+                    <h3 style="color: #c62828; font-size: 1.4rem; margin-bottom: 10px;">🔒 እንደገና ይሞክሩ (Try Again)</h3>
+                    <p style="font-size: 1.05rem; line-height: 1.5;">
+                        የአሁኑ ውጤትዎ <strong>${scorePercentage}%</strong> ነው። የሞባይል ካርድ ሽልማቱን ለመክፈት 95% እና ከዚያ በላይ ማግኘት አለብዎት። ተስፋ ሳይቆርጡ በድጋሚ ይሞክሩ!
+                    </p>
+                `;
                 tryAgainBtn.style.display = 'block';
             }
         }
 
-        function restartQuiz() { points = 0; currentBankIndex = 0; correctAnswersCount = 0; document.getElementById('quiz-points').innerText = points; loadNextQuestion(); }
-        window.onload = loadNextQuestion;
+        function restartQuiz() {
+            points = 0;
+            currentBankIndex = 0;
+            correctAnswersCount = 0;
+            document.getElementById('quiz-points').innerText = points;
+            loadNextQuestion();
+        }
     </script>
 </body>
 </html>
